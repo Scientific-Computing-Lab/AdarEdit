@@ -205,7 +205,7 @@ results/
 ![cross_tissues_evo](Figure/cross_tissues_evo.png)
 (A) Cross-tissue evaluation showing model performance across different tissue combinations. (B) Cross-species evaluation demonstrating generalization capability
 
-All trained model checkpoints from our comprehensive cross-tissue evaluation are available in the trained_models/ directory. This includes the best performing models for each train-validation tissue combination. 
+All trained model checkpoints from our comprehensive cross-tissue and species evaluation are available in the trained_models/ directory. This includes the best performing models for each train-validation tissue combination. 
 
 ## Model Interpretability
 AdarEdit provides comprehensive interpretability analysis through two complementary approaches:
