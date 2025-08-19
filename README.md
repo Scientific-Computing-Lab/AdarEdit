@@ -194,13 +194,13 @@ Usage:
 python Scripts/interpretability/xgboost_shap_analysis.py \
     --attention_csv attention_data.csv
 ```
-Process:
+#### Process:
 
-![cross_tissues_evo](Figure/cross_tissues_evo.png)
+![interpertability_process](Figure/interpertability_process.png)
 
-Stage 1: Train XGBoost on all attention features (positions -600 to +600)
-Stage 2: Apply SHAP analysis to identify top 20 most important features
-Stage 3: Retrain XGBoost using only top 20 features
+* Stage 1: Train XGBoost on all attention features (positions -600 to +600)
+* Stage 2: Apply SHAP analysis to identify top 20 most important features
+* Stage 3: Retrain XGBoost using only top 20 features
 
 Outputs:
 
