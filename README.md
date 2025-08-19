@@ -40,7 +40,7 @@ conda activate rnagnn
 ```
 
 ## Data Processing Pipeline
-### Step 1: Human Alu Dataset Construction
+### Step 1a: Human Alu Dataset Construction
 The Scripts/Data_preparation/Classification_Data_Creation.py script creates classification datasets for each tissue:
 
 Process:
@@ -76,7 +76,7 @@ for tissue in Brain_Cerebellum Artery_Tibial Liver Muscle_Skeletal; do
 done
 ```
 
-### Step 2: Cross-Tissue Data Splitting
+### Step 1b: Cross-Tissue Data Splitting
 The Scripts/Data_preparation/build_cross_splits.R script creates balanced train/validation splits:
 Process:
 
@@ -111,6 +111,29 @@ Rscript scripts/build_cross_splits.R \
     --no_cutoff 1 \
     --seed 42
 ```
+
+### Step 2: Cross-Species Dataset Construction (Non-Alu)
+Cross-species datasets are constructed using a multi-step pipeline that processes editing sites from three evolutionarily distant species lacking Alu elements:
+Target Species:
+
+* Strongylocentrotus purpuratus (Sea urchin) - Echinoderm
+* Ptychodera flava (Acorn worm) - Hemichordate
+* Octopus bimaculoides (Octopus) - Mollusk
+
+#### Pipeline Overview:
+The cross-species data construction follows a 6-step pipeline that processes raw editing sites into training-ready datasets:
+
+Key Processing Steps:
+
+1. Editing Level Extraction: Parse sequencing data to calculate A-to-I editing ratios
+2. Spatial Clustering: Merge editing sites within 1kb distance, retain clusters with >5 sites
+3. Density Selection: Extract sequence regions with highest editing site density
+4. Structure Prediction: Predict RNA secondary structure using RNAfold
+5. Quality Filtering: Apply coverage (≥100 reads) and editing level (≥10%) thresholds
+6. Dataset Preparation: Create balanced train/validation splits with equal edited/non-edited sites
+   
+Step-by-step Pipeline:
+
 
 
 ## Model Training and Evaluation
