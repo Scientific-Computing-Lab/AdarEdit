@@ -11,7 +11,7 @@ AdarEdit is a domain-specialized graph foundation model for predicting A-to-I RN
 
 
 ![GNN_model](Figure/GNN_model.png)
-Figure 1: ADAREDIT model architecture showing RNA-to-graph conversion and Graph Attention Network processing
+ADAREDIT model architecture showing RNA-to-graph conversion and Graph Attention Network processing
 
 
 ## Getting Started
@@ -62,17 +62,17 @@ Input:
 
 Output:
 
-data_for_prepare_classification.csv → data/processed/tissues/{tissue}/
+data_for_prepare_classification.csv → data/data_for_model_input/tissues
 
 ```
 for tissue in Brain_Cerebellum Artery_Tibial Liver Muscle_Skeletal; do
-    python scripts/Classification_Data_Creation_Liver.py \
+    python scripts/Classification_Data_Creation.py \
         --pair_region data/raw/alu_pairs.bed \
         --genome data/raw/hg38.fa \
         --editing_site_plus data/raw/${tissue}_editing_plus.tsv \
         --editing_site_minus data/raw/${tissue}_editing_minus.tsv \
         --editing_level 10.0 \
-        --output_dir data/processed/tissues/${tissue}/
+        --output_dir data/data_for_model_input/tissues
 done
 ```
 
@@ -80,7 +80,7 @@ done
 The Scripts/Data_preparation/build_cross_splits.R script creates balanced train/validation splits:
 Process:
 
-1. Load per-tissue CSV files from data/processed/tissues/
+1. Load per-tissue CSV files from data/data_for_model_input/tissues/
 2. Label editing sites: "yes" (≥10%) vs "no" (<1%)
 3. Create balanced datasets (equal yes/no samples)
 4. Generate all tissue-pair combinations for cross-validation
@@ -96,15 +96,15 @@ Input:
 
 Output:
 
-Cross-tissue directories → data/processed/cross_splits/{train_tissue}/{train_tissue}_{valid_tissue}/
+Cross-tissue directories → data/data_for_model_input/tissues/cross_splits/{train_tissue}/{train_tissue}_{valid_tissue}/
 Training files: {train_tissue}_train.csv
 Validation files: {valid_tissue}_valid.csv
 Summary report: cross_split_summary.csv
 
 ```
 Rscript scripts/build_cross_splits.R \
-    --data_dir data/processed/tissues/ \
-    --output_dir data/processed/cross_splits/ \
+    --data_dir data/data_for_model_input/tissues/ \
+    --output_dir data/data_for_model_input/tissues/cross_splits/ \
     --train_size 19200 \
     --valid_size 4800 \
     --yes_cutoff 10 \
@@ -158,13 +158,63 @@ python Scripts/model/gnnadar_verb_compact.py \
 ```
 
 ## Results
-### Results: Cross-Tissue and Cross-Species
+
+### Best Model Checkpoints
+The training script automatically identifies and saves the top 10 performing models based on a composite performance score (accuracy + F1 + sensitivity + specificity + precision). After training, you can find:
+
+- *Top model rankings:* ;`top_epochs.csv` - Lists the 10 best epochs with their performance metrics
+- *Best model checkpoint directory*: /checkpoints/ - Contains all saved model checkpoints
+- *Validation logs*: `validation_logs.csv` - Complete training history with metrics per epoch
+
+Example structure:
+```
+results/
+├── Liver/
+│   ├── checkpoints/
+│   │   ├── model_checkpoint_epoch_980.pth  # Top performing model
+│   │   ├── model_checkpoint_epoch_970.pth
+│   │   └── ...
+│   ├── top_epochs.csv                      # Top 10 models ranking
+│   └── validation_logs.csv                 # Training history
+```
+### Cross-Tissue and Cross-Species Performance
 
 ![cross_tissues_evo](Figure/cross_tissues_evo.png)
-Figure 2: (A) Cross-tissue evaluation showing model performance across different tissue combinations. (B) Cross-species evaluation demonstrating generalization capability
+(A) Cross-tissue evaluation showing model performance across different tissue combinations. (B) Cross-species evaluation demonstrating generalization capability
 
+All trained model checkpoints from our comprehensive cross-tissue evaluation are available in the trained_models/ directory. This includes the best performing models for each train-validation tissue combination. 
 
+## Model Interpretability
+AdarEdit provides comprehensive interpretability analysis through two complementary approaches:
 
+### 1. XGBoost-based Feature Analysis
+The interpretability pipeline (Scripts/interpretability/xgboost_shap_analysis.py) performs two-stage XGBoost analysis:
+Usage:
+```
+python Scripts/interpretability/xgboost_shap_analysis.py \
+    --attention_csv attention_data.csv
+```
+Process:
+
+![cross_tissues_evo](Figure/cross_tissues_evo.png)
+
+Stage 1: Train XGBoost on all attention features (positions -600 to +600)
+Stage 2: Apply SHAP analysis to identify top 20 most important features
+Stage 3: Retrain XGBoost using only top 20 features
+
+Outputs:
+
+- `shap_top20_XGBoost.png`: SHAP feature importance plot for full model
+- `shap_top20_Retrained_XGBoost.png`: SHAP plot for retrained model
+- `shap_data_Original_Model.pkl`: Saved SHAP analysis data
+- `shap_data_Retrained_Model.pkl`: Saved retrained model SHAP data
+
+### 2. Graph Attention Analysis
+The GNN model automatically generates attention analysis during evaluation:
+Generated during model evaluation:
+
+- `attention_data.csv`: Attention weights for each position (-650 to +649) for each validation sample
+- `attention_graphs/`: Directory containing detailed attention visualization plots
 
 
 
