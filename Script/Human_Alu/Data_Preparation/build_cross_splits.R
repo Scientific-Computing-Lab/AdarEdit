@@ -36,7 +36,7 @@ parser$add_argument("--train_size", type="integer", default=19200,
 parser$add_argument("--valid_size", type="integer", default=4800,
                     help="Total valid size per tissue (balanced 50/50) (default: 4800).")
 
-# Column names (כמו במקור)
+# Column names
 parser$add_argument("--structure_col", default="structure",
                     help='Name of the structure column (default: "structure").')
 parser$add_argument("--L_col", default="L",
