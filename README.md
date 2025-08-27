@@ -186,7 +186,7 @@ For each species prepare:
 #### 2) End-to-end pipeline
 Below, replace Species and all paths accordingly (run for each species).
 
-**Step 1 — Parse editing table → CSV + BED6**
+## Step 1 — Parse editing table → CSV + BED6
 
 Script: Script/Evolution/get_editing_levels.py
 
@@ -205,7 +205,7 @@ Writes:
 ```
 Optional flags (see --help): minimum coverage filter, custom column names, etc.
 
-**Step 2 — Cluster nearby editing sites (strand-aware)**
+## Step 2 — Cluster nearby editing sites (strand-aware)
 
 Script: Script/Evolution/cluster_editing_sites.py
 
@@ -224,7 +224,7 @@ python Script/Evolution/cluster_editing_sites.py \
 ```
 Output: /path/to/Species/cluster_d1000_up5editingsite.bed
 
-**Step 3 — Fold windows, choose dsRNA segment with majority of ES; annotate sites & nearby A**
+## Step 3 — Fold windows, choose dsRNA segment with majority of ES; annotate sites & nearby A
 
 Script: Script/Evolution/get_ds_with_majority_ES.py
 
@@ -249,7 +249,7 @@ Key outputs (in -o):
 - mfe_data_results.csv — per-window MFE summary
 - Per-region .dbn/.ct/.shape/.svg
 
-**Step 4 — Merge structure results with per-site editing levels**
+## Step 4 — Merge structure results with per-site editing levels
 
 Script: Script/Evolution/merge_ds_results.py
 
@@ -265,7 +265,7 @@ python Script/Evolution/merge_ds_results.py \
   -w 15
 ```
 
-**Step 5 — De-duplicate groups & filter by length / coverage (and optional editing threshold)**
+## Step 5 — De-duplicate groups & filter by length / coverage (and optional editing threshold)
 
 Script: `Script/Evolution/filter_ds_groups.R`
 
@@ -283,7 +283,7 @@ Rscript Script/Evolution/filter_ds_groups.R \
 # --save-above-threshold /path/to/Species/above_0.1.csv
 ```
 
-**Step 6 — Prepare balanced ML train/valid sets per species**
+## Step 6 — Prepare balanced ML train/valid sets per species
 
 Script: Script/Evolution/prepare_balanced_ml_sets.R.R (comma-list interface)
 
