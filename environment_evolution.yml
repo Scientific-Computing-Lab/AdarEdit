@@ -1,0 +1,13 @@
+name: evolution
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.11
+  - pandas
+  - pyfaidx
+  - bedtools
+  - viennarna            # ViennaRNA + binding 
+  - rnastructure         #  dot2ct ,draw
+  - perl                 # /‏bpRNA
+  - perl-graph           #  bpRNA 
