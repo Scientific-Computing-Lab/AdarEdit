@@ -144,7 +144,7 @@ Use the provided environment file:
 
 ```
 conda env create -f Script/Evolution/environment_evolution.yml
-conda activate rna-editing-pipeline
+conda activate evolution
 ```
 This environment includes (or expects) the following:
 - Python ≥ 3.10, pandas, pyfaidx
