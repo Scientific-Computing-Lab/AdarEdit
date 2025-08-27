@@ -16,9 +16,9 @@ option_list <- list(
   make_option(c("-o","--out-dir"), type="character", metavar="DIR",
               help="Output directory (species subfolders will be created)."),
   make_option(c("--pos-threshold"), type="double", default=0.1,
-              help="EditingLevel threshold for positive class (yes). [default: %default]"),
+              help="EditingLevel threshold for positive class (yes)."[default: 0.1]),
   make_option(c("--neg-threshold"), type="double", default=0.001,
-              help="EditingLevel threshold for negative class (no). [default: %default]"),
+              help="EditingLevel threshold for negative class (no). [default: 0.001]"),
   make_option(c("--train-frac"), type="double", default=0.8,
               help="Train split fraction. [default: %default]"),
   make_option(c("--equalize-across"), type="logical", default=TRUE,
@@ -203,3 +203,4 @@ for (sp in names(species_dfs)) {
 }
 
 message("Done.")
+
