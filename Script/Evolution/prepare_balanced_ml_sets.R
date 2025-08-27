@@ -26,7 +26,7 @@ option_list <- list(
   make_option(c("--seed"), type="integer", default=42,
               help="Random seed. [default: %default]"),
   make_option(c("--min-local-pos"), type="integer", default=1,
-              help="Filter rows with Local_Position < this value. [default: %default]")
+              help="Filter rows with Local_Position < this value.")
 )
 
 opt <- parse_args(OptionParser(option_list = option_list))
@@ -203,4 +203,5 @@ for (sp in names(species_dfs)) {
 }
 
 message("Done.")
+
 
