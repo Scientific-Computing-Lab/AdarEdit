@@ -15,7 +15,7 @@ ADAREDIT model architecture showing RNA-to-graph conversion and Graph Attention 
 
 
 ## Getting Started
-### Requirments
+### Requirements
 
 First, clone this repository. 
 ```
@@ -285,7 +285,7 @@ Rscript Script/Evolution/filter_ds_groups.R \
 
 ## Step 6 — Prepare balanced ML train/valid sets per species
 
-Script: Script/Evolution/prepare_balanced_ml_sets.R.R (comma-list interface)
+Script: Script/Evolution/prepare_balanced_ml_sets.R (comma-list interface)
 
 - Splits small_ds_seq into L/R by Local_Position
 - Labels yes if EditingLevel > 0.1, no if < 0.001 (configurable)
@@ -293,7 +293,7 @@ Script: Script/Evolution/prepare_balanced_ml_sets.R.R (comma-list interface)
 - Splits 80/20 → train/valid (configurable)
   
 ```
-Rscript Script/Evolution/prepare_balanced_ml_sets.R.R \
+Rscript Script/Evolution/prepare_balanced_ml_sets.R \
   --inputs "Strongylocentrotus_purpuratus=/.../Strongylocentrotus_purpuratus/..._withoutDup.csv,Octopus_bimaculoides=/.../Octopus_bimaculoides/..._withoutDup.csv,Ptychodera_flava=/.../Ptychodera_flava/..._withoutDup.csv" \
   --out-dir /path/to/all_data/ \
   --pos-threshold 0.1 --neg-threshold 0.001 \
@@ -305,6 +305,8 @@ Outputs (per species under --out-dir/<Species>/):
 - `final_<Species>_valid.csv`
 
 These are the files you feed into AdarEdit’s training/evaluation scripts (see your model README section).
+
+**Examples.** See `data/examples/Evolution/` — it contains all example inputs/outputs you need (except the species genome FASTA, which is not included due to its size). For the clustering demo we kept only the first **40** clusters from `cluster_d1000_up5editingsite.bed`. 
 
 
 
@@ -342,8 +344,20 @@ Training Parameters:
 `--checkpoint_dir`: Directory to save model checkpoints
 `--checkpoint_interval`: Epoch interval for saving checkpoints (default: 10)
 
-Model Evaluation
-Evaluate Pre-trained Model:
+
+
+### Model Evaluation
+
+#### Pretrained checkpoints (best-performing models)
+
+We provide pretrained model checkpoints so you can **evaluate without training**.  
+All best checkpoints are stored under:
+
+`data/checkpoints/`
+
+Each subfolder corresponds to a **species** (non-human) or **human tissue**.  
+
+**Evaluate Pre-trained Model:**
 
 ```
 python Scripts/model/gnnadar_verb_compact.py \
