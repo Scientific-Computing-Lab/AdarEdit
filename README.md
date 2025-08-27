@@ -62,7 +62,7 @@ Input:
 
 Output:
 
-data_for_prepare_classification.csv → data/Human_Alu/data_for_model_input/tissues
+data_for_prepare_classification.csv
 
 ```
 for tissue in Brain_Cerebellum Artery_Tibial Liver Muscle_Skeletal; do
@@ -96,7 +96,7 @@ Input:
 
 Output:
 
-Cross-tissue directories → data/Human_Alu/data_for_model_input/tissues/cross_splits/{train_tissue}/{train_tissue}_{valid_tissue}/
+Cross-tissue directories - 
 Training files: {train_tissue}_train.csv
 Validation files: {valid_tissue}_valid.csv
 Summary report: cross_split_summary.csv
@@ -256,7 +256,7 @@ Script: Script/Evolution/merge_ds_results.py
 - Expands by relative_positions (edited) and A_20d (nearby adenosines)
 - Joins editing metrics by (Chr, Position, Strand)
 - Writes combined table
-- 
+  
 ```
 python Script/Evolution/merge_ds_results.py \
   -e /path/to/Species/A2IEditingSite.csv \
@@ -306,7 +306,7 @@ Outputs (per species under --out-dir/<Species>/):
 
 These are the files you feed into AdarEdit’s training/evaluation scripts (see your model README section).
 
-**Examples.** See `data/examples/Evolution/` — it contains all example inputs/outputs you need (except the species genome FASTA, which is not included due to its size). For the clustering demo we kept only the first **40** clusters from `cluster_d1000_up5editingsite.bed`. 
+**Examples.** See `data/examples/Evolution/` — it contains all example inputs/outputs you need (except the species editing site and genome FASTA, which is not included due to its size). For the clustering demo we kept only the first **40** clusters from `cluster_d1000_up5editingsite.bed`. 
 
 
 
