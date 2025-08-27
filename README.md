@@ -11,17 +11,13 @@ AdarEdit is a domain-specialized graph foundation model for predicting A-to-I RN
 
 
 ![GNN_model](Figure/GNN_model.png)
-ADAREDIT model architecture showing RNA-to-graph conversion and Graph Attention Network processing
+AdarEdit model architecture showing RNA-to-graph conversion and Graph Attention Network processing
 
 
 ## Getting Started
 ### Requirements
 
 First, clone this repository. 
-```
-git clone https://github.com/Scientific-Computing-Lab/AdarEdit.git
-cd AdarEdit
-```
 
 You may use the file  `environment.yml` to create anaconda environment with the required packages.
 
