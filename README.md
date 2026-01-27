@@ -13,12 +13,12 @@ AdarEdit is a domain-specialized graph foundation model for predicting A-to-I RN
 
 ## Model Architectures
 
-Baseline Model:
+**Baseline Model:**
 
 Node features (8-dim): Base identity, pairing status, relative position, target flag
 Edges: Sequential + base-pairing (uniform)
 
-Bio-aware Model:
+**Bio-aware Model:**
 
 Node features (22-dim): Baseline + trinucleotide context, stem-loop geometry, pairing energies
 Edges: Typed (canonical/wobble/sequential) with learned embeddings
@@ -50,6 +50,8 @@ conda activate rnagnn
 ```
 
 ## Data Processing Pipeline
+![GNN_model](Figure/ADAR-EDIT-DATA.png)
+
 ### Step 1a: Human Alu Dataset Construction
 The Script/Human_Alu/Data_preparation/Classification_Data_Creation.py script creates classification datasets for each tissue:
 
