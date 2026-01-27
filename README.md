@@ -24,7 +24,7 @@ Node features (22-dim): Baseline + trinucleotide context, stem-loop geometry, pa
 Edges: Typed (canonical/wobble/sequential) with learned embeddings
 Additional: Parallel 1D CNN (3-mer/5-mer filters), optional global attention
 
-![GNN_model](Figure/GNN_model.png)
+![GNN_model](Figure/ADAREdit_Model_V2.png)
 AdarEdit model architecture showing RNA-to-graph conversion and Graph Attention Network processing
 
 
