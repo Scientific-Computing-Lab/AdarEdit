@@ -3,12 +3,26 @@
 AdarEdit is a domain-specialized graph foundation model for predicting A-to-I RNA editing sites. Unlike generic foundation models that treat RNA as linear sequences, AdarEdit represents RNA segments as graphs where nucleotides are nodes connected by both sequential and base-pairing edges, enabling the model to learn biologically meaningful sequence–structure patterns.
 
 ## Key Features:
+- Dual architecture: Baseline (data-driven) and bio-aware (biochemically-informed) models
 - Graph-based RNA representation: Captures both sequence and secondary structure information.
-- High accuracy: F1 > 0.85 across cross-tissue evaluations (see Results).
+- High accuracy: F1 ≈ 0.90 (bio-aware), AUROC/AUPRC ≈ 0.96 (combined tissue).
 - Cross-species generalization: Works on evolutionarily distant species even without Alu elements.
 - Mechanistic interpretability: Graph attention highlights influential structural motifs.
 - Foundation model behavior: A single model generalizes across tissues and conditions.
 
+
+## Model Architectures
+
+Baseline Model:
+
+Node features (8-dim): Base identity, pairing status, relative position, target flag
+Edges: Sequential + base-pairing (uniform)
+
+Bio-aware Model:
+
+Node features (22-dim): Baseline + trinucleotide context, stem-loop geometry, pairing energies
+Edges: Typed (canonical/wobble/sequential) with learned embeddings
+Additional: Parallel 1D CNN (3-mer/5-mer filters), optional global attention
 
 ![GNN_model](Figure/GNN_model.png)
 AdarEdit model architecture showing RNA-to-graph conversion and Graph Attention Network processing
