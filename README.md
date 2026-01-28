@@ -93,7 +93,7 @@ The Script/Human_Alu/Data_Preparation/build_cross_splits.R script creates balanc
 Process:
 
 1. Load per-tissue CSV files from data/data_for_model_input/tissues/
-2. Label editing sites: "yes" (≥10%) vs "no" (<1%)
+2. Label editing sites: "yes" (≥15%) vs "no" (<1%)
 3. Create balanced datasets (equal yes/no samples)
 4. Generate all tissue-pair combinations for cross-validation
 5. Remove training examples from validation sets to prevent data leakage
@@ -318,7 +318,7 @@ Outputs (per species under --out-dir/<Species>/):
 
 These are the files you feed into AdarEdit’s training/evaluation scripts (see your model README section).
 
-**Examples.** See `data/examples/Evolution/` — it contains all example inputs/outputs you need (except the species editing site and genome FASTA, which is not included due to its size). For the clustering demo we kept only the first **40** clusters from `cluster_d1000_up5editingsite.bed`. 
+**Examples.** See `data_evo/examples/Evolution/` — it contains all example inputs/outputs you need (except the species editing site and genome FASTA, which is not included due to its size). For the clustering demo we kept only the first **40** clusters from `cluster_d1000_up5editingsite.bed`. 
 
 
 
