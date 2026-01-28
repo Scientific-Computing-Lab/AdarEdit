@@ -447,9 +447,14 @@ python Scripts/model/gnnadar_verb_compact.py \
 ### Cross-Tissue and Cross-Species Performance
 
 ![cross_tissues_evo](Figure/cross_tissues_evo.png)
-(A) Cross-tissue evaluation showing model performance across different tissue combinations. (B) Cross-species evaluation demonstrating generalization capability
 
-All trained model checkpoints from our comprehensive cross-tissue and species evaluation are available in the trained_models/ directory. This includes the best performing models for each train-validation tissue combination. 
+- **(A, B)** ROC and PR curves comparing AdarEdit (graph-based) with sequence-only baselines (EditPredict, RNA-FM, ADAR-GPT) on liver tissue. Graph-based models achieve higher AUROC and AUPRC.
+- **(C, D)** Cross-tissue F1 heatmaps for baseline and bio-aware models. Rows = training tissue, columns = validation tissue. Diagonal = within-tissue performance; off-diagonal = cross-tissue generalization.
+- **(E)** ΔF1 heatmap showing bio-aware improvement over baseline across all tissue combinations.
+- **(F)** Cross-species F1 scores: within-species (species→species) and human-to-other transfer (Combined→species) for sea urchin, acorn worm, and octopus.
+- **(G, H)** ROC and PR curves for all cross-tissue and cross-species combinations, comparing baseline and bio-aware models.
+
+**Key findings:** Bio-aware model outperforms baseline in 20/25 tissue settings (ΔF1 = +0.012 average) and shows robust cross-species transfer.
 
 ## Model Interpretability
 AdarEdit provides comprehensive interpretability analysis through two complementary approaches:
@@ -463,7 +468,7 @@ python Scripts/interpretability/xgboost_shap_analysis.py \
 ```
 #### Process:
 
-![interpertability_process](Figure/interpertability_process.png)
+![interpertability_process](Figure/interpertability_process_1.png)
 
 * Stage 1: Train XGBoost on all attention features (positions -600 to +600)
 * Stage 2: Apply SHAP analysis to identify top 20 most important features
