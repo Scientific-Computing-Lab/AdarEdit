@@ -323,18 +323,115 @@ These are the files you feed into AdarEdit’s training/evaluation scripts (see 
 
 
 ## Model Training and Evaluation
-### Model Architecture
-ADAREDIT employs a Graph Attention Network (GAT) architecture with the following components:
 
-Graph Representation: RNA segments as graphs with nucleotides as nodes
-Edge Types: Sequential (adjacent nucleotides) and structural (base-pairs)
-Node Features: 8-dimensional vectors including base encoding, pairing status, relative position, and target flag
-Architecture: 3-layer GAT with multi-head attention (4 heads per layer)
-Output: Binary classification with attention weights for interpretability
+Use the automated runner script to train and evaluate both models across all tissue combinations:
 
-Training a Model
-Basic Training Command:
+### Script: `Scripts/model/run_all_evals_bioaware_baseline.py`
 
+**What it does:**
+1. Creates a timestamped workspace copy of the project and datasets
+2. Runs smoke test to verify imports and paths
+3. Trains and evaluates both models on all train/valid pairs in `datasets/**/combine_*/`
+4. Saves checkpoints, predictions, and ROC/PR curves for each model and split
+5. Generates a comprehensive evaluation summary
+
+
+### Basic Usage
+
+```bash
+python run_all_evals_bioaware_baseline.py \
+    --variants baseline,bioaware
+```
+
+his will:
+- Train baseline and bio-aware models on all tissue combinations
+- Save results to `overnight_eval_YYYYMMDD_HHMMSS/`
+- Run 1000 epochs per model/split
+- Use batch size 256
+
+### Advanced Options
+
+```bash
+python run_all_evals_bioaware_baseline.py \
+    --variants baseline,bioaware          # Models to train (comma-separated)
+    --timestamp my_experiment_name        # Custom workspace name (optional)
+    --resume_existing                     # Skip splits with existing predictions
+    --start_after "combine_2_4/Liver->Brain"  # Resume from specific split
+    --skip_variants baseline              # Skip specific models
+    --clean_variants bioaware             # Delete old results for specific models
+```
+
+**Available variants:**
+- `baseline`: Baseline GAT model
+- `bioaware`: Bio-aware model with typed edges + sequence CNN
+
+## Input Data Structure
+
+The script expects datasets organized as:
+
+```
+datasets/
+├── Liver/
+│   ├── combine_3_2/
+│   │   ├── Liver_train.jsonl
+│   │   ├── Liver_valid.jsonl
+│   └── combine_3_1/
+│       └── ...
+├── Brain_Cerebellum/
+│   └── combine_4_2/
+│       └── ...
+└── Combined/
+    └── ...
+```
+**JSONL format:**
+```json
+{"messages": [{"role": "user", "content": "L:AUGC..., A:A, R:...UGCA, Alu Vienna Structure:(((...)))..."}, {"role": "assistant", "content": "yes"}]}
+```
+
+## Output Structure
+
+After running, you'll find in `overnight_eval_YYYYMMDD_HHMMSS/`:
+
+```
+overnight_eval_20240128_153045/
+├── checkpoints/
+│   ├── Liver/
+│   │   ├── baseline/
+│   │   │   └── combine_3_2_Liver_Liver/
+│   │   │       └── best.pth              # Best checkpoint for this split
+│   │   └── bioaware/
+│   │       └── combine_3_2_Liver_Liver/
+│   │           └── best.pth
+│   └── Brain_Cerebellum/
+│       └── ...
+├── predictions/
+│   ├── Liver/
+│   │   ├── baseline/
+│   │   │   ├── combine_3_2_Liver_Liver.jsonl         # Per-sample predictions
+│   │   │   └── combine_3_2_Liver_Liver/
+│   │   │       └── curves.npz                        # ROC/PR curve data
+│   │   └── bioaware/
+│   │       └── ...
+│   └── ...
+└── comprehensive_evaluation.md                        # Summary table
+```
+
+## Model Selection
+
+Both models use **F1-optimized threshold search**:
+- At each epoch, evaluate on validation set
+- Test 33 thresholds (0.1 to 0.9)
+- Select threshold that maximizes F1 score
+- Save checkpoint if F1 improves
+- Best checkpoint is automatically selected
+
+**This ensures optimal performance for each tissue and split.**
+
+## Individual Model Training (Alternative)
+
+If you prefer to train models individually, use the standalone scripts:
+
+### Baseline
 ```
 python Scripts/model/gnnadar_verb_compact.py \
     --train_file {tissue}_train.csv \
@@ -346,58 +443,7 @@ python Scripts/model/gnnadar_verb_compact.py \
     --checkpoint_dir checkpoints/Liver \
     --checkpoint_interval 10
 ```
-Training Parameters:
 
-`--train_file`: Path to training CSV file
-`--val_file`: Path to validation CSV file
-`--epochs`: Number of training epochs (default: 600)
-`--batch_size`: Training batch size (default: 128)
-`--mode`: Operation mode ('train' or 'eval')
-`--checkpoint_dir`: Directory to save model checkpoints
-`--checkpoint_interval`: Epoch interval for saving checkpoints (default: 10)
-
-
-
-### Model Evaluation
-
-#### Pretrained checkpoints (best-performing models)
-
-We provide pretrained model checkpoints so you can **evaluate without training**.  
-All best checkpoints are stored under:
-
-`data/checkpoints/`
-
-Each subfolder corresponds to a **species** (non-human) or **human tissue**.  
-
-**Evaluate Pre-trained Model:**
-
-```
-python Scripts/model/gnnadar_verb_compact.py \
-    --val_file {{tissue}_valid.csv \
-    --mode eval \
-    --checkpoint checkpoints/{tissue}/model_checkpoint_epoch_980.pth
-```
-
-## Results
-
-### Best Model Checkpoints
-The training script automatically identifies and saves the top 10 performing models based on a composite performance score (accuracy + F1 + sensitivity + specificity + precision). After training, you can find:
-
-- *Top model rankings:* ;`top_epochs.csv` - Lists the 10 best epochs with their performance metrics
-- *Best model checkpoint directory*: /checkpoints/ - Contains all saved model checkpoints
-- *Validation logs*: `validation_logs.csv` - Complete training history with metrics per epoch
-
-Example structure:
-```
-results/
-├── Liver/
-│   ├── checkpoints/
-│   │   ├── model_checkpoint_epoch_980.pth  # Top performing model
-│   │   ├── model_checkpoint_epoch_970.pth
-│   │   └── ...
-│   ├── top_epochs.csv                      # Top 10 models ranking
-│   └── validation_logs.csv                 # Training history
-```
 ### Cross-Tissue and Cross-Species Performance
 
 ![cross_tissues_evo](Figure/cross_tissues_evo.png)
