@@ -186,8 +186,8 @@ if (length(summary_log)) {
 
 #######################
 # Rscript build_cross_splits.R \
-#   --data_dir "/data_10PEL/" \
-#   --output_dir "/cross_splits_10PEL/" \
+#   --data_dir "/data_15PEL/" \
+#   --output_dir "/cross_splits_15PEL/" \
 #   --train_size 19200 --valid_size 4800 \
-#   --yes_cutoff 10 --no_cutoff 1
+#   --yes_cutoff 15 --no_cutoff 1
 ########################
