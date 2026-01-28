@@ -320,6 +320,52 @@ These are the files you feed into AdarEdit’s training/evaluation scripts (see 
 
 **Examples.** See `data_evo/examples/Evolution/` — it contains all example inputs/outputs you need (except the species editing site and genome FASTA, which is not included due to its size). For the clustering demo we kept only the first **40** clusters from `cluster_d1000_up5editingsite.bed`. 
 
+## Data Format Conversion
+
+The final data preparation step converts CSV files to JSONL format required by the models.
+
+### Script: `Script/Human_Alu/Data_Preparationcsv_to_jsonl.py`
+
+**Converts CSV files (output from data processing pipeline) to JSONL format (input for model training).**
+
+### Usage
+
+```bash
+# Convert all CSV files in a directory tree
+python csv_to_jsonl.py datasets/
+
+# Convert CSV files in current directory
+python csv_to_jsonl.py .
+
+# Convert specific directory
+python csv_to_jsonl.py datasets/Liver/combine_3_2/
+```
+
+### Input Format (CSV)
+
+From the data processing pipeline, each CSV has 4 columns:
+
+```csv
+structure,L,R,y_n
+(((...)))...(((...))),AUGCUAGCUAGC,GCUAGCUAGCUA,yes
+.((..))....((..)),CUAGCUAGCUAG,UAGCUAGCUAGC,no
+...
+```
+
+**Columns:**
+- `structure`: Dot-bracket notation of RNA secondary structure
+- `L`: Left flanking sequence (upstream of editing site)
+- `R`: Right flanking sequence (downstream of editing site)
+- `y_n`: Label - "yes" (edited) or "no" (non-edited)
+
+### Output Format (JSONL)
+
+Each CSV row becomes a JSONL entry:
+
+```json
+{"messages": [{"role": "system", "content": "Predict if the central adenosine (A) in the given RNA sequence context within an Alu element will be edited to inosine (I) by ADAR enzymes."}, {"role": "user", "content": "L:AUGCUAGCUAGC, A:A, R:GCUAGCUAGCUA, Alu Vienna Structure:(((...)))...(((...))"}, {"role": "assistant", "content": "yes"}]}
+{"messages": [{"role": "system", "content": "Predict if the central adenosine (A) in the given RNA sequence context within an Alu element will be edited to inosine (I) by ADAR enzymes."}, {"role": "user", "content": "L:CUAGCUAGCUAG, A:A, R:UAGCUAGCUAGC, Alu Vienna Structure:.((..))....((..)"}, {"role": "assistant", "content": "no"}]}
+```
 
 
 ## Model Training and Evaluation
@@ -382,10 +428,6 @@ datasets/
 │       └── ...
 └── Combined/
     └── ...
-```
-**JSONL format:**
-```json
-{"messages": [{"role": "user", "content": "L:AUGC..., A:A, R:...UGCA, Alu Vienna Structure:(((...)))..."}, {"role": "assistant", "content": "yes"}]}
 ```
 
 ## Output Structure
