@@ -530,6 +530,103 @@ Generated during model evaluation:
 - `attention_data.csv`: Attention weights for each position (-650 to +649) for each validation sample
 - `attention_graphs/`: Directory containing detailed attention visualization plots
 
+# ADAR Rules Analysis (In-silico Mutagenesis)
+
+![interpertability_process](Figure/ADAR_RULES.png)
+
+This section documents the scripts used to characterize the model’s learned **ADAR-related sequence and structure preferences**
+around the target adenosine. The analyses are **topology-aware**: when a perturbation breaks a valid pair, the script removes the
+corresponding structural edge in the graph.
+
+> These scripts are intended for ** Scripts/interpretability/** and reproduce the same analysis workflow used in the manuscript,
+---
+
+## Inputs
+
+All scripts operate on:
+- `--val_file`: Validation JSONL format used in this repository  
+  (fields include `L`, `A`, `R`, and `Alu Vienna Structure`)
+- `--checkpoint`: Baseline checkpoint `.pth` (either a raw `state_dict` or a dict containing `state_dict`)
+- `--num_samples`: Maximum number of samples to process (default: 4000)
+
+### Sample filtering (paper setting)
+To focus on high-confidence edited sites, all scripts:
+- keep only edited samples (`label=1`)
+- require original model confidence `pred > 0.7` (on the unmodified graph)
+
+---
+
+## Scripts
+
+### 1) Core motif preference heatmaps (sequence + structure)
+**Script:** ` Scripts/interpretability/fig6ab_core_heatmaps_topology_aware.py`
+
+**What it does**
+- **Sequence preference (heatmap):** mutates base identity in the window `[-3, +3]` (relative to the target A at position 0),
+  while keeping structure and edges unchanged. It aggregates mean prediction per base/position and normalizes each column
+  by subtracting its mean (excluding the target column).
+- **Structure preference (heatmap; topology-aware):** compares `paired` vs `unpaired` per base/position.
+  In the `unpaired` condition it sets the paired-flag to 0 **and removes the structural edge** to the partner node (when a partner exists).
+
+**Run**
+```bash
+python  Scripts/interpretability/fig6ab_core_heatmaps_topology_aware.py \
+  --val_file datasets/Liver/combine_2_4/Liver_valid.jsonl \
+  --checkpoint checkpoints/Liver/baseline/.../best.pth \
+  --num_samples 4000
+```
+
+**Outputs**
+- `fig6a_motif_sequence_preference_heatmap.png`
+- `fig6b_structure_preference_heatmap.png`
+
+---
+
+### 2) Structural impact across a full window (paired − unpaired)
+**Script:** ` Scripts/interpretability/fig6c_structural_impact_square.py`
+
+**What it does**
+- For each relative position in `[-40, +40]`, computes:
+  `impact = pred(paired) - pred(unpaired)`
+- The `unpaired` condition is topology-aware: it removes the structural partner edge if it exists.
+- Aggregates the mean impact across samples and produces a square zoned curve.
+
+**Run**
+```bash
+python  Scripts/interpretability/fig6c_structural_impact_square.py \
+  --val_file datasets/Liver/combine_2_4/Liver_valid.jsonl \
+  --checkpoint checkpoints/Liver/baseline/.../best.pth \
+  --num_samples 4000
+```
+
+**Output**
+- `fig6c_structural_impact_square.png`
+
+---
+
+### 3) Partner interaction matrix (paired mutations with edge removal)
+**Script:** ` Scripts/interpretability/fig6d_partner_interaction_topology.py`
+
+**What it does**
+- For positions `[-1, 0, +1]`, identifies the structural partner node for each sample and evaluates paired mutations across all
+  base pairs (self×partner).
+- If a pair is invalid (not Watson–Crick or wobble), the script removes the structural edge between the two nodes.
+- Aggregates mean prediction per pair and outputs heatmaps.
+
+**Run**
+```bash
+python  Scripts/interpretability/fig6d_partner_interaction_topology.py \
+  --val_file datasets/Liver/combine_2_4/Liver_valid.jsonl \
+  --checkpoint checkpoints/Liver/baseline/.../best.pth \
+  --out adar_partner_interaction_topology.png
+```
+
+**Output**
+- `adar_partner_interaction_topology.png` (or your chosen `--out` path)
+
+---
+
+
 
 
 
