@@ -25,8 +25,8 @@ parser$add_argument("--seed", type="integer", default=42,
                     help="Random seed (default: 42).")
 
 # Labeling thresholds
-parser$add_argument("--yes_cutoff", type="double", default=10,
-                    help='Threshold for "yes": EditingIndex >= yes_cutoff (default: 10).')
+parser$add_argument("--yes_cutoff", type="double", default=15,
+                    help='Threshold for "yes": EditingIndex >= yes_cutoff (default: 15).')
 parser$add_argument("--no_cutoff", type="double", default=1,
                     help='Threshold for "no": EditingIndex < no_cutoff (default: 1).')
 
