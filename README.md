@@ -498,6 +498,8 @@ python Scripts/model/gnnadar_verb_compact.py \
 
 **Key findings:** Bio-aware model outperforms baseline in 20/25 tissue settings (ΔF1 = +0.012 average) and shows robust cross-species transfer.
 
+Note: Sequence-only baseline comparisons (EditPredict, RNA-FM, ADAR-GPT) are taken from a previously published study (see: ADAR-GPT, PNAS 2026).
+
 ## Model Interpretability
 AdarEdit provides comprehensive interpretability analysis through two complementary approaches:
 
