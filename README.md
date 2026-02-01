@@ -626,6 +626,40 @@ python  Scripts/interpretability/fig6d_partner_interaction_topology.py \
 
 ---
 
+# Training Dynamics and Checkpoint Robustness (bio-aware model)
+
+To complement our main results, we provide an **aggregate view of training behavior** for the bio-aware model across all train→validation
+tissue/species combinations. The goal is to show that our F1-optimized checkpoint selection operates within broad, stable plateaus rather than
+isolated transient peaks (i.e., training is well-behaved and checkpoint choice is robust).
+
+![training_dynamics](Figure/APPENDIX_training_dynamics.png)
+
+ Training dynamics for the bio-aware model across all train→validation settings. Each colored line corresponds to one
+train→validation tissue or species combination. Curves are smoothed with a moving average window **w=51**.
+
+### Data (CSV exports)
+The long-format CSVs used to generate panels A–B are included:
+- `Tables/training_dynamics/loss_over_epochs_bioaware_plain.csv`
+- `Tables/training_dynamics/f1_over_epochs_bioaware_plain.csv`
+
+Each row is `(variant, train, val, epoch, metric)`.
+
+### Regenerating plots from training logs
+If you have the raw training log file(s), you can reproduce the plots directly from logs.
+
+**Loss over epochs (panel A)**  
+Script: `Scripts/analysis/training_dynamics/plot_loss_over_epochs.py`
+
+```bash
+python Scripts/analysis/training_dynamics/plot_loss_over_epochs.py   --log <TRAIN_LOG.txt>   --variant bioaware_plain   --smooth_window 51   --out_png Figure/training_loss_over_epochs_bioaware_plain.png   --out_csv Tables/training_dynamics/loss_over_epochs_bioaware_plain.csv
+```
+
+**F1 over epochs (panel B)**  
+Script: `Scripts/analysis/training_dynamics/plot_f1_over_epochs.py`
+
+```bash
+python Scripts/analysis/training_dynamics/plot_f1_over_epochs.py   --log <TRAIN_LOG.txt>   --variant bioaware_plain   --smooth_window 51   --out_png Figure/training_f1_over_epochs_bioaware_plain.png   --out_csv Tables/training_dynamics/f1_over_epochs_bioaware_plain.csv
+```
 
 
 
