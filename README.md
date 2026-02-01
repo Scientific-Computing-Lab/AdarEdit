@@ -648,17 +648,17 @@ Each row is `(variant, train, val, epoch, metric)`.
 If you have the raw training log file(s), you can reproduce the plots directly from logs.
 
 **Loss over epochs (panel A)**  
-Script: `Scripts/analysis/training_dynamics/plot_loss_over_epochs.py`
+Script: `Scripts/training_dynamics/plot_loss_over_epochs.py`
 
 ```bash
-python Scripts/analysis/training_dynamics/plot_loss_over_epochs.py   --log <TRAIN_LOG.txt>   --variant bioaware_plain   --smooth_window 51   --out_png Figure/training_loss_over_epochs_bioaware_plain.png   --out_csv Tables/training_dynamics/loss_over_epochs_bioaware_plain.csv
+python Scripts/training_dynamics/plot_loss_over_epochs.py   --log <TRAIN_LOG.txt>   --variant bioaware_plain   --smooth_window 51   --out_png Figure/training_loss_over_epochs_bioaware_plain.png   --out_csv Tables/training_dynamics/loss_over_epochs_bioaware_plain.csv
 ```
 
 **F1 over epochs (panel B)**  
-Script: `Scripts/analysis/training_dynamics/plot_f1_over_epochs.py`
+Script: `Scripts/training_dynamics/plot_f1_over_epochs.py`
 
 ```bash
-python Scripts/analysis/training_dynamics/plot_f1_over_epochs.py   --log <TRAIN_LOG.txt>   --variant bioaware_plain   --smooth_window 51   --out_png Figure/training_f1_over_epochs_bioaware_plain.png   --out_csv Tables/training_dynamics/f1_over_epochs_bioaware_plain.csv
+python Scripts/training_dynamics/plot_f1_over_epochs.py   --log <TRAIN_LOG.txt>   --variant bioaware_plain   --smooth_window 51   --out_png Figure/training_f1_over_epochs_bioaware_plain.png   --out_csv Tables/training_dynamics/f1_over_epochs_bioaware_plain.csv
 ```
 
 
