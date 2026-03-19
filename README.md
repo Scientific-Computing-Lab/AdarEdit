@@ -52,6 +52,9 @@ conda env create -f environment.yml
 conda activate rnagnn
 ```
 
+> **Typical install time:** ~15 minutes on a standard desktop computer 
+> (conda environment creation including all dependencies).
+
 ## Data Processing Pipeline
 ![GNN_model](Figure/ADAR-EDIT-DATA.png)
 
@@ -322,6 +325,8 @@ Outputs (per species under --out-dir/<Species>/):
 These are the files you feed into AdarEdit’s training/evaluation scripts (see your model README section).
 
 **Examples.** See `data_evo/examples/Evolution/` — it contains all example inputs/outputs you need (except the species editing site and genome FASTA, which is not included due to its size). For the clustering demo we kept only the first **40** clusters from `cluster_d1000_up5editingsite.bed`. 
+
+**Expected run time for demo:** ~5 minutes on a standard desktop computer (40 clusters demo, CPU only). Full dataset processing requires several hours and GPU is recommended.
 
 ## Data Format Conversion
 
