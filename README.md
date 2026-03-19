@@ -35,6 +35,8 @@ First, clone this repository.
 
 You may use the file  `environment.yml` to create anaconda environment with the required packages.
 
+** No non-standard hardware is required. GPU is recommended for efficient model training; CPU execution is supported but slower.
+
 ### Steps to Use the environment.yml File:
 #### Create the Environment:
 1. Save the `environment.yml` file in your project directory, then run the following command:
