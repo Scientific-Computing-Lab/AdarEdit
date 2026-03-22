@@ -76,7 +76,7 @@ Input:
 `--pair_region`: BED file with Alu pair coordinates 
 `--genome`: Human genome FASTA file
 `--editing_site_plus/minus`: Editing level files 
-`--editing_level`: Minimum editing threshold (e.g., 10.0)
+`--editing_level`: Minimum editing threshold (e.g., 15.0)
 
 Output:
 
@@ -89,7 +89,7 @@ for tissue in Brain_Cerebellum Artery_Tibial Liver Muscle_Skeletal; do
         --genome data/raw/hg38.fa \
         --editing_site_plus data/raw/${tissue}_editing_plus.tsv \
         --editing_site_minus data/raw/${tissue}_editing_minus.tsv \
-        --editing_level 10.0 \
+        --editing_level 15.0 \
         --output_dir data/data_for_model_input/tissues
 done
 ```
@@ -109,7 +109,7 @@ Input:
 `--data_dir`: Per-tissue CSV files 
 `--train_size`: Training samples per tissue (default: 19,200)
 `--valid_size`: Validation samples per tissue (default: 4,800)
-`--yes_cutoff`: Editing threshold for positive class (default: 10%)
+`--yes_cutoff`: Editing threshold for positive class (default: 15%)
 `--no_cutoff`: Non-editing threshold for negative class (default: 1%)
 
 Output:
@@ -125,7 +125,7 @@ Rscript Script/Human_Alu/Data_Preparation/build_cross_splits.R \
     --output_dir data/data_for_model_input/tissues/cross_splits/ \
     --train_size 19200 \
     --valid_size 4800 \
-    --yes_cutoff 10 \
+    --yes_cutoff 15 \
     --no_cutoff 1 \
     --seed 42
 ```
@@ -147,7 +147,7 @@ Key Processing Steps:
 2. Spatial Clustering: Merge editing sites within 1kb distance, retain clusters with >5 sites
 3. Density Selection: Extract sequence regions with highest editing site density
 4. Structure Prediction: Predict RNA secondary structure using RNAfold
-5. Quality Filtering: Apply coverage (≥100 reads) and editing level (≥10%) thresholds
+5. Quality Filtering: Apply coverage (≥100 reads) and editing level (≥15%) thresholds
 6. Dataset Preparation: Create balanced train/validation splits with equal edited/non-edited sites
    
 Step-by-step Pipeline:
