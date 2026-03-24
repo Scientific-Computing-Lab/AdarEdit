@@ -10,6 +10,18 @@ AdarEdit is a domain-specialized graph foundation model for predicting A-to-I RN
 - Mechanistic interpretability: Graph attention highlights influential structural motifs.
 - Foundation model behavior: A single model generalizes across tissues and conditions.
 
+##  Data and Model Availability
+ 
+All data, pretrained models, and predictions used in the manuscript are publicly available. The table below summarizes all resources and their locations.
+ 
+| Resource | Description | Location |
+|----------|-------------|----------|
+| **Source code** | Full pipeline and model code | (this repo) |
+| **Alu pair coordinates** | BED file of 905 high-confidence inverted Alu pairs (hg38) | [Google Drive](https://drive.google.com/file/d/1GgrsPa71XOfmAU2gaKIr7gA-3L-zwnBa/view?usp=drive_link) |
+| **Per-tissue editing levels** | A-to-I editing levels for all adenosines across Brain Cerebellum, Artery Tibial, Liver, Muscle Skeletal, and Combined (derived from GTEx v7) | [Google Drive](https://drive.google.com/drive/folders/1KkGElOF-Peg0xzJWehONI5JfRKEAAdT_?usp=drive_link) |
+| **Trained model checkpoints** | Best checkpoints for all 25 cross-tissue and 6 cross-species train→validation settings (baseline and bio-aware) | [Google Drive](https://drive.google.com/file/d/1RdjNgafQ1ZEEhgh1qsgsKokgJpbiYBnv/view?usp=drive_link) |
+| **Model predictions** | Per-sample predictions and ROC/PR curve data for all experimental settings | [Google Drive](https://drive.google.com/file/d/1RdjNgafQ1ZEEhgh1qsgsKokgJpbiYBnv/view?usp=drive_link) |
+| **Example data (cross-species)** | Demo inputs/outputs for the cross-species pipeline (40 clusters) | `data_evo/examples/Evolution/` (this repo) |
 
 ## Model Architectures
 
@@ -73,9 +85,9 @@ Process:
 
 Input:
 
-`--pair_region`: BED file with Alu pair coordinates 
+`--pair_region`: BED file with Alu pair coordinates (available at [Google Drive](https://drive.google.com/PLACEHOLDER_EDITING_LEVELS](https://drive.google.com/file/d/1GgrsPa71XOfmAU2gaKIr7gA-3L-zwnBa/view?usp=drive_link)))
 `--genome`: Human genome FASTA file
-`--editing_site_plus/minus`: Editing level files 
+`--editing_site_plus/minus`: Editing level files (available at [Google Drive](https://drive.google.com/drive/folders/1KkGElOF-Peg0xzJWehONI5JfRKEAAdT_?usp=drive_link))
 `--editing_level`: Minimum editing threshold (e.g., 15.0)
 
 Output:
@@ -388,6 +400,10 @@ Use the automated runner script to train and evaluate both models across all tis
 3. Trains and evaluates both models on all train/valid pairs in `datasets/**/combine_*/`
 4. Saves checkpoints, predictions, and ROC/PR curves for each model and split
 5. Generates a comprehensive evaluation summary
+
+> **Pretrained models and predictions** from all experiments reported in the manuscript are available for direct download (no retraining required):
+> - Trained checkpoints (baseline + bio-aware, all 31 settings): [Google Drive](https://drive.google.com/file/d/1RdjNgafQ1ZEEhgh1qsgsKokgJpbiYBnv/view?usp=drive_link)
+> - Per-sample predictions and ROC/PR curve data: [Google Drive](https://drive.google.com/file/d/1RdjNgafQ1ZEEhgh1qsgsKokgJpbiYBnv/view?usp=drive_link)
 
 
 ### Basic Usage
