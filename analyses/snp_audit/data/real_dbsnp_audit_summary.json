@@ -1,0 +1,26 @@
+{
+  "resource": "UCSC hg38 Common Genomic SNPs dbSNP150 (MAF>=1%)",
+  "resource_path": "data/raw/dbsnp/ucscHg38CommonGenomicSNPs150.bed.gz",
+  "genome": "hg38/GRCh38",
+  "n_sites": 100377,
+  "n_edited": 22249,
+  "n_non_edited": 78128,
+  "edited_base_any_common_snv": 0,
+  "edited_base_ag_mimic": 0,
+  "edited_base_any_pct": 0.0,
+  "flank_mean_per_base": 551.8,
+  "flank_pct_per_base": 0.5497275272223716,
+  "per_offset": {
+    "-5": 600,
+    "-4": 632,
+    "-3": 574,
+    "-2": 533,
+    "-1": 491,
+    "0": 0,
+    "1": 494,
+    "2": 500,
+    "3": 549,
+    "4": 580,
+    "5": 565
+  }
+}

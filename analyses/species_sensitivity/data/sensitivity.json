@@ -1,0 +1,296 @@
+[
+  {
+    "name": "Octopus bimaculoides",
+    "short": "Octopus",
+    "results": {
+      "Baseline GAT": [
+        {
+          "filter": "All sites",
+          "n": 1678,
+          "n_pos": 929,
+          "n_neg": 749,
+          "threshold": 0.6,
+          "auroc": 0.8647310155916537,
+          "f1": 0.8088397790055248
+        },
+        {
+          "filter": "Excl. neg \u22645 bp",
+          "n": 1636,
+          "n_pos": 929,
+          "n_neg": 707,
+          "threshold": 0.6,
+          "auroc": 0.8652868516130408,
+          "f1": 0.8128817323709051
+        },
+        {
+          "filter": "Excl. neg \u226410 bp",
+          "n": 1596,
+          "n_pos": 929,
+          "n_neg": 667,
+          "threshold": 0.6,
+          "auroc": 0.8679642955701911,
+          "f1": 0.8192501398992725
+        },
+        {
+          "filter": "Excl. neg \u226430 bp",
+          "n": 1439,
+          "n_pos": 929,
+          "n_neg": 510,
+          "threshold": 0.6,
+          "auroc": 0.8679414930665484,
+          "f1": 0.8346636259977195
+        }
+      ],
+      "Bio-aware GNN": [
+        {
+          "filter": "All sites",
+          "n": 1678,
+          "n_pos": 929,
+          "n_neg": 749,
+          "threshold": 0.325,
+          "auroc": 0.8715617953467918,
+          "f1": 0.8313805399898115
+        },
+        {
+          "filter": "Excl. neg \u22645 bp",
+          "n": 1636,
+          "n_pos": 929,
+          "n_neg": 707,
+          "threshold": 0.325,
+          "auroc": 0.8747280386965346,
+          "f1": 0.8408037094281299
+        },
+        {
+          "filter": "Excl. neg \u226410 bp",
+          "n": 1596,
+          "n_pos": 929,
+          "n_neg": 667,
+          "threshold": 0.325,
+          "auroc": 0.8778635440084048,
+          "f1": 0.8460342146189735
+        },
+        {
+          "filter": "Excl. neg \u226430 bp",
+          "n": 1439,
+          "n_pos": 929,
+          "n_neg": 510,
+          "threshold": 0.325,
+          "auroc": 0.8753097363810972,
+          "f1": 0.8639491794600318
+        }
+      ]
+    },
+    "prediction_sources": {
+      "Baseline GAT": {
+        "threshold": 0.6,
+        "prediction_file": "checkpoints/baseline_Octopus/test_predictions.csv",
+        "prediction_sha256": "5f4b79e590486ba157fbfeebe6dfe71bac3937648b4aa06a542934fd512575db",
+        "summary_file": "checkpoints/baseline_Octopus/summary.json",
+        "summary_sha256": "ec5b4a5b01affdd4aff4abe5ecc858539b73cb335f790e1f7b95b5378c70520c"
+      },
+      "Bio-aware GNN": {
+        "threshold": 0.325,
+        "prediction_file": "checkpoints/bioaware_Octopus/test_predictions.csv",
+        "prediction_sha256": "b98bb72ef361b655156864d3e14b8e47b4db78f56cd4cd14fa0103fca97e4114",
+        "summary_file": "checkpoints/bioaware_Octopus/summary.json",
+        "summary_sha256": "2906aaa1ac25e550ab0c8efaef1010422d23ddaddc2b8c3decdf418640cd6660"
+      }
+    }
+  },
+  {
+    "name": "Ptychodera flava",
+    "short": "Ptychodera",
+    "results": {
+      "Baseline GAT": [
+        {
+          "filter": "All sites",
+          "n": 1634,
+          "n_pos": 875,
+          "n_neg": 759,
+          "threshold": 0.475,
+          "auroc": 0.8225228684359118,
+          "f1": 0.7914716588663546
+        },
+        {
+          "filter": "Excl. neg \u22645 bp",
+          "n": 1571,
+          "n_pos": 875,
+          "n_neg": 696,
+          "threshold": 0.475,
+          "auroc": 0.8358177339901478,
+          "f1": 0.8113006396588486
+        },
+        {
+          "filter": "Excl. neg \u226410 bp",
+          "n": 1502,
+          "n_pos": 875,
+          "n_neg": 627,
+          "threshold": 0.475,
+          "auroc": 0.844473000683527,
+          "f1": 0.8307860262008734
+        },
+        {
+          "filter": "Excl. neg \u226430 bp",
+          "n": 1324,
+          "n_pos": 875,
+          "n_neg": 449,
+          "threshold": 0.475,
+          "auroc": 0.8527572383073496,
+          "f1": 0.8594014680971203
+        }
+      ],
+      "Bio-aware GNN": [
+        {
+          "filter": "All sites",
+          "n": 1634,
+          "n_pos": 875,
+          "n_neg": 759,
+          "threshold": 0.1,
+          "auroc": 0.8097112742330133,
+          "f1": 0.7562568008705114
+        },
+        {
+          "filter": "Excl. neg \u22645 bp",
+          "n": 1571,
+          "n_pos": 875,
+          "n_neg": 696,
+          "threshold": 0.1,
+          "auroc": 0.8156748768472907,
+          "f1": 0.7679558011049724
+        },
+        {
+          "filter": "Excl. neg \u226410 bp",
+          "n": 1502,
+          "n_pos": 875,
+          "n_neg": 627,
+          "threshold": 0.1,
+          "auroc": 0.8210590111642744,
+          "f1": 0.7808988764044944
+        },
+        {
+          "filter": "Excl. neg \u226430 bp",
+          "n": 1324,
+          "n_pos": 875,
+          "n_neg": 449,
+          "threshold": 0.1,
+          "auroc": 0.8206961501749921,
+          "f1": 0.8100233100233101
+        }
+      ]
+    },
+    "prediction_sources": {
+      "Baseline GAT": {
+        "threshold": 0.475,
+        "prediction_file": "checkpoints/baseline_Ptychodera/test_predictions.csv",
+        "prediction_sha256": "3e63844a68ccc5b607015ea4f7c962db82ca457c0eed0cb7f9d50c93d4623c37",
+        "summary_file": "checkpoints/baseline_Ptychodera/summary.json",
+        "summary_sha256": "3a86666a161c2f95b818d00c02050b3c3f2283a78a7b00e8910e66c04fe8661c"
+      },
+      "Bio-aware GNN": {
+        "threshold": 0.1,
+        "prediction_file": "checkpoints/bioaware_Ptychodera/test_predictions.csv",
+        "prediction_sha256": "4bd3a5fe8970fe2464e64ce6214090bcb3d5e82fb08746d03f4109aba6b19780",
+        "summary_file": "checkpoints/bioaware_Ptychodera/summary.json",
+        "summary_sha256": "169874bb59ec94ac317f16c0dc39dead8717dad49e4715f7f2ca7aab7aaab46f"
+      }
+    }
+  },
+  {
+    "name": "Strongylocentrotus purpuratus",
+    "short": "S. purpuratus",
+    "results": {
+      "Baseline GAT": [
+        {
+          "filter": "All sites",
+          "n": 1493,
+          "n_pos": 724,
+          "n_neg": 769,
+          "threshold": 0.4,
+          "auroc": 0.8601200525903627,
+          "f1": 0.7967781908302355
+        },
+        {
+          "filter": "Excl. neg \u22645 bp",
+          "n": 1440,
+          "n_pos": 724,
+          "n_neg": 716,
+          "threshold": 0.4,
+          "auroc": 0.8699631933084354,
+          "f1": 0.8134092346616065
+        },
+        {
+          "filter": "Excl. neg \u226410 bp",
+          "n": 1389,
+          "n_pos": 724,
+          "n_neg": 665,
+          "threshold": 0.4,
+          "auroc": 0.8777343912266855,
+          "f1": 0.8280746941403735
+        },
+        {
+          "filter": "Excl. neg \u226430 bp",
+          "n": 1229,
+          "n_pos": 724,
+          "n_neg": 505,
+          "threshold": 0.4,
+          "auroc": 0.8885263388217274,
+          "f1": 0.8590514362057449
+        }
+      ],
+      "Bio-aware GNN": [
+        {
+          "filter": "All sites",
+          "n": 1493,
+          "n_pos": 724,
+          "n_neg": 769,
+          "threshold": 0.375,
+          "auroc": 0.7967529761690938,
+          "f1": 0.7337209302325581
+        },
+        {
+          "filter": "Excl. neg \u22645 bp",
+          "n": 1440,
+          "n_pos": 724,
+          "n_neg": 716,
+          "threshold": 0.375,
+          "auroc": 0.7996697428932992,
+          "f1": 0.744542772861357
+        },
+        {
+          "filter": "Excl. neg \u226410 bp",
+          "n": 1389,
+          "n_pos": 724,
+          "n_neg": 665,
+          "threshold": 0.375,
+          "auroc": 0.8013521372492003,
+          "f1": 0.7575030012004802
+        },
+        {
+          "filter": "Excl. neg \u226430 bp",
+          "n": 1229,
+          "n_pos": 724,
+          "n_neg": 505,
+          "threshold": 0.375,
+          "auroc": 0.8105081778896122,
+          "f1": 0.7962145110410095
+        }
+      ]
+    },
+    "prediction_sources": {
+      "Baseline GAT": {
+        "threshold": 0.4,
+        "prediction_file": "checkpoints/baseline_Strongylocentrotus/test_predictions.csv",
+        "prediction_sha256": "e64e3898c96406670f387fc96827c4bedde6bb9c314886a48d59f15e14a6a0a4",
+        "summary_file": "checkpoints/baseline_Strongylocentrotus/summary.json",
+        "summary_sha256": "03ae0d2c2b5be1360f7c9d4652f5953d78f8a6449816c934f1a788db5805d127"
+      },
+      "Bio-aware GNN": {
+        "threshold": 0.375,
+        "prediction_file": "checkpoints/bioaware_Strongylocentrotus/test_predictions.csv",
+        "prediction_sha256": "3d737068a3c4fb56ef5682173beed949926fa7c8835c5040fdc10bf96e1a683a",
+        "summary_file": "checkpoints/bioaware_Strongylocentrotus/summary.json",
+        "summary_sha256": "1974c034319c15ff646bfac58e6e2384dbf15b82ad939cec5d703926b38f40c6"
+      }
+    }
+  }
+]

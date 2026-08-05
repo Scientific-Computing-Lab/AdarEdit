@@ -1,0 +1,57 @@
+{
+  "best_epoch": 914,
+  "bio_ablation": "full",
+  "context": "MuscleSkeletal",
+  "data_sha256": {
+    "test": "10c0e1462e0c7b992e1a7ece1cc51f84a6ca2fafa28322ddf62b2016e6de8933",
+    "train": "7463d2abf2d106d0386bc2c1b4f671ee91a4afa46ee1923488d1b4bfc41a0605",
+    "valid": "96e73170e9863c1d20ee67fd2504d7c125578f3014f1b8c6e8f83fe6ed6ae3a2"
+  },
+  "epochs_requested": 1000,
+  "graph_version": "graph_v2",
+  "paths": {
+    "best_checkpoint": "runs/bioaware_MuscleSkeletal/checkpoints/best.pth",
+    "curves_npz": "runs/bioaware_MuscleSkeletal/test_curves.npz",
+    "graph_cache_dir": "cache/single/bioaware/MuscleSkeletal",
+    "history_csv": "runs/bioaware_MuscleSkeletal/history.csv",
+    "latest_checkpoint": "runs/bioaware_MuscleSkeletal/checkpoints/last.pth",
+    "predictions_csv": "runs/bioaware_MuscleSkeletal/test_predictions.csv",
+    "predictions_jsonl": "runs/bioaware_MuscleSkeletal/test_predictions.jsonl",
+    "run_dir": "runs/bioaware_MuscleSkeletal"
+  },
+  "seed": 42,
+  "selection_split": "valid",
+  "sizes": {
+    "test": 1425,
+    "train": 4679,
+    "valid": 1288
+  },
+  "test_metrics": {
+    "acc": 0.7950877192982456,
+    "auc": 0.8781956823133293,
+    "auprc": 0.8954283693047507,
+    "f1": 0.8161209068010076,
+    "n": 1425,
+    "positive_n": 765,
+    "precision": 0.787363304981774,
+    "recall": 0.8470588235294118,
+    "specificity": 0.7348484848484849,
+    "threshold": 0.1
+  },
+  "test_selection_metrics": null,
+  "test_used_during_training": false,
+  "tissue": "MuscleSkeletal",
+  "valid_selection_metrics": {
+    "acc": 0.7942546583850931,
+    "auc": 0.872923519736842,
+    "auprc": 0.8877047549548682,
+    "f1": 0.8153310104529616,
+    "n": 1288,
+    "positive_n": 680,
+    "precision": 0.7748344370860927,
+    "recall": 0.8602941176470589,
+    "specificity": 0.7203947368421053,
+    "threshold": 0.1
+  },
+  "variant": "bioaware"
+}

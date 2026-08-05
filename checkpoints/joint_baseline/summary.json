@@ -1,0 +1,104 @@
+{
+  "best_epoch": 704,
+  "combined_included": true,
+  "epochs_requested": 1000,
+  "experiment": "graph_with_combined",
+  "graph_version": "graph_v2",
+  "seed": 42,
+  "leakage_note": "The supplied global pair-disjoint split is reused across tissues.",
+  "mode": "multilabel",
+  "num_outputs": 5,
+  "observed_labels": {
+    "test": 19797,
+    "train": 63388,
+    "valid": 15747
+  },
+  "selection_split": "valid",
+  "sizes": {
+    "test": 11285,
+    "train": 37014,
+    "valid": 9119
+  },
+  "test_by_tissue": {
+    "Artery": {
+      "acc": 0.8403589315525877,
+      "auc": 0.9152276317125876,
+      "auprc": 0.9187182809222022,
+      "f1": 0.8533640023001725,
+      "n": 4792,
+      "precision": 0.8409520211560257,
+      "recall": 0.866147859922179,
+      "threshold": 0.42500000000000004
+    },
+    "Brain": {
+      "acc": 0.844502847130968,
+      "auc": 0.9172367624566218,
+      "auprc": 0.9179879621713705,
+      "f1": 0.8546868604175194,
+      "n": 4566,
+      "precision": 0.8460291734197731,
+      "recall": 0.8635235732009926,
+      "threshold": 0.42500000000000004
+    },
+    "Combined": {
+      "acc": 0.8427220394736842,
+      "auc": 0.9186946007868647,
+      "auprc": 0.9186823768804365,
+      "f1": 0.8557964184731386,
+      "n": 4864,
+      "precision": 0.8206796818510484,
+      "recall": 0.8940527766837337,
+      "threshold": 0.375
+    },
+    "Liver": {
+      "acc": 0.8395180722891566,
+      "auc": 0.9108228753759289,
+      "auprc": 0.9244788853806939,
+      "f1": 0.8604358759430009,
+      "n": 4150,
+      "precision": 0.8462489694971146,
+      "recall": 0.8751065643648764,
+      "threshold": 0.4
+    },
+    "MuscleSkeletal": {
+      "acc": 0.8,
+      "auc": 0.8916003168944346,
+      "auprc": 0.8959311204930606,
+      "f1": 0.8286229705351774,
+      "n": 1425,
+      "precision": 0.767260579064588,
+      "recall": 0.9006535947712418,
+      "threshold": 0.325
+    }
+  },
+  "test_macro_auc": 0.9107164374452875,
+  "test_macro_auprc": 0.9151597251695527,
+  "test_macro_f1": 0.8505812255338018,
+  "test_pooled": {
+    "acc": 0.8388139617113705,
+    "auc": 0.9140258228791711,
+    "auprc": 0.9179383008798421,
+    "f1": 0.8539120084237514,
+    "n": 19797,
+    "precision": 0.8323070058009817,
+    "recall": 0.8766685467193082
+  },
+  "test_used_during_training": false,
+  "threshold_note": "Per-output F1-optimal thresholds selected on validation only and applied unchanged to held-out test; AUROC/AUPRC are threshold-free.",
+  "thresholds_from_valid": {
+    "Artery": 0.42500000000000004,
+    "Brain": 0.42500000000000004,
+    "Combined": 0.375,
+    "Liver": 0.4,
+    "MuscleSkeletal": 0.325
+  },
+  "tissue_set": "with_combined",
+  "tissues": [
+    "Artery",
+    "Brain",
+    "Combined",
+    "Liver",
+    "MuscleSkeletal"
+  ],
+  "variant": "baseline"
+}

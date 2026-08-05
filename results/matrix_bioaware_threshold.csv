@@ -1,0 +1,9 @@
+train\eval,Artery,Brain,Combined,Liver,MuscleSkeletal,Octopus,Ptychodera,Strongylocentrotus
+Artery,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4
+Brain,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25
+Combined,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25
+Liver,0.375,0.375,0.375,0.375,0.375,0.375,0.375,0.375
+MuscleSkeletal,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1
+Octopus,0.325,0.325,0.325,0.325,0.325,0.325,0.325,0.325
+Ptychodera,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1
+Strongylocentrotus,0.375,0.375,0.375,0.375,0.375,0.375,0.375,0.375

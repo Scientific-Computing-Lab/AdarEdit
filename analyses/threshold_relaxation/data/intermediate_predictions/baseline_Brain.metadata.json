@@ -1,0 +1,18 @@
+{
+  "analysis": "Supplementary Figure S1 intermediate-site inference",
+  "checkpoint": "checkpoints/baseline_Brain/best.pth",
+  "checkpoint_sha256": "0fadd0dc07c9b88c1e7696610cdd448e63af43a5e63386b44399139e7f08a1b2",
+  "cohort": "data/cohorts/inter_Brain.jsonl",
+  "cohort_sha256": "ca858a685eed8d0e645be233368c19de4df14730b8c1d354333daba0436a0960",
+  "context": "Brain",
+  "graph_version": "graph_v2",
+  "mean_score": 0.5102507103741482,
+  "output": "data/intermediate_predictions/baseline_Brain.csv",
+  "output_sha256": "102ffd06e2b2c5623a46deb44644dea9ce43c5486d2ed7c880b0f0eb993659cc",
+  "python": "3.9.25",
+  "rows": 6122,
+  "status": "PASS",
+  "torch": "1.11.0+cu102",
+  "torch_geometric": "2.0.4",
+  "variant": "baseline"
+}

@@ -1,0 +1,18 @@
+{
+  "analysis": "Supplementary Figure S1 intermediate-site inference",
+  "checkpoint": "checkpoints/bioaware_Liver/best.pth",
+  "checkpoint_sha256": "c54100a93e9eda2e38871b5b5a058dfe478b3fef73b45e7bb9222bc784bb770c",
+  "cohort": "data/cohorts/inter_Liver.jsonl",
+  "cohort_sha256": "d8100eecc2afdf63f55931b4f4e51138c09e4e835a14dd303556d8c2867e1b56",
+  "context": "Liver",
+  "graph_version": "graph_v2",
+  "mean_score": 0.5046764968427759,
+  "output": "data/intermediate_predictions/bioaware_Liver.csv",
+  "output_sha256": "a750eac3c919247b0bc90fd196678ef12a023c358065077f1b718ffe6a3beb56",
+  "python": "3.9.25",
+  "rows": 4893,
+  "status": "PASS",
+  "torch": "1.11.0+cu102",
+  "torch_geometric": "2.0.4",
+  "variant": "bioaware"
+}

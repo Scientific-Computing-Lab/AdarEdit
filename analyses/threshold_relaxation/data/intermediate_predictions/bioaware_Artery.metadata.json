@@ -1,0 +1,18 @@
+{
+  "analysis": "Supplementary Figure S1 intermediate-site inference",
+  "checkpoint": "checkpoints/bioaware_Artery/best.pth",
+  "checkpoint_sha256": "9a3ad2e38554249035d7f57806e311c47ab3c167349cd4213d160fbfa06fd340",
+  "cohort": "data/cohorts/inter_Artery.jsonl",
+  "cohort_sha256": "f241d838ad5a0ef6532d26a7f303fee645b6466a59c82a7a12c9ec0695c8ee29",
+  "context": "Artery",
+  "graph_version": "graph_v2",
+  "mean_score": 0.5797626238991468,
+  "output": "data/intermediate_predictions/bioaware_Artery.csv",
+  "output_sha256": "dd4f7945c377996a89192f45b84c0bde0d57bb7a52295dd4b1d53b6e5437228e",
+  "python": "3.9.25",
+  "rows": 6638,
+  "status": "PASS",
+  "torch": "1.11.0+cu102",
+  "torch_geometric": "2.0.4",
+  "variant": "bioaware"
+}

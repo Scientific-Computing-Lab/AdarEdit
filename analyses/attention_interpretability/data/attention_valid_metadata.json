@@ -1,0 +1,28 @@
+{
+  "attention_aggregation": "mean across heads, then maximum over outgoing non-self edges for each source position",
+  "attention_heads": 4,
+  "attention_layer": 2,
+  "checkpoint_epoch": 668,
+  "correct_predictions": 3300,
+  "correct_predictions_by_label": {
+    "0": 1621,
+    "1": 1679
+  },
+  "device": "cpu",
+  "duplexes": 139,
+  "feature_position_range": [
+    -50,
+    50
+  ],
+  "graphs": 3793,
+  "graphs_by_label": {
+    "0": 1920,
+    "1": 1873
+  },
+  "maximum_probability_error_vs_shipped_test_predictions": null,
+  "node_level_test_rows": null,
+  "node_level_test_table": null,
+  "split": "valid",
+  "threshold": 0.475,
+  "threshold_source": "validation-selected checkpoint summary"
+}

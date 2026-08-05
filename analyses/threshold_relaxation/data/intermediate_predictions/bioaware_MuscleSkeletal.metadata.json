@@ -1,0 +1,18 @@
+{
+  "analysis": "Supplementary Figure S1 intermediate-site inference",
+  "checkpoint": "checkpoints/bioaware_MuscleSkeletal/best.pth",
+  "checkpoint_sha256": "25968fa9694e61d5223829951f976610468001afd4eba4421134d2efcae08f81",
+  "cohort": "data/cohorts/inter_MuscleSkeletal.jsonl",
+  "cohort_sha256": "67078ac89d0a7887a9794682b6528f146602e6617db490aeff8485d4b22e927b",
+  "context": "MuscleSkeletal",
+  "graph_version": "graph_v2",
+  "mean_score": 0.5448575567513221,
+  "output": "data/intermediate_predictions/bioaware_MuscleSkeletal.csv",
+  "output_sha256": "f1f6060abb3c051b357cc9f5e316d89be4312b79eb8e02ace3b64c5c2d8a579c",
+  "python": "3.9.25",
+  "rows": 4549,
+  "status": "PASS",
+  "torch": "1.11.0+cu102",
+  "torch_geometric": "2.0.4",
+  "variant": "bioaware"
+}

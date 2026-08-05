@@ -1,0 +1,305 @@
+{
+  "analysis": "training dynamics and validation-selected thresholds",
+  "architectures": [
+    "baseline",
+    "bioaware"
+  ],
+  "epochs": 1000,
+  "runs": [
+    {
+      "architecture": "baseline",
+      "best_epoch": 239,
+      "best_valid_f1": 0.8499626772829062,
+      "data_sha256": {
+        "test": "27621a48125df0328acde6308c3f078bca2f1fb835142a23dd4c169941d3d0bf",
+        "train": "2f1a54884f880bea2389623de11618d8e7a839493c1b3eaa2377fde90f3fbf0b",
+        "valid": "0e93f0edc785bbfb79dc759cd1b080390698928ddd6fedcf1e2f91563b660d85"
+      },
+      "history_path": "checkpoints/baseline_Artery/history.csv",
+      "history_sha256": "cce321403160e7b80326f200e45e01c14915148141ff3b4797442d6ea2706007",
+      "selected_threshold": 0.45000000000000007,
+      "setting": "Artery",
+      "summary_path": "checkpoints/baseline_Artery/summary.json",
+      "summary_sha256": "339c598a10da913c234975634806d38ddceaf6f12d5cc685d0bce402f533ec7f"
+    },
+    {
+      "architecture": "bioaware",
+      "best_epoch": 330,
+      "best_valid_f1": 0.8356854838709677,
+      "data_sha256": {
+        "test": "27621a48125df0328acde6308c3f078bca2f1fb835142a23dd4c169941d3d0bf",
+        "train": "2f1a54884f880bea2389623de11618d8e7a839493c1b3eaa2377fde90f3fbf0b",
+        "valid": "0e93f0edc785bbfb79dc759cd1b080390698928ddd6fedcf1e2f91563b660d85"
+      },
+      "history_path": "checkpoints/bioaware_Artery/history.csv",
+      "history_sha256": "0ff354e41be770952c0a001ce4268f0e9884a760a6c091975e65ef3d2cb8e422",
+      "selected_threshold": 0.4,
+      "setting": "Artery",
+      "summary_path": "checkpoints/bioaware_Artery/summary.json",
+      "summary_sha256": "4412b103b4f9632bb84f5cedf253b352d51191540b46ffbaf0bdff8670b70a2d"
+    },
+    {
+      "architecture": "baseline",
+      "best_epoch": 795,
+      "best_valid_f1": 0.871912401324166,
+      "data_sha256": {
+        "test": "c2e95092d91c929f85c52fee55b587ed6572c2db4ffc470d23f180baeefe2a5b",
+        "train": "ae4b61fdd339ccf02f9b842c177dc6ed75fe0c9ce01471da50e8506249fdf936",
+        "valid": "505f514ff02d8d8a564c65d0c25372307f1528011e45c903857c29d6abd4edb6"
+      },
+      "history_path": "checkpoints/baseline_Brain/history.csv",
+      "history_sha256": "6434f7d15170ea85c525ae2b8c22b317444bd089b33c898fcb772a35d84778ad",
+      "selected_threshold": 0.375,
+      "setting": "Brain",
+      "summary_path": "checkpoints/baseline_Brain/summary.json",
+      "summary_sha256": "9a4bddbc518da27bb22dff1b22579169ed497cf7b7594f20075a0809cdadc527"
+    },
+    {
+      "architecture": "bioaware",
+      "best_epoch": 896,
+      "best_valid_f1": 0.8679825685721609,
+      "data_sha256": {
+        "test": "c2e95092d91c929f85c52fee55b587ed6572c2db4ffc470d23f180baeefe2a5b",
+        "train": "ae4b61fdd339ccf02f9b842c177dc6ed75fe0c9ce01471da50e8506249fdf936",
+        "valid": "505f514ff02d8d8a564c65d0c25372307f1528011e45c903857c29d6abd4edb6"
+      },
+      "history_path": "checkpoints/bioaware_Brain/history.csv",
+      "history_sha256": "dc93a9899f7ba0dbc9a5a7cf74646e726f0b15c7fb773145c7d302c7208a6346",
+      "selected_threshold": 0.25,
+      "setting": "Brain",
+      "summary_path": "checkpoints/bioaware_Brain/summary.json",
+      "summary_sha256": "b5d203c2d0349d7ff080fa641077fe341f874e7b4c7fae934effa3949e7ebcf3"
+    },
+    {
+      "architecture": "baseline",
+      "best_epoch": 226,
+      "best_valid_f1": 0.8341329677861549,
+      "data_sha256": {
+        "test": "d261e04803d5fadb06ea3ec6cbae8c225ab630e5bc8c33272d18ae0ff11362af",
+        "train": "a6c22c5d2cbab0ce4b11fc51e37f216a4936015af4af0653a0806f64db3a11a6",
+        "valid": "7de928eee98b6e7a15514e6d06959ff9dd61da882b01c624d1485cb1cf71994e"
+      },
+      "history_path": "checkpoints/baseline_Liver/history.csv",
+      "history_sha256": "058c0bbd8f480d540ae8acd7e3cb3bc28f21cfe72ced3d6db7d6b9d514722224",
+      "selected_threshold": 0.525,
+      "setting": "Liver",
+      "summary_path": "checkpoints/baseline_Liver/summary.json",
+      "summary_sha256": "c2a1045a80b517244be2ec0c24397bcfd3ea1609379150f95fc53ea8ab9242e5"
+    },
+    {
+      "architecture": "bioaware",
+      "best_epoch": 162,
+      "best_valid_f1": 0.8330499829989799,
+      "data_sha256": {
+        "test": "d261e04803d5fadb06ea3ec6cbae8c225ab630e5bc8c33272d18ae0ff11362af",
+        "train": "a6c22c5d2cbab0ce4b11fc51e37f216a4936015af4af0653a0806f64db3a11a6",
+        "valid": "7de928eee98b6e7a15514e6d06959ff9dd61da882b01c624d1485cb1cf71994e"
+      },
+      "history_path": "checkpoints/bioaware_Liver/history.csv",
+      "history_sha256": "bc8ea812702a8338ac915883947da9a61dd1695dfd3a10baec04a0ec79347629",
+      "selected_threshold": 0.375,
+      "setting": "Liver",
+      "summary_path": "checkpoints/bioaware_Liver/summary.json",
+      "summary_sha256": "ddce0717ef09a29ea62a45a607f42994e237c574d3bfe2b832a26d93f8278fec"
+    },
+    {
+      "architecture": "baseline",
+      "best_epoch": 354,
+      "best_valid_f1": 0.8396094839609484,
+      "data_sha256": {
+        "test": "10c0e1462e0c7b992e1a7ece1cc51f84a6ca2fafa28322ddf62b2016e6de8933",
+        "train": "7463d2abf2d106d0386bc2c1b4f671ee91a4afa46ee1923488d1b4bfc41a0605",
+        "valid": "96e73170e9863c1d20ee67fd2504d7c125578f3014f1b8c6e8f83fe6ed6ae3a2"
+      },
+      "history_path": "checkpoints/baseline_MuscleSkeletal/history.csv",
+      "history_sha256": "ca4c44cb468b4148d97d2455d15bf75ff1e0ab84bf6858c3edefe8b9b1a49a39",
+      "selected_threshold": 0.35,
+      "setting": "MuscleSkeletal",
+      "summary_path": "checkpoints/baseline_MuscleSkeletal/summary.json",
+      "summary_sha256": "86898601bb21e3a405114744752c32540e6e83484091672b7e084510be50345e"
+    },
+    {
+      "architecture": "bioaware",
+      "best_epoch": 914,
+      "best_valid_f1": 0.8153310104529616,
+      "data_sha256": {
+        "test": "10c0e1462e0c7b992e1a7ece1cc51f84a6ca2fafa28322ddf62b2016e6de8933",
+        "train": "7463d2abf2d106d0386bc2c1b4f671ee91a4afa46ee1923488d1b4bfc41a0605",
+        "valid": "96e73170e9863c1d20ee67fd2504d7c125578f3014f1b8c6e8f83fe6ed6ae3a2"
+      },
+      "history_path": "checkpoints/bioaware_MuscleSkeletal/history.csv",
+      "history_sha256": "bd6353fa61e1d6b396b187e89d0fd273fbfa31d7d190dcfc705f86216b90cbee",
+      "selected_threshold": 0.1,
+      "setting": "MuscleSkeletal",
+      "summary_path": "checkpoints/bioaware_MuscleSkeletal/summary.json",
+      "summary_sha256": "b9b33fd1bb3f176b6957a5c776a6a7144322f72ac3ff46a2e4fde16b2290848c"
+    },
+    {
+      "architecture": "baseline",
+      "best_epoch": 668,
+      "best_valid_f1": 0.8719813035575176,
+      "data_sha256": {
+        "test": "8228d28c4b92afe4d014d0fa9549a586ebc8acf4677b2bc5b29002df6bdb1dbf",
+        "train": "9afc6cbd04717b5f3ed66dade7c18d70722322f83ff1f5280fb9986806466f0a",
+        "valid": "f82984631df749fd5ae2cfbd1cca0f5290eaf21c23d9df418baf384add330509"
+      },
+      "history_path": "checkpoints/baseline_Combined/history.csv",
+      "history_sha256": "c5a817b518e2bb33cf7a14a512952f0f995bd1f990d1dcf250f12e92434c6909",
+      "selected_threshold": 0.475,
+      "setting": "Combined",
+      "summary_path": "checkpoints/baseline_Combined/summary.json",
+      "summary_sha256": "fd54fc714f32ab576d61f80d78961f6b7a3c298e8a673dc1777c8e44eda3c653"
+    },
+    {
+      "architecture": "bioaware",
+      "best_epoch": 389,
+      "best_valid_f1": 0.8514750762970499,
+      "data_sha256": {
+        "test": "8228d28c4b92afe4d014d0fa9549a586ebc8acf4677b2bc5b29002df6bdb1dbf",
+        "train": "9afc6cbd04717b5f3ed66dade7c18d70722322f83ff1f5280fb9986806466f0a",
+        "valid": "f82984631df749fd5ae2cfbd1cca0f5290eaf21c23d9df418baf384add330509"
+      },
+      "history_path": "checkpoints/bioaware_Combined/history.csv",
+      "history_sha256": "88a78d07ae4694955261a35e891249e71fa333c38a2b0ace302a0b2399bcf714",
+      "selected_threshold": 0.25,
+      "setting": "Combined",
+      "summary_path": "checkpoints/bioaware_Combined/summary.json",
+      "summary_sha256": "6f2945c127bb7ecfbf29d8b29fe08af0e298da5d678c4df83a4e3ea8f20fd7fc"
+    },
+    {
+      "architecture": "baseline",
+      "best_epoch": 258,
+      "best_valid_f1": 0.8033195020746888,
+      "data_sha256": {
+        "test": "8c78c54b6fb8421220004b058f7d6e006e87b3ec74444020c80f0b29b1872b10",
+        "train": "8846d7aa69644639af8dc9ea67dda95cd9c971282bbefa37e78290994ef4cd9f",
+        "valid": "21264454a7f844949c326cdd62758904eb41d05e5c110a6473d5567c595f10a1"
+      },
+      "history_path": "checkpoints/baseline_Octopus/history.csv",
+      "history_sha256": "fedd49640c38257f2d13b342597a6dc31057ea768470b15a78bdcfa3d4ea6015",
+      "selected_threshold": 0.6,
+      "setting": "Octopus",
+      "summary_path": "checkpoints/baseline_Octopus/summary.json",
+      "summary_sha256": "ec5b4a5b01affdd4aff4abe5ecc858539b73cb335f790e1f7b95b5378c70520c"
+    },
+    {
+      "architecture": "bioaware",
+      "best_epoch": 89,
+      "best_valid_f1": 0.8147578785549577,
+      "data_sha256": {
+        "test": "8c78c54b6fb8421220004b058f7d6e006e87b3ec74444020c80f0b29b1872b10",
+        "train": "8846d7aa69644639af8dc9ea67dda95cd9c971282bbefa37e78290994ef4cd9f",
+        "valid": "21264454a7f844949c326cdd62758904eb41d05e5c110a6473d5567c595f10a1"
+      },
+      "history_path": "checkpoints/bioaware_Octopus/history.csv",
+      "history_sha256": "7330a7c4e3af2bdb4bd291f2af5ac719a3e432b4a3227e3c2dbe41719c2083d1",
+      "selected_threshold": 0.325,
+      "setting": "Octopus",
+      "summary_path": "checkpoints/bioaware_Octopus/summary.json",
+      "summary_sha256": "2906aaa1ac25e550ab0c8efaef1010422d23ddaddc2b8c3decdf418640cd6660"
+    },
+    {
+      "architecture": "baseline",
+      "best_epoch": 44,
+      "best_valid_f1": 0.7396593673965937,
+      "data_sha256": {
+        "test": "1885921f545f51630adec8a0b78b20efc5b568ac2d441b4136bc6999f9fbfc6f",
+        "train": "2e9e958dae1516163e7166c2221a51534370556ab1f12fbe9a0d9a3c67da4b25",
+        "valid": "1baac3a47903917ea9e2834f9e6dd968529639e000d8f903e1cade1202885bba"
+      },
+      "history_path": "checkpoints/baseline_Ptychodera/history.csv",
+      "history_sha256": "7f86a4e8c4285f4f4639ac28327c28b4ab71e3a1b9825bf06f28ff8ac79dcd79",
+      "selected_threshold": 0.475,
+      "setting": "Ptychodera",
+      "summary_path": "checkpoints/baseline_Ptychodera/summary.json",
+      "summary_sha256": "3a86666a161c2f95b818d00c02050b3c3f2283a78a7b00e8910e66c04fe8661c"
+    },
+    {
+      "architecture": "bioaware",
+      "best_epoch": 781,
+      "best_valid_f1": 0.7323704333050127,
+      "data_sha256": {
+        "test": "1885921f545f51630adec8a0b78b20efc5b568ac2d441b4136bc6999f9fbfc6f",
+        "train": "2e9e958dae1516163e7166c2221a51534370556ab1f12fbe9a0d9a3c67da4b25",
+        "valid": "1baac3a47903917ea9e2834f9e6dd968529639e000d8f903e1cade1202885bba"
+      },
+      "history_path": "checkpoints/bioaware_Ptychodera/history.csv",
+      "history_sha256": "0c769937f970fa19043dfe6f0bce13a013c4a43e1c223edea8ef0dae34b00bbe",
+      "selected_threshold": 0.1,
+      "setting": "Ptychodera",
+      "summary_path": "checkpoints/bioaware_Ptychodera/summary.json",
+      "summary_sha256": "169874bb59ec94ac317f16c0dc39dead8717dad49e4715f7f2ca7aab7aaab46f"
+    },
+    {
+      "architecture": "baseline",
+      "best_epoch": 416,
+      "best_valid_f1": 0.7862165963431786,
+      "data_sha256": {
+        "test": "cdd86187476f21db4f57cfb1c1b0981b3a1ba1a0c449e3c40c623f657d5a43f8",
+        "train": "a9f1af806b6477d04210a13027cef9942dca3abbc9399f52a4742f5a217eadfb",
+        "valid": "0734c7104a59548ed106368afbd932080314e2f210168eeda114147a8a67c624"
+      },
+      "history_path": "checkpoints/baseline_Strongylocentrotus/history.csv",
+      "history_sha256": "30eecc03bf1de5c67f3b9da2f2cecf824ef0204a6eb73785f4540339b4f1721d",
+      "selected_threshold": 0.4,
+      "setting": "Strongylocentrotus",
+      "summary_path": "checkpoints/baseline_Strongylocentrotus/summary.json",
+      "summary_sha256": "03ae0d2c2b5be1360f7c9d4652f5953d78f8a6449816c934f1a788db5805d127"
+    },
+    {
+      "architecture": "bioaware",
+      "best_epoch": 50,
+      "best_valid_f1": 0.8094276094276094,
+      "data_sha256": {
+        "test": "cdd86187476f21db4f57cfb1c1b0981b3a1ba1a0c449e3c40c623f657d5a43f8",
+        "train": "a9f1af806b6477d04210a13027cef9942dca3abbc9399f52a4742f5a217eadfb",
+        "valid": "0734c7104a59548ed106368afbd932080314e2f210168eeda114147a8a67c624"
+      },
+      "history_path": "checkpoints/bioaware_Strongylocentrotus/history.csv",
+      "history_sha256": "f1045f10dc81e9e3fe2ca7df747fb4d39685bcdfdf60e8c1e6a3fa2310346924",
+      "selected_threshold": 0.375,
+      "setting": "Strongylocentrotus",
+      "summary_path": "checkpoints/bioaware_Strongylocentrotus/summary.json",
+      "summary_sha256": "1974c034319c15ff646bfac58e6e2384dbf15b82ad939cec5d703926b38f40c6"
+    }
+  ],
+  "seed": 42,
+  "selection_split": "valid",
+  "settings": "five human contexts and three within-species models",
+  "smoothing_window_epochs": 51,
+  "test_used_during_training": false,
+  "threshold_summary": {
+    "baseline": {
+      "maximum": 0.6,
+      "median": 0.4625,
+      "minimum": 0.35,
+      "n": 8,
+      "values": [
+        0.45000000000000007,
+        0.375,
+        0.525,
+        0.35,
+        0.475,
+        0.6,
+        0.475,
+        0.4
+      ]
+    },
+    "bioaware": {
+      "maximum": 0.4,
+      "median": 0.2875,
+      "minimum": 0.1,
+      "n": 8,
+      "values": [
+        0.4,
+        0.25,
+        0.375,
+        0.1,
+        0.25,
+        0.325,
+        0.1,
+        0.375
+      ]
+    }
+  }
+}

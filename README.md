@@ -1,692 +1,469 @@
-# AdarEdit: Structure-aware graph learning predicts ADAR editability across tissues and species
-
-AdarEdit is a domain-specialized graph foundation model for predicting A-to-I RNA editing sites. Unlike generic foundation models that treat RNA as linear sequences, AdarEdit represents RNA segments as graphs where nucleotides are nodes connected by both sequential and base-pairing edges, enabling the model to learn biologically meaningful sequence–structure patterns.
-
-## Key Features:
-- Dual architecture: Baseline (data-driven) and bio-aware (biochemically-informed) models
-- Graph-based RNA representation: Captures both sequence and secondary structure information.
-- High accuracy: F1 ≈ 0.90 (bio-aware), AUROC/AUPRC ≈ 0.96 (combined tissue).
-- Cross-species generalization: Works on evolutionarily distant species even without Alu elements.
-- Mechanistic interpretability: Graph attention highlights influential structural motifs.
-- Foundation model behavior: A single model generalizes across tissues and conditions.
-
-##  Data and Model Availability
- 
-All data, pretrained models, and predictions used in the manuscript are publicly available. The table below summarizes all resources and their locations.
- 
-| Resource | Description | Location |
-|----------|-------------|----------|
-| **Source code** | Full pipeline and model code | (this repo) |
-| **Alu pair coordinates** | BED file of 905 high-confidence inverted Alu pairs (hg38) | [Google Drive](https://drive.google.com/file/d/1GgrsPa71XOfmAU2gaKIr7gA-3L-zwnBa/view?usp=drive_link) |
-| **Per-tissue editing levels** | A-to-I editing levels for all adenosines across Brain Cerebellum, Artery Tibial, Liver, Muscle Skeletal, and Combined (derived from GTEx v7) | [Google Drive](https://drive.google.com/drive/folders/1KkGElOF-Peg0xzJWehONI5JfRKEAAdT_?usp=drive_link) |
-| **Trained model checkpoints** | Best checkpoints for all 25 cross-tissue and 6 cross-species train→validation settings (baseline and bio-aware) | [Google Drive](https://drive.google.com/file/d/1RdjNgafQ1ZEEhgh1qsgsKokgJpbiYBnv/view?usp=drive_link) |
-| **Model predictions** | Per-sample predictions and ROC/PR curve data for all experimental settings | [Google Drive](https://drive.google.com/file/d/1RdjNgafQ1ZEEhgh1qsgsKokgJpbiYBnv/view?usp=drive_link) |
-| **Example data (cross-species)** | Demo inputs/outputs for the cross-species pipeline (40 clusters) | `data_evo/examples/Evolution/` (this repo) |
-
-## Model Architectures
-
-**Baseline Model:**
-
-Node features (8-dim): Base identity, pairing status, relative position, target flag
-Edges: Sequential + base-pairing (uniform)
-
-**Bio-aware Model:**
-
-Node features (22-dim): Baseline + trinucleotide context, stem-loop geometry, pairing energies
-Edges: Typed (canonical/wobble/sequential) with learned embeddings
-Additional: Parallel 1D CNN (3-mer/5-mer filters), optional global attention
-
-![GNN_model](Figure/ADAREdit_Model_V2.png)
-AdarEdit model architecture showing RNA-to-graph conversion and Graph Attention Network processing
-
-
-## Getting Started
-### Requirements
-
-First, clone this repository. 
-
-You may use the file  `environment.yml` to create anaconda environment with the required packages.
-
-** No non-standard hardware is required. GPU is recommended for efficient model training; CPU execution is supported but slower. 
-** Tested on Linux
-
-### Steps to Use the environment.yml File:
-#### Create the Environment:
-1. Save the `environment.yml` file in your project directory, then run the following command:
-   
-```
-conda env create -f environment.yml
-```
-
-2. Activate the Environment:
-   
-```
-conda activate rnagnn
-```
-
-> **Typical install time:** ~15 minutes on a standard desktop computer 
-> (conda environment creation including all dependencies).
-
-## Data Processing Pipeline
-![GNN_model](Figure/ADAR-EDIT-DATA.png)
-
-### Step 1a: Human Alu Dataset Construction
-The Script/Human_Alu/Data_preparation/Classification_Data_Creation.py script creates classification datasets for each tissue:
-
-Process:
-
-- Read Alu pair regions from BED file (chr1,start1,end1,chr2,start2,end2,strand)
-- Extract RNA sequences for each Alu pair using genome FASTA
-- Connect Alu pairs with "NNNNNNNNNN" linker sequence
-- Predict secondary structure using ViennaRNA fold_compound
-- Extract editing levels from tissue-specific editing files
-- Filter sites with >100 read coverage
-- Generate full context sequences with structural annotations
-
-Input:
-
-`--pair_region`: BED file with Alu pair coordinates (available at [Google Drive](https://drive.google.com/PLACEHOLDER_EDITING_LEVELS](https://drive.google.com/file/d/1GgrsPa71XOfmAU2gaKIr7gA-3L-zwnBa/view?usp=drive_link)))
-`--genome`: Human genome FASTA file
-`--editing_site_plus/minus`: Editing level files (available at [Google Drive](https://drive.google.com/drive/folders/1KkGElOF-Peg0xzJWehONI5JfRKEAAdT_?usp=drive_link))
-`--editing_level`: Minimum editing threshold (e.g., 15.0)
-
-Output:
-
-data_for_prepare_classification.csv
-
-```
-for tissue in Brain_Cerebellum Artery_Tibial Liver Muscle_Skeletal; do
-    python Script/Human_Alu/Data_preparation/Classification_Data_Creation.py \
-        --pair_region data/raw/alu_pairs.bed \
-        --genome data/raw/hg38.fa \
-        --editing_site_plus data/raw/${tissue}_editing_plus.tsv \
-        --editing_site_minus data/raw/${tissue}_editing_minus.tsv \
-        --editing_level 15.0 \
-        --output_dir data/data_for_model_input/tissues
-done
-```
-
-### Step 1b: Cross-Tissue Data Splitting
-The Script/Human_Alu/Data_Preparation/build_cross_splits.R script creates balanced train/validation splits:
-Process:
-
-1. Load per-tissue CSV files from data/data_for_model_input/tissues/
-2. Label editing sites: "yes" (≥15%) vs "no" (<1%)
-3. Create balanced datasets (equal yes/no samples)
-4. Generate all tissue-pair combinations for cross-validation
-5. Remove training examples from validation sets to prevent data leakage
-
-Input:
-
-`--data_dir`: Per-tissue CSV files 
-`--train_size`: Training samples per tissue (default: 19,200)
-`--valid_size`: Validation samples per tissue (default: 4,800)
-`--yes_cutoff`: Editing threshold for positive class (default: 15%)
-`--no_cutoff`: Non-editing threshold for negative class (default: 1%)
-
-Output:
-
-Cross-tissue directories - 
-Training files: {train_tissue}_train.csv
-Validation files: {valid_tissue}_valid.csv
-Summary report: cross_split_summary.csv
-
-```
-Rscript Script/Human_Alu/Data_Preparation/build_cross_splits.R \
-    --data_dir data/data_for_model_input/tissues/ \
-    --output_dir data/data_for_model_input/tissues/cross_splits/ \
-    --train_size 19200 \
-    --valid_size 4800 \
-    --yes_cutoff 15 \
-    --no_cutoff 1 \
-    --seed 42
-```
-
-### Step 2: Cross-Species Dataset Construction (Non-Alu)
-Cross-species datasets are constructed using a multi-step pipeline that processes editing sites from three evolutionarily distant species lacking Alu elements:
-Target Species:
-
-* Strongylocentrotus purpuratus (Sea urchin) - Echinoderm
-* Ptychodera flava (Acorn worm) - Hemichordate
-* Octopus bimaculoides (Octopus) - Mollusk
-
-#### Pipeline Overview:
-The cross-species data construction follows a 6-step pipeline that processes raw editing sites into training-ready datasets:
-
-Key Processing Steps:
-
-1. Editing Level Extraction: Parse sequencing data to calculate A-to-I editing ratios
-2. Spatial Clustering: Merge editing sites within 1kb distance, retain clusters with >5 sites
-3. Density Selection: Extract sequence regions with highest editing site density
-4. Structure Prediction: Predict RNA secondary structure using RNAfold
-5. Quality Filtering: Apply coverage (≥100 reads) and editing level (≥15%) thresholds
-6. Dataset Preparation: Create balanced train/validation splits with equal edited/non-edited sites
-   
-Step-by-step Pipeline:
-
-#### 0) Environment & Dependencies
-
-All scripts live under: Script/Evolution/
-
-Conda environment
-
-Use the provided environment file:
-
-```
-conda env create -f Script/Evolution/environment_evolution.yml
-conda activate evolution
-```
-This environment includes (or expects) the following:
-- Python ≥ 3.10, pandas, pyfaidx
-- ViennaRNA (with Python bindings; RNA / ViennaRNA)
-- bedtools
-- R + packages: data.table, dplyr, readr, tidyr, optparse, stringr, tools
-- RNAstructure CLI tools: dot2ct, draw (on PATH)
-- bpRNA (bpRNA.pl accessible; see below)
-
-##### RNAstructure data tables (DATAPATH)
-
-The scripts will try to auto-detect DATAPATH (e.g., $CONDA_PREFIX/share/rnastructure/data_tables). If needed, set it explicitly:
-```
-export DATAPATH="$CONDA_PREFIX/share/rnastructure/data_tables"
-```
-##### bpRNA installation
-
-Install bpRNA from GitHub and make the Perl entrypoint reachable in your environment:
-```
-git clone https://github.com/hendrixlab/bpRNA.git
-# Option A: symlink into the active conda env
-ln -sf "$(pwd)/bpRNA/bpRNA.pl" "$CONDA_PREFIX/bin/bpRNA.pl"
-chmod +x "$CONDA_PREFIX/bin/bpRNA.pl"
-
-# Option B: set env var instead of symlink
-export BPRNA_PL="$(pwd)/bpRNA/bpRNA.pl"
-```
-The pipeline requires either bpRNA.pl on PATH or BPRNA_PL set.
-
-#### 1) Inputs per species
-
-For each species prepare:
-- **Genome FASTA** (index will be created by `pyfaidx` on first use).  
-  *Use the same reference genome/version reported in Zhang et al., Cell Reports (2023), Supplemental Information.*
-- **Editing results table** (“resTable”-like; includes base counts per replicate, strand, etc.).  
-  *Use the per-species editing tables provided in Zhang et al., Cell Reports (2023), Supplemental Information.*
-- **Output directory** for intermediate and final files.
-
-#### 2) End-to-end pipeline
-Below, replace Species and all paths accordingly (run for each species).
-
-## Step 1 — Parse editing table → CSV + BED6
-
-Script: Script/Evolution/get_editing_levels.py
-
-- Keeps A→G only
-- Aggregates replicate counts
-- Computes EditingLevel and Total_Coverage
-
-Writes:
-- A2IEditingSite.csv
-- A2IEditingSite.bed (BED6 with strand)
-
-```
-  python Script/Evolution/get_editing_levels.py \
-  -i /path/to/Species.resTable.txt \
-  -d /path/to/Species/
-```
-Optional flags (see --help): minimum coverage filter, custom column names, etc.
-
-## Step 2 — Cluster nearby editing sites (strand-aware)
-
-Script: Script/Evolution/cluster_editing_sites.py
-
-Wraps:
-```
-bedtools sort -i A2IEditingSite.bed \
-| bedtools merge -d 1000 -s -c 3,3,6 -o count,collapse,distinct
-```
-Keeps clusters with site count > 5.
-```
-python Script/Evolution/cluster_editing_sites.py \
-  -i /path/to/Species/A2IEditingSite.bed \
-  -d 1000 \
-  -m 5 \
-  -D /path/to/Species/
-```
-Output: /path/to/Species/cluster_d1000_up5editingsite.bed
-
-## Step 3 — Fold windows, choose dsRNA segment with majority of ES; annotate sites & nearby A
-
-Script: Script/Evolution/get_ds_with_majority_ES.py
-
-- Extracts/folds extended windows (ViennaRNA)
-- Converts and draws structures (dot2ct, draw)
-- Runs bpRNA to parse segments (.st)
-- Selects the segment containing the majority of editing sites
-- Intersects the chosen ds regions with all editing sites (BED6)
-- Collects nearby A (≤20 nt from an edited site) as negatives
-- Writes structure SVGs and summary CSVs
-
-```
-python Script/Evolution/get_ds_with_majority_ES.py \
-  -i /path/to/Species/cluster_d1000_up5editingsite.bed \
-  -o /path/to/Species/ \
-  -e /path/to/Species/A2IEditingSite.bed \
-  -g /path/to/Species/genome.fa \
-  --num_processes 8
-```
-Key outputs (in -o):
-- all_data_results.csv — ds selection, coordinates, MFE, etc.
-- mfe_data_results.csv — per-window MFE summary
-- Per-region .dbn/.ct/.shape/.svg
-
-## Step 4 — Merge structure results with per-site editing levels
-
-Script: Script/Evolution/merge_ds_results.py
-
-- Expands by relative_positions (edited) and A_20d (nearby adenosines)
-- Joins editing metrics by (Chr, Position, Strand)
-- Writes combined table
-  
-```
-python Script/Evolution/merge_ds_results.py \
-  -e /path/to/Species/A2IEditingSite.csv \
-  -a /path/to/Species/all_data_results.csv \
-  -o /path/to/Species/dsRNA_structure_with_editing_sites_andA20.csv \
-  -w 15
-```
-
-## Step 5 — De-duplicate groups & filter by length / coverage (and optional editing threshold)
-
-Script: `Script/Evolution/filter_ds_groups.R`
-
-- Collapses to one row per (Chr, Position, Strand) using boundary consistency (default tolerance 20 bp for each ds boundary)
-- Keeps length_small_ds ≥ 200 and Total_Coverage ≥ 100
-- Optionally saves rows above an editing threshold (default 0.1)
-
-```
-Rscript Script/Evolution/filter_ds_groups.R \
-  --input  /path/to/Species/dsRNA_structure_with_editing_sites_andA20.csv \
-  --output /path/to/Species/dsRNA_structure_with_editing_sites_andA20_len200_cov_100_withoutDup.csv \
-  --tolerance 20 --min-length 200 --min-coverage 100 \
-  --editing-threshold 0.1
-# optionally:
-# --save-above-threshold /path/to/Species/above_0.1.csv
-```
-
-## Step 6 — Prepare balanced ML train/valid sets per species
-
-Script: Script/Evolution/prepare_balanced_ml_sets.R (comma-list interface)
-
-- Splits small_ds_seq into L/R by Local_Position
-- Labels yes if EditingLevel > 0.1, no if < 0.001 (configurable)
-- Balances yes/no per species and (optionally) equalizes across species
-- Splits 80/20 → train/valid (configurable)
-  
-```
-Rscript Script/Evolution/prepare_balanced_ml_sets.R \
-  --inputs "Strongylocentrotus_purpuratus=/.../Strongylocentrotus_purpuratus/..._withoutDup.csv,Octopus_bimaculoides=/.../Octopus_bimaculoides/..._withoutDup.csv,Ptychodera_flava=/.../Ptychodera_flava/..._withoutDup.csv" \
-  --out-dir /path/to/all_data/ \
-  --pos-threshold 0.1 --neg-threshold 0.001 \
-  --train-frac 0.8 --equalize-across TRUE --seed 42
-```
-Outputs (per species under --out-dir/<Species>/):
-- `data_for_prepare_<Species>.csv`
-- `final_<Species>_train.csv`
-- `final_<Species>_valid.csv`
-
-These are the files you feed into AdarEdit’s training/evaluation scripts (see your model README section).
-
-**Examples.** See `data_evo/examples/Evolution/` — it contains all example inputs/outputs you need (except the species editing site and genome FASTA, which is not included due to its size). For the clustering demo we kept only the first **40** clusters from `cluster_d1000_up5editingsite.bed`. 
-
-**Expected run time for demo:** ~5 minutes on a standard desktop computer (40 clusters demo, CPU only). Full dataset processing requires several hours and GPU is recommended.
-
-## Data Format Conversion
-
-The final data preparation step converts CSV files to JSONL format required by the models.
-
-### Script: `Script/Human_Alu/Data_Preparationcsv_to_jsonl.py`
-
-**Converts CSV files (output from data processing pipeline) to JSONL format (input for model training).**
-
-### Usage
-
-```bash
-# Convert all CSV files in a directory tree
-python csv_to_jsonl.py datasets/
-
-# Convert CSV files in current directory
-python csv_to_jsonl.py .
-
-# Convert specific directory
-python csv_to_jsonl.py datasets/Liver/combine_3_2/
-```
-
-### Input Format (CSV)
-
-From the data processing pipeline, each CSV has 4 columns:
-
-```csv
-structure,L,R,y_n
-(((...)))...(((...))),AUGCUAGCUAGC,GCUAGCUAGCUA,yes
-.((..))....((..)),CUAGCUAGCUAG,UAGCUAGCUAGC,no
-...
-```
-
-**Columns:**
-- `structure`: Dot-bracket notation of RNA secondary structure
-- `L`: Left flanking sequence (upstream of editing site)
-- `R`: Right flanking sequence (downstream of editing site)
-- `y_n`: Label - "yes" (edited) or "no" (non-edited)
-
-### Output Format (JSONL)
-
-Each CSV row becomes a JSONL entry:
-
-```json
-{"messages": [{"role": "system", "content": "Predict if the central adenosine (A) in the given RNA sequence context within an Alu element will be edited to inosine (I) by ADAR enzymes."}, {"role": "user", "content": "L:AUGCUAGCUAGC, A:A, R:GCUAGCUAGCUA, Alu Vienna Structure:(((...)))...(((...))"}, {"role": "assistant", "content": "yes"}]}
-{"messages": [{"role": "system", "content": "Predict if the central adenosine (A) in the given RNA sequence context within an Alu element will be edited to inosine (I) by ADAR enzymes."}, {"role": "user", "content": "L:CUAGCUAGCUAG, A:A, R:UAGCUAGCUAGC, Alu Vienna Structure:.((..))....((..)"}, {"role": "assistant", "content": "no"}]}
-```
-
-
-## Model Training and Evaluation
-
-Use the automated runner script to train and evaluate both models across all tissue combinations:
-
-### Script: `Scripts/model/run_all_evals_bioaware_baseline.py`
-
-**What it does:**
-1. Creates a timestamped workspace copy of the project and datasets
-2. Runs smoke test to verify imports and paths
-3. Trains and evaluates both models on all train/valid pairs in `datasets/**/combine_*/`
-4. Saves checkpoints, predictions, and ROC/PR curves for each model and split
-5. Generates a comprehensive evaluation summary
-
-> **Pretrained models and predictions** from all experiments reported in the manuscript are available for direct download (no retraining required):
-> - Trained checkpoints (baseline + bio-aware, all 31 settings): [Google Drive](https://drive.google.com/file/d/1RdjNgafQ1ZEEhgh1qsgsKokgJpbiYBnv/view?usp=drive_link)
-> - Per-sample predictions and ROC/PR curve data: [Google Drive](https://drive.google.com/file/d/1RdjNgafQ1ZEEhgh1qsgsKokgJpbiYBnv/view?usp=drive_link)
-
-
-### Basic Usage
-
-```bash
-python run_all_evals_bioaware_baseline.py \
-    --variants baseline,bioaware
-```
-
-his will:
-- Train baseline and bio-aware models on all tissue combinations
-- Save results to `overnight_eval_YYYYMMDD_HHMMSS/`
-- Run 1000 epochs per model/split
-- Use batch size 256
-
-### Advanced Options
-
-```bash
-python run_all_evals_bioaware_baseline.py \
-    --variants baseline,bioaware          # Models to train (comma-separated)
-    --timestamp my_experiment_name        # Custom workspace name (optional)
-    --resume_existing                     # Skip splits with existing predictions
-    --start_after "combine_2_4/Liver->Brain"  # Resume from specific split
-    --skip_variants baseline              # Skip specific models
-    --clean_variants bioaware             # Delete old results for specific models
-```
-
-**Available variants:**
-- `baseline`: Baseline GAT model
-- `bioaware`: Bio-aware model with typed edges + sequence CNN
-
-## Input Data Structure
-
-The script expects datasets organized as:
-
-```
-datasets/
-├── Liver/
-│   ├── combine_3_2/
-│   │   ├── Liver_train.jsonl
-│   │   ├── Liver_valid.jsonl
-│   └── combine_3_1/
-│       └── ...
-├── Brain_Cerebellum/
-│   └── combine_4_2/
-│       └── ...
-└── Combined/
-    └── ...
-```
-
-## Output Structure
-
-After running, you'll find in `overnight_eval_YYYYMMDD_HHMMSS/`:
-
-```
-overnight_eval_20240128_153045/
-├── checkpoints/
-│   ├── Liver/
-│   │   ├── baseline/
-│   │   │   └── combine_3_2_Liver_Liver/
-│   │   │       └── best.pth              # Best checkpoint for this split
-│   │   └── bioaware/
-│   │       └── combine_3_2_Liver_Liver/
-│   │           └── best.pth
-│   └── Brain_Cerebellum/
-│       └── ...
-├── predictions/
-│   ├── Liver/
-│   │   ├── baseline/
-│   │   │   ├── combine_3_2_Liver_Liver.jsonl         # Per-sample predictions
-│   │   │   └── combine_3_2_Liver_Liver/
-│   │   │       └── curves.npz                        # ROC/PR curve data
-│   │   └── bioaware/
-│   │       └── ...
-│   └── ...
-└── comprehensive_evaluation.md                        # Summary table
-```
-
-## Model Selection
-
-Both models use **F1-optimized threshold search**:
-- At each epoch, evaluate on validation set
-- Test 33 thresholds (0.1 to 0.9)
-- Select threshold that maximizes F1 score
-- Save checkpoint if F1 improves
-- Best checkpoint is automatically selected
-
-**This ensures optimal performance for each tissue and split.**
-
-## Individual Model Training (Alternative)
-
-If you prefer to train models individually, use the standalone scripts:
-
-### Baseline
-```
-python Scripts/model/gnnadar_verb_compact.py \
-    --train_file {tissue}_train.csv \
-    --val_file {tissue}_valid.csv \
-    --epochs 1000 \
-    --mode train \
-    --batch_size 128 \
-    --num_workers 6 \
-    --checkpoint_dir checkpoints/Liver \
-    --checkpoint_interval 10
-```
-
-### Cross-Tissue and Cross-Species Performance
-
-![cross_tissues_evo](Figure/cross_tissues_evo.png)
-
-- **(A, B)** ROC and PR curves comparing AdarEdit (graph-based) with sequence-only baselines (EditPredict, RNA-FM, ADAR-GPT) on liver tissue. Graph-based models achieve higher AUROC and AUPRC.
-- **(C, D)** Cross-tissue F1 heatmaps for baseline and bio-aware models. Rows = training tissue, columns = validation tissue. Diagonal = within-tissue performance; off-diagonal = cross-tissue generalization.
-- **(E)** ΔF1 heatmap showing bio-aware improvement over baseline across all tissue combinations.
-- **(F)** Cross-species F1 scores: within-species (species→species) and human-to-other transfer (Combined→species) for sea urchin, acorn worm, and octopus.
-- **(G, H)** ROC and PR curves for all cross-tissue and cross-species combinations, comparing baseline and bio-aware models.
-
-**Key findings:** Bio-aware model outperforms baseline in 20/25 tissue settings (ΔF1 = +0.012 average) and shows robust cross-species transfer.
-
-Note: Sequence-only baseline comparisons (EditPredict, RNA-FM, ADAR-GPT) are taken from a previously published study (see: ADAR-GPT, PNAS 2026).
-
-## Model Interpretability
-AdarEdit provides comprehensive interpretability analysis through two complementary approaches:
-
-### 1. XGBoost-based Feature Analysis
-The interpretability pipeline (Scripts/interpretability/xgboost_shap_analysis.py) performs two-stage XGBoost analysis:
-Usage:
-```
-python Scripts/interpretability/xgboost_shap_analysis.py \
-    --attention_csv attention_data.csv
-```
-#### Process:
-
-![interpertability_process](Figure/interpertability_process_1.png)
-
-* Stage 1: Train XGBoost on all attention features (positions -600 to +600)
-* Stage 2: Apply SHAP analysis to identify top 20 most important features
-* Stage 3: Retrain XGBoost using only top 20 features
-
-Outputs:
-
-- `shap_top20_XGBoost.png`: SHAP feature importance plot for full model
-- `shap_top20_Retrained_XGBoost.png`: SHAP plot for retrained model
-- `shap_data_Original_Model.pkl`: Saved SHAP analysis data
-- `shap_data_Retrained_Model.pkl`: Saved retrained model SHAP data
-
-### 2. Graph Attention Analysis
-The GNN model automatically generates attention analysis during evaluation:
-Generated during model evaluation:
-
-- `attention_data.csv`: Attention weights for each position (-650 to +649) for each validation sample
-- `attention_graphs/`: Directory containing detailed attention visualization plots
-
-# ADAR Rules Analysis (In-silico Mutagenesis)
-
-![interpertability_process](Figure/ADAR_RULES.png)
-
-This section documents the scripts used to characterize the model’s learned **ADAR-related sequence and structure preferences**
-around the target adenosine. The analyses are **topology-aware**: when a perturbation breaks a valid pair, the script removes the
-corresponding structural edge in the graph.
-
-> These scripts are intended for ** Scripts/interpretability/** and reproduce the same analysis workflow used in the manuscript,
----
-
-## Inputs
-
-All scripts operate on:
-- `--val_file`: Validation JSONL format used in this repository  
-  (fields include `L`, `A`, `R`, and `Alu Vienna Structure`)
-- `--checkpoint`: Baseline checkpoint `.pth` (either a raw `state_dict` or a dict containing `state_dict`)
-- `--num_samples`: Maximum number of samples to process (default: 4000)
-
-### Sample filtering (paper setting)
-To focus on high-confidence edited sites, all scripts:
-- keep only edited samples (`label=1`)
-- require original model confidence `pred > 0.7` (on the unmodified graph)
+# AdarEdit — reproducibility repository
+
+**Structure-aware Graph Learning Predicts RNA Editability Across Tissues and Species**
+
+This repository, together with the linked external datasets, contains the model code,
+processed data splits, trained best checkpoints, analysis inputs and outputs, and one
+self-documenting folder per analysis. All reported numerical results are linked to supplied
+artifacts and reproducible analysis workflows; external or controlled-access inputs needed
+for upstream reconstruction are identified explicitly.
+
+> **The central protocol.** All results use a **strict global pair-disjoint split**: every *Alu*
+> inverted-repeat pair — and every adenosine site derived from it — is assigned to exactly one of
+> train / validation / test (64:16:20), shared across all five tissues, with **zero pair overlap**
+> between partitions. Class balancing is performed before partitioning; after the split is fixed,
+> the test partition is not used for model, epoch or threshold selection.
+
+## The two model architectures
+
+Every model in this repository is one of two graph neural networks over the
+predicted dsRNA secondary structure. They appear throughout as **Baseline GAT**
+and **Bio-aware GNN**.
+
+- **Baseline GAT** (`code/gnnadar_verb_compact.py`) — a compact graph attention
+  network. Each nucleotide is a node with **8 features** (one-hot base A/G/C/U/N,
+  a paired/unpaired flag, relative distance to the target adenosine, and a
+  target-site flag); edges connect sequential (backbone) neighbours and
+  base-paired nucleotides, and carry **no features** — the model receives only
+  graph topology and must learn structural editing rules from data alone.
+- **Bio-aware GNN** (`code/bioaware_gnn.py`) — the same graph enriched with
+  explicit biochemistry: **22-dimensional node features** (adds 5′/3′ neighbour
+  identity, stem/loop geometry, and base-pairing energy), **typed edges** that
+  distinguish Watson–Crick (A-U, G-C) from wobble (G-U) and backbone edges (each
+  with a learned embedding and scalar attributes), and a **parallel sequence-CNN
+  branch** capturing local motifs. It tests whether hand-provided biological
+  annotation improves prediction beyond the minimal baseline.
+
+The **joint** multi-label model (one network predicting all five tissues at once)
+comes in the same two flavours — **Joint Baseline** and **Joint Bio-aware** —
+using these same two encoders (see `analyses/joint_model/`).
 
 ---
 
-## Scripts
+## 1. Requirements
 
-### 1) Core motif preference heatmaps (sequence + structure)
-**Script:** ` Scripts/interpretability/fig6ab_core_heatmaps_topology_aware.py`
-
-**What it does**
-- **Sequence preference (heatmap):** mutates base identity in the window `[-3, +3]` (relative to the target A at position 0),
-  while keeping structure and edges unchanged. It aggregates mean prediction per base/position and normalizes each column
-  by subtracting its mean (excluding the target column).
-- **Structure preference (heatmap; topology-aware):** compares `paired` vs `unpaired` per base/position.
-  In the `unpaired` condition it sets the paired-flag to 0 **and removes the structural edge** to the partner node (when a partner exists).
-
-**Run**
 ```bash
-python  Scripts/interpretability/fig6ab_core_heatmaps_topology_aware.py \
-  --val_file datasets/Liver/combine_2_4/Liver_valid.jsonl \
-  --checkpoint checkpoints/Liver/baseline/.../best.pth \
-  --num_samples 4000
+conda env create -f environment.yml      # creates the 'adaredit' env (Python 3.10)
+conda activate adaredit
+# or manually:
+pip install torch==2.7.0 torch-geometric==2.6.1 scikit-learn==1.6.1 \
+            numpy==2.2.5 pandas==2.2.3 matplotlib \
+            networkx shap seaborn pysam scipy xgboost
+# ViennaRNA (RNAfold) is only needed to regenerate secondary structures from scratch:
+#   conda install -c bioconda viennarna
 ```
-
-**Outputs**
-- `fig6a_motif_sequence_preference_heatmap.png`
-- `fig6b_structure_preference_heatmap.png`
+A GPU is recommended for (re)training; all evaluation, the classical baselines and every figure
+script run on CPU.
 
 ---
 
-### 2) Structural impact across a full window (paired − unpaired)
-**Script:** ` Scripts/interpretability/fig6c_structural_impact_square.py`
+## 2. Repository layout
 
-**What it does**
-- For each relative position in `[-40, +40]`, computes:
-  `impact = pred(paired) - pred(unpaired)`
-- The `unpaired` condition is topology-aware: it removes the structural partner edge if it exists.
-- Aggregates the mean impact across samples and produces a square zoned curve.
-
-**Run**
-```bash
-python  Scripts/interpretability/fig6c_structural_impact_square.py \
-  --val_file datasets/Liver/combine_2_4/Liver_valid.jsonl \
-  --checkpoint checkpoints/Liver/baseline/.../best.pth \
-  --num_samples 4000
 ```
-
-**Output**
-- `fig6c_structural_impact_square.png`
+ADAREDIT_repro/
+├── README.md                       ← this file
+├── environment.yml                 ← conda environment
+├── code/                           ← model + trainer (self-contained)
+│   ├── train_strict_long.py        ← exact per-context training pipeline used for the supplied checkpoints
+│   ├── gnnadar_verb_compact.py     ← exact Baseline GAT implementation used for training
+│   ├── bioaware_gnn.py             ← exact Bio-aware GNN implementation used for training
+│   └── rna_attention_analysis.py   ← attention extraction utilities
+├── data_construction/              ← how data/ was built, + split verifier (see §3.1)
+│   ├── human_alu/                  ← Alu substrates from hg38 + GTEx editing levels
+│   ├── species/                    ← non-Alu substrates for the three species (7 steps)
+│   ├── split/                      ← the global pair-disjoint 64:16:20 protocol
+│   └── verify_split.py             ← verifies pair/site disjointness across splits
+├── data/
+│   ├── human/{Artery,Brain,Liver,MuscleSkeletal,Combined}/{train,valid,test}.jsonl (+ .metadata.csv)
+│   ├── species/{Octopus,Ptychodera,Strongylocentrotus}/{train,valid,test}.jsonl
+│   └── raw/
+│       ├── alu_pairs/Pair_Alu_withStrand.bed       ← 905 Alu-pair duplex definitions (hg38)
+│       └── editing_levels/                          ← GTEx per-site editing tables — HOSTED ON GOOGLE DRIVE
+│                                                       (see §3; too large to commit, ~700 MB)
+├── checkpoints/                    ← BEST checkpoint + summary.json per model (see §7)
+├── results/                        ← long-format results, manuscript table, matrices and predictions
+├── analyses/                       ← one self-contained folder per analysis (see §6)
+│   ├── threshold_relaxation/        ├── substrate_stability/
+│   ├── gtex_tissue_selection/
+│   ├── rnaatlas_external_cohort/    ├── component_ablation/
+│   ├── snp_audit/                   ├── triplet_baseline/
+│   ├── species_sensitivity/         ├── coding_targets/
+│   ├── attention_interpretability/   ├── insilico_mutagenesis/
+│   ├── joint_model/                 ├── joint_vs_pertissue/
+│   └── minor_training_dynamics/
+└── manuscript/                     ← the figures that appear in the paper (main + supplementary)
+```
+Each `analyses/<name>/` folder holds `scripts/` (code), `data/` and/or `raw_data/` (inputs and
+derived tables), `figures/` (outputs) and usually its own `README.md`.
 
 ---
 
-### 3) Partner interaction matrix (paired mutations with edge removal)
-**Script:** ` Scripts/interpretability/fig6d_partner_interaction_topology.py`
+## 3. Data
 
-**What it does**
-- For positions `[-1, 0, +1]`, identifies the structural partner node for each sample and evaluates paired mutations across all
-  base pairs (self×partner).
-- If a pair is invalid (not Watson–Crick or wobble), the script removes the structural edge between the two nodes.
-- Aggregates mean prediction per pair and outputs heatmaps.
+**Processed data (in this repo).** Each `data/**/*.jsonl` line is one candidate adenosine as a
+chat-style record. The user message encodes `L:<left seq>, A:<target base>, R:<right seq>,
+Alu Vienna Structure:<RNAfold dot-bracket>`; the assistant message is `yes`/`no` (edited ≥15% /
+non-edited <1%; intermediate 1–15% excluded). The full substrate is `L + A + R` and its length
+equals the dot-bracket length.
 
-**Run**
+Human `*.metadata.csv` files carry one row per site, aligned to the `.jsonl`, with
+columns `pair_id, pair_prefix, yes_no, split`. **`pair_id` is the substrate key** — one
+integer per distinct `L + A + R` duplex, shared across tissues, so a substrate has the same
+id wherever it appears. Use it for any disjointness or grouping check. `pair_prefix` is the
+first 24 nt of the duplex, useful for eyeballing but **not unique**: *Alu* elements share a
+conserved 5' end, so 55 of the 884 substrates collide on it.
+
+Species `*.metadata.csv` files are likewise aligned row-for-row to their JSONL files and
+record the species, genomic `region_id`, source row, label, split, genomic coordinate,
+strand, local position, editing level and source table. Use `region_id` to verify that
+complete genomic regions remain disjoint across train, validation and test.
+
+Pair_Alu_withStrand.bed contains 905 candidate inverted Alu pair loci. After
+coverage/label selection and removal of 156 terminal-site records whose
+serialized `L+A+R` length did not match the dot-bracket length,
+884 graph-buildable full substrate structures remain. These are assigned stable
+`pair_id` values 1..884 in all shipped human metadata files.
+
+Test-split unique-site counts: Artery 4,792 · Brain 4,566 · Liver 4,150 ·
+Muscle Skeletal 1,425 · Combined 4,864. All 884 retained substrates are
+graph-buildable (dot-bracket length equals sequence length), and the global
+pair-disjoint split assignment in the shipped metadata and
+`data_construction/split/global_pair_split.json` contains exactly these 884
+(566 train / 139 valid / 179 test).
+
+**Raw data.**
+- `data/raw/alu_pairs/Pair_Alu_withStrand.bed` — the 905 *Alu*-pair duplex loci (hg38, stranded).
+- **GTEx per-site editing tables** `{Tissue}_Site_in_PairAlu_cov100.csv` (raw editing level and
+  coverage for every candidate adenosine, the source from which the binary labels were derived).
+  These are **~700 MB** and are hosted on Google Drive:
+  **https://drive.google.com/drive/folders/1KkGElOF-Peg0xzJWehONI5JfRKEAAdT_?usp=drive_link**
+  Download them into `data/raw/editing_levels/` to rebuild the `.jsonl` from scratch.
+  The Combined dataset was derived from the GTEx-wide table pooling data across
+  all 47 tissues; its precomputed per-site levels are provided in
+  `Combined_Site_in_PairAlu_cov100.csv`.
+- Analysis-specific raw inputs live inside each analysis folder's `raw_data/` (e.g. the RNAAtlas
+  editing table, the donor-SNP overlap table) — see §6.
+
+**Controlled-access / external data (NOT redistributed here).**
+- GTEx v8 donor genotype VCF `GTEx_..._838Indiv_..._SHAPEIT2_phased.vcf.gz` (dbGaP/AnVIL) — used by
+  the SNP donor cascade; (https://drive.google.com/file/d/1jVDpQ_AJ_X55TkCkZ4P5Z72uJ1FPuGPL/view?usp=drive_link)
+- hg38 reference for coordinate/strand checks.
+- **UCSC Common SNPs 150** track (public; ~143 MB) — the duplex SNP-burden script
+  (`analyses/snp_audit/scripts/duplex_snp_burden.py`) reads it from
+  `data/raw/dbsnp/ucscHg38CommonGenomicSNPs150.bed.gz`; download the track from the UCSC Genome
+  Browser (hg38 `snp150Common`) into that folder to regenerate the panel-a numbers.
+
+### 3.1 How the data was built — `data_construction/`
+
+The upstream pipeline is included so the benchmark is auditable end to end
+(`data_construction/README.md` has the full step-by-step):
+
+| stage | folder | what it produces |
+|---|---|---|
+| Human *Alu* substrates | `data_construction/human_alu/` | labels the five downloaded per-site tables (`yes` ≥15 %, `no` <1 %, intermediate excluded), verifies the exact balanced pre-split site selection using the shipped manifest, and reports/removes 156 non-buildable terminal-site serializations |
+| Cross-species substrates | `data_construction/species/` | seven steps from the Zhang et al. editing tables: parse → cluster (1 kb, >5 sites) → fold and pick the dsRNA segment → merge levels → filter (len ≥200, cov ≥100) → label and balance → region-disjoint split |
+| Pair-disjoint split | `data_construction/split/` | applies the exact shipped `pair_id` map to whole *Alu* substrates at **64:16:20**, one assignment reused across all five contexts |
+
+The cross-species stages, including the final region-disjoint 64:16:20 split,
+can be run with one command:
+
 ```bash
-python  Scripts/interpretability/fig6d_partner_interaction_topology.py \
-  --val_file datasets/Liver/combine_2_4/Liver_valid.jsonl \
-  --checkpoint checkpoints/Liver/baseline/.../best.pth \
-  --out adar_partner_interaction_topology.png
+bash data_construction/run_species_construction.sh \
+    data_construction/species_manifest.csv \
+    /tmp/adaredit_species_reconstructed \
+    --num-processes 8 --merge-workers 8
 ```
 
-**Output**
-- `adar_partner_interaction_topology.png` (or your chosen `--out` path)
+Copy `data_construction/species_manifest.example.csv` and replace the editing
+table and genome paths. The complete instructions, outputs and focal-adenosine
+safety check are documented in `data_construction/README.md`. This workflow
+also requires `bpRNA.pl`; provide it through `PATH`, `BPRNA_PL`, or the
+`--bprna` option as described there.
+
+To reconstruct the human benchmark after downloading the five tables:
+
+```bash
+bash data_construction/run_human_construction.sh \
+    data/raw/editing_levels \
+    /tmp/adaredit_human_reconstructed
+```
+
+The command writes only to the requested output and temporary directories. It
+verifies the exact published site selection against the downloaded raw tables,
+applies the immutable global pair assignment, compares every reconstructed
+partition with `data/human/`, and then runs the split-overlap verifier.
+
+**Verify the split yourself** — no external input needed:
+
+```bash
+python data_construction/verify_split.py
+```
+
+It asserts, directly from the shipped JSONL: 884 substrates with **0** appearing in
+more than one split; **0** cross-tissue site overlap across all 25 ordered tissue pairs
+(no site in one tissue's train/valid is in another tissue's test); and 64.0/15.7/20.2 %
+partition proportions. It also reports the per-split positive rate (45.6–56.5 %),
+which varies because balancing was applied to each dataset as a whole before splitting.
+
+**Split provenance.** The exact split assignment is shipped as data — the `split` column
+of every `data/human/<tissue>/*.metadata.csv` and
+`data_construction/split/global_pair_split.json` — so the partition behind every
+number in the paper is available directly.
+`split/build_human_global_split.py` applies this exact map to reconstructed
+balanced pools. `split/build_global_split.py` can create an alternative
+protocol-equivalent random assignment, but it must not replace the manuscript
+map. `verify_split.py` confirms that the shipped partition satisfies the
+whole-pair, cross-context disjointness claims.
 
 ---
 
-# Training Dynamics and Checkpoint Robustness (bio-aware model)
-
-To complement our main results, we provide an **aggregate view of training behavior** for the bio-aware model across all train→validation
-tissue/species combinations. The goal is to show that our F1-optimized checkpoint selection operates within broad, stable plateaus rather than
-isolated transient peaks (i.e., training is well-behaved and checkpoint choice is robust).
-
-![training_dynamics](Figure/APPENDIX_training_dynamics.png)
-
- Training dynamics for the bio-aware model across all train→validation settings. Each colored line corresponds to one
-train→validation tissue or species combination. Curves are smoothed with a moving average window **w=51**.
-
-### Data (CSV exports)
-The long-format CSVs used to generate panels A–B are included:
-- `Tables/training_dynamics/loss_over_epochs_bioaware_plain.csv`
-- `Tables/training_dynamics/f1_over_epochs_bioaware_plain.csv`
-
-Each row is `(variant, train, val, epoch, metric)`.
-
-### Regenerating plots from training logs
-If you have the raw training log file(s), you can reproduce the plots directly from logs.
-
-**Loss over epochs (panel A)**  
-Script: `Scripts/training_dynamics/plot_loss_over_epochs.py`
+## 4. Train / evaluate a model
 
 ```bash
-python Scripts/training_dynamics/plot_loss_over_epochs.py   --log <TRAIN_LOG.txt>   --variant bioaware_plain   --smooth_window 51   --out_png Figure/training_loss_over_epochs_bioaware_plain.png   --out_csv Tables/training_dynamics/loss_over_epochs_bioaware_plain.csv
+# One model (for example, Liver bio-aware). The output directory contains
+# checkpoints/, history.csv, summary.json and held-out test predictions.
+python code/train_strict_long.py \
+  --variant bioaware \
+  --context Liver \
+  --data-root data/human \
+  --cache-root cache/single \
+  --out-root runs \
+  --epochs 1000 \
+  --batch-size 256 \
+  --num-workers 0 \
+  --num-threads 8 \
+  --checkpoint-every 100 \
+  --seed 42 \
+  --resume
 ```
 
-**F1 over epochs (panel B)**  
-Script: `Scripts/training_dynamics/plot_f1_over_epochs.py`
+Use `--variant baseline|bioaware`; for species, replace `--data-root
+data/human` with `--data-root data/species` and set `--context` to the species
+directory name. A CUDA device is required by default; pass `--allow-cpu` only
+for a CPU smoke test or an intentionally slow CPU training run.
 
-```bash
-python Scripts/training_dynamics/plot_f1_over_epochs.py   --log <TRAIN_LOG.txt>   --variant bioaware_plain   --smooth_window 51   --out_png Figure/training_f1_over_epochs_bioaware_plain.png   --out_csv Tables/training_dynamics/f1_over_epochs_bioaware_plain.csv
+This is the same validation-selected training implementation used to produce
+the supplied per-context checkpoints. It records the input hashes, environment,
+graph version and RNG state; writes checkpoints atomically; and refuses to
+resume from an incompatible graph version. The default `--grad-clip 0.0`
+matches the reported training recipe. The test split is evaluated only after
+the requested final epoch, never for checkpoint or threshold selection.
+
+To score with a provided checkpoint instead of retraining, load
+`checkpoints/<model>/best.pth` (state under `model_state`). Each
+`checkpoints/<model>/summary.json` holds the held-out `test_metrics` reported
+in the paper.
+
+---
+
+## 5. Key verified results (held-out test)
+
+Within-tissue (diagonal), Baseline GAT / Bio-aware GNN:
+
+| Tissue | Base F1 | Base AUROC | Bio F1 | Bio AUROC |
+|---|---:|---:|---:|---:|
+| Artery | 0.867 | 0.924 | 0.858 | 0.918 |
+| Brain | 0.869 | 0.930 | 0.863 | 0.927 |
+| Liver | 0.854 | 0.909 | 0.854 | 0.910 |
+| Muscle Skeletal | 0.814 | 0.869 | 0.816 | 0.878 |
+| Combined | 0.867 | 0.933 | 0.836 | 0.903 |
+
+Joint multi-label model (one model, all five tissue outputs): bio-aware
+**macro F1 0.855 / AUROC 0.917**, baseline **0.851 / 0.911**. The no-Combined
+control is documented in `analyses/joint_model/`. Triplet-SVM baseline (Liver):
+**F1 0.785–0.793 / AUROC 0.784–0.787** across its three classifier heads.
+
+---
+
+## 6. Reproduce each analysis
+
+Every folder is self-contained. Below: what it does, what to run, and what to expect. Each script
+resolves its paths relative to its own location (`Path(__file__).resolve().parents[...]`), so the
+analyses run in place with no path edits; controlled-access external inputs (donor VCF, hg38, UCSC
+dbSNP, the large editing tables) are marked and documented in §3.
+
+### threshold_relaxation — editing-level distribution & threshold robustness
+- **Run:** from the repository root,
+  `bash analyses/threshold_relaxation/run_all.sh`.
+- **Inputs:** the five GTEx per-site editing tables under
+  `data/raw/editing_levels/`, the authoritative human split, and the
+  per-context checkpoints plus their canonical test predictions. The workflow
+  derives the complete 1–15% held-out cohorts directly from these inputs.
+- **Outputs:** `data/run0_distribution.csv`, `run1_score_by_bin.csv`, `run2_threshold_auroc.csv`;
+  `data/analysis_metadata.json`,
+  `figures/threshold_relaxation.*`, `figures/intermediate_site_scores.*`, and
+  `manuscript/figS1_combined.png`.
+- **Validation:** all 30,488 context-specific intermediate records must map to
+  held-out substrates; all 60,976 model-site scores must align with their
+  editing levels; local inference must reproduce canonical checkpoint
+  predictions; and the ≥15% column must exactly equal each within-context test
+  AUROC.
+
+### gtex_tissue_selection — ADAR isoform expression in selected tissues
+- **Run:** `bash analyses/gtex_tissue_selection/run_all.sh`.
+- **Input:** a frozen 54-tissue snapshot of GTEx v8 median TPM for `ADAR`
+  (ADAR1) and `ADARB1` (ADAR2), with API endpoint and Ensembl identifiers
+  documented in the analysis README.
+- **Outputs:** `figures/gtex_tissues.png/pdf` and
+  `manuscript/gtex_tissues.png`.
+- **Validation:** verifies the four plotted values against the frozen table,
+  that Artery Tibial has the highest `ADARB1` across all GTEx v8 tissues, and
+  that Muscle Skeletal has the lowest `ADAR`.
+
+### rnaatlas_external_cohort — independent-cohort editing concordance
+- **Run:** `bash analyses/rnaatlas_external_cohort/run_all.sh`.
+- **Input (raw):** `raw_data/Combined_GTEx_RNAatlas.csv` — GTEx vs RNAAtlas editing index per site.
+- **Outputs:** `figures/rnaatlas_concordance.png/pdf`.
+- **Expect:** Pearson r = 0.967, Spearman ρ = 0.932 and n = 16,028
+  co-measured sites. Of these, 1,678 fall in the intermediate RNAAtlas range;
+  no site changes from GTEx non-edited to RNAAtlas edited, and one changes from
+  GTEx edited to RNAAtlas non-edited.
+
+### snp_audit — reference-vs-donor SNP audit
+- **Run (figure from shipped summaries):**
+  `bash analyses/snp_audit/run_all.sh`.
+- **Optional upstream panel-a recomputation:** `python scripts/duplex_snp_burden.py` →
+  `data/duplex_snp_burden_summary.json` (requires the public UCSC dbSNP track).
+- **Panel b (donor cascade):** computed against the controlled-access GTEx v8 donor VCF; the derived
+  summary tables are provided in `donor_gtex_analysis/` (see its README for the numbers).
+- **Figure:** `python scripts/make_snp_figure.py`.
+- **Input (raw):** `raw_data/gtex_empirical_snp_site_overlaps.csv` (100,377 site×donor overlaps).
+- **Expect:** ~3.5 common SNPs per ~586-nt duplex, 92.5% carry ≥1; only **0.151%** of labelled
+  sites carry a strand-aware editing-mimicking donor variant (0.041% at AF≥1%, 0.030% at AF≥5%).
+
+### species_sensitivity — cross-species negative-distance sensitivity
+- **Run:** `bash analyses/species_sensitivity/run_all.sh`.
+- **Inputs:** `data/species/*`, `data/species_prebalancing/*.csv.gz`, and the
+  within-species checkpoints and test predictions.
+- **Outputs:** `data/sensitivity.json`; `figures/species_sensitivity.*`;
+  `raw_data/species_inter_site_distances.json`; and
+  `manuscript/species_sensitivity.png`.
+- **Expect:** excluding operational negatives near benchmark-positive sites
+  raises F1 (octopus baseline 0.809→0.835; bio-aware 0.831→0.864), while
+  AUROC remains stable or increases modestly, supporting robustness to
+  alternative minimum-distance criteria.
+
+### substrate_stability — intrinsic & genomic-context structural stability
+- **Run:** `bash analyses/substrate_stability/run_all.sh`.
+- **Inputs:** `data/human/*` + checkpoints; `raw_data/context_folding_results.csv`,
+  `raw_data/Pair_Alu_withStrand.bed`.
+- **Outputs:** `data/stability_performance.json`;
+  `figures/substrate_stability.png/pdf`; `manuscript/fig_stability.png`.
+- **Expect:** paired-fraction Q1/median/Q3 = 0.776/0.812/0.844 over 884 substrates; genomic-context
+  dsRNA fraction median 0.810 with 94.6% ≥0.5; least-stable-quartile AUROC ≈0.88–0.90
+  in most contexts (Muscle Skeletal: 0.826–0.839).
+
+### component_ablation — which bio-aware components carry signal (Liver)
+- **Run from shipped outputs:** `bash analyses/component_ablation/run_all.sh`.
+- **Retrain on GPU:** `bash analyses/component_ablation/scripts/run_ablations.sh`.
+- **Inputs:** `data/human/Liver`; `checkpoints/bioaware_Liver/summary.json`;
+  `checkpoints/ablations/Liver/*/summary.json`.
+- **Outputs:** `ablation_summary.{csv,json}`;
+  `figures/component_ablation.*`; `manuscript/figS_ablation.png`.
+- **Expect (ΔAUROC vs full 0.9100):** neighbouring-base context −0.0540,
+  pairing partner −0.0241, base-pair edges −0.0188, edge typing −0.0018,
+  sequence-CNN −0.0054, and stem-loop geometry +0.0118. These are
+  descriptive single-seed comparisons of separately trained models.
+
+### triplet_baseline — Triplet-SVM / logistic-regression baseline (Xue 2005)
+- **Run:** `bash analyses/triplet_baseline/scripts/run_all.sh Liver` (builds metadata and trains all three heads).
+- **Input:** `data/human/Liver`.
+- **Outputs:** `results/Liver_{logreg,linear_svm,rbf_svm}.json` (+ test predictions).
+- **Expect:** F1 0.785–0.793 / AUROC 0.784–0.787 — below the graph models
+  (AUROC 0.909–0.910).
+
+### coding_targets — generalization to protein-coding editing targets
+- **Run:** `bash analyses/coding_targets/run_all.sh`.
+- **Inputs:** seven sequence/structure records and their Brain, Combined and Liver
+  editing-level tables; six per-tissue checkpoints and two joint checkpoints.
+- **Outputs:** 84 per-adenosine prediction files; `results/auroc_summary.{csv,json}`;
+  joint-only and four-model AUROC panels; the FLNA structure panel; and
+  `figures/coding_targets_full.{png,pdf}`.
+- **Expect:** Joint Bio-aware AUROC is 0.86/0.83/0.85 for AJUBA,
+  0.92/1.00/0.98 for BLCAP, 1.00/1.00/0.96 for FLNA, and
+  0.90/0.91/0.93 for GRIA2 (Brain/Combined/Liver). The sparse NEIL1 and TTYH2
+  cells remain descriptive. Interpret these per-gene AUROCs as a
+  scope/generalization check rather than a definitive coding-target benchmark.
+
+### attention_interpretability — attention analysis
+- **Environment:** this analysis uses its own pinned software environment. From
+  the repository root, create and activate it once with
+  `conda env create -f analyses/attention_interpretability/environment.yml`
+  followed by `conda activate adaredit-attention`. Use this environment rather
+  than the repository-level environment for the attention workflow.
+- **Run:** after activating `adaredit-attention`, execute
+  `bash analyses/attention_interpretability/run_all.sh`.
+- **Protocol:** extracts last-layer attention from the frozen Baseline Combined
+  GAT across positions -50 to +50; fits and SHAP-ranks XGBoost probes on the
+  validation split; evaluates them on the duplex-disjoint test split; and
+  summarizes attention by editing label, nucleotide, and structural status
+  across all test sites.
+- **Inputs:** the checkpoint and Combined validation/test JSONL files included
+  within the analysis directory.
+- **Outputs:** `figures/attention_interpretability.png`, standalone panels B-G,
+  complete metrics and predictions, node-level attention, SHAP data, and
+  serialized XGBoost models.
+
+### insilico_mutagenesis — in-silico mutagenesis (Fig 6)
+- **Run:** `cd analyses/insilico_mutagenesis && bash run_all.sh`.
+- **Inputs/model:** the self-contained Combined validation JSONL and
+  Baseline Combined checkpoint stored in the analysis directory.
+- **Outputs:** sample-level and summary CSV files under `data/`, individual
+  A--D panels, and `figures/insilico_mutagenesis_full.{png,pdf}`.
+
+### joint_model — joint multi-label training pipeline (both variants)
+- **Validate supplied outputs:** `bash analyses/joint_model/run_all.sh`.
+- **Retrain:** `bash analyses/joint_model/scripts/run_joint.sh`.
+- **Models:** Baseline and Bio-aware, each with and without the Combined output.
+- **Outputs:** four joint checkpoint directories under `checkpoints/` and the
+  with/without-Combined control under
+  `analyses/joint_model/results/combined_supervision_control.csv`.
+- **Expect:** with-Combined macro F1 0.855 (bio-aware) / 0.851 (baseline);
+  no-Combined macro F1 0.856 / 0.858.
+
+### joint_vs_pertissue — joint vs five per-tissue models (Fig 2d)
+- **Run:** `bash analyses/joint_vs_pertissue/run_all.sh`.
+- **Inputs:** supplied per-tissue prediction NPZ files and joint summaries;
+  `data/comparison_data.csv` is generated rather than manually entered.
+- **Outputs:** `figures/joint_comparison_*` (slope + stacked).
+- **Expect:** Bio-aware joint training improves the five-tissue macro F1 by
+  0.009 and AUROC by 0.010; Baseline effects are mixed across tissues.
+
+### minor_training_dynamics — training dynamics & validation-selected thresholds
+- **Run:** `bash analyses/minor_training_dynamics/run_all.sh`.
+- **Inputs:** the 16 per-context `history.csv`, `summary.json` and
+  `run_config.json` files under `checkpoints/`.
+- **Outputs:** `training_dynamics.png/pdf`,
+  `training_dynamics_summary.csv/json`, and
+  `manuscript/training_dynamics.png`.
+- **Expect:** Baseline GAT threshold median 0.4625 (range 0.350--0.600);
+  Bio-aware GNN median 0.2875 (range 0.100--0.400).
+
+---
+
+## 7. Checkpoints
+
 ```
+checkpoints/
+├── {baseline,bioaware}_{Artery,Brain,Liver,MuscleSkeletal,Combined}/best.pth   (10 human)
+├── {baseline,bioaware}_{Octopus,Ptychodera,Strongylocentrotus}/best.pth        (6 species)
+├── joint_{baseline,bioaware}/best.pth
+└── joint_{baseline,bioaware}_noCombined/best.pth
+```
+Single-output summaries carry `test_metrics`; joint summaries carry
+`test_by_tissue`, macro and pooled metrics. All use validation-selected
+thresholds and report held-out test performance.
 
+---
 
+## 8. Reproducibility check (verified when assembled)
 
-
+- All 20 best checkpoints are supplied: 16 single-output models and four joint
+  multi-label models. Their summaries and saved predictions match the reported
+  metrics.
+- The Triplet-SVM baseline reproduces end-to-end **from the data in this repo** (F1 0.785 / AUROC 0.784).
+- Every supplementary number was traced to the run-output file of its specific analysis
+  (comprehensive metrics table, threshold relaxation, RNAAtlas concordance, SNP audit, cross-species
+  sensitivity, substrate stability, component ablation).
+- Precision/recall/AUPRC for off-diagonal cells live in the per-cell prediction files under the
+  matrix package; the diagonal + thresholds are in each `checkpoints/*/summary.json`.

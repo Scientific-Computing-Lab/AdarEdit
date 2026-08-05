@@ -1,0 +1,12 @@
+# Preserve existing CRLF artifacts without treating the carriage return as
+# trailing whitespace. No files in this repository use Git LFS.
+* whitespace=cr-at-eol
+
+# Binary model and figure artifacts should never undergo line-ending conversion.
+*.pth binary
+*.pt  binary
+*.pkl binary
+*.npz binary
+*.png binary
+*.pdf binary
+*.gz  binary

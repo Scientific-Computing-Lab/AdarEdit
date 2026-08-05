@@ -1,0 +1,124 @@
+{
+  "analysis": "Supplementary Figure S1 cohort construction",
+  "authoritative_substrates": 884,
+  "contexts": {
+    "Artery": {
+      "jsonl": "data/cohorts/inter_Artery.jsonl",
+      "jsonl_sha256": "f241d838ad5a0ef6532d26a7f303fee645b6466a59c82a7a12c9ec0695c8ee29",
+      "levels": "data/cohorts/inter_Artery_levels.csv",
+      "levels_sha256": "c8f2fdb4314f2b19e61a332d88a5e5d5edfc47a82f3ba0090dc44acd326248f0",
+      "source_parts": [
+        {
+          "bytes": 99694516,
+          "file": "Artery_Site_in_PairAlu_cov100.csv.part-00000",
+          "sha256": "40d4ff04ae499e64f8f5437c9b865ac861de1ae9c83c579aa43b09942fbc6bf3"
+        },
+        {
+          "bytes": 16349248,
+          "file": "Artery_Site_in_PairAlu_cov100.csv.part-00001",
+          "sha256": "39d9cf205872a90c894a46e92be7de46f20bc7396d56184dc003b64cd986f0bd"
+        }
+      ],
+      "source_rows": 92871,
+      "source_rows_with_numeric_level": 92871,
+      "status": "PASS",
+      "test_intermediate_rows": 6638,
+      "test_intermediate_substrates": 149
+    },
+    "Brain": {
+      "jsonl": "data/cohorts/inter_Brain.jsonl",
+      "jsonl_sha256": "ca858a685eed8d0e645be233368c19de4df14730b8c1d354333daba0436a0960",
+      "levels": "data/cohorts/inter_Brain_levels.csv",
+      "levels_sha256": "cea0978060b4abd43ae630c67ce3b02e5ada63782b213ffbd20261ac7655418c",
+      "source_parts": [
+        {
+          "bytes": 99694526,
+          "file": "Brain_Site_in_PairAlu_cov100.csv.part-00000",
+          "sha256": "1a3b53eede43da1d281d67c72a4363084bd14c546f69b4b7611b4157689cdc2b"
+        },
+        {
+          "bytes": 12545432,
+          "file": "Brain_Site_in_PairAlu_cov100.csv.part-00001",
+          "sha256": "52b6e1935c401cb153dc835a7dd730121b68c874d3bdaa304baaf8a33e926507"
+        }
+      ],
+      "source_rows": 89849,
+      "source_rows_with_numeric_level": 89849,
+      "status": "PASS",
+      "test_intermediate_rows": 6122,
+      "test_intermediate_substrates": 148
+    },
+    "Combined": {
+      "jsonl": "data/cohorts/inter_Combined.jsonl",
+      "jsonl_sha256": "5d82c40149e70addefc4e1efc8d4550a426d498d6cf2d2c741a0529d22f9227a",
+      "levels": "data/cohorts/inter_Combined_levels.csv",
+      "levels_sha256": "59c013b221df246044b915f3685ea298b53547fe162aa122ed145cd01d4ede79",
+      "source_parts": [
+        {
+          "bytes": 101823809,
+          "file": "Combined_Site_in_PairAlu_cov100.csv.part-00000",
+          "sha256": "1e7b5fcd1c545ee3988acd563972b3c76de5cfe3dffe4afec50cffab75fa3e4f"
+        },
+        {
+          "bytes": 101823472,
+          "file": "Combined_Site_in_PairAlu_cov100.csv.part-00001",
+          "sha256": "389dd76690441dfac9adc50913d18db0607a324592d7a8b5835771197cdf8afe"
+        },
+        {
+          "bytes": 99761067,
+          "file": "Combined_Site_in_PairAlu_cov100.csv.part-00002",
+          "sha256": "d6391b13d811d1c16c2be222064e494223b80d21382a7d7c7fb821263224559e"
+        }
+      ],
+      "source_rows": 117520,
+      "source_rows_with_numeric_level": 117520,
+      "status": "PASS",
+      "test_intermediate_rows": 8286,
+      "test_intermediate_substrates": 178
+    },
+    "Liver": {
+      "jsonl": "data/cohorts/inter_Liver.jsonl",
+      "jsonl_sha256": "d8100eecc2afdf63f55931b4f4e51138c09e4e835a14dd303556d8c2867e1b56",
+      "levels": "data/cohorts/inter_Liver_levels.csv",
+      "levels_sha256": "6f5eec1041f66adf43940b76ae40ca024bb3b904478e99992d0e86de5ecebc72",
+      "source_parts": [
+        {
+          "bytes": 87271720,
+          "file": "Liver_Site_in_PairAlu_cov100.csv",
+          "sha256": "c906bf497757012fe573c75934ed6da03acfe0207a9fa2e40445e358b4d2cc19"
+        }
+      ],
+      "source_rows": 69925,
+      "source_rows_with_numeric_level": 69925,
+      "status": "PASS",
+      "test_intermediate_rows": 4893,
+      "test_intermediate_substrates": 128
+    },
+    "MuscleSkeletal": {
+      "jsonl": "data/cohorts/inter_MuscleSkeletal.jsonl",
+      "jsonl_sha256": "67078ac89d0a7887a9794682b6528f146602e6617db490aeff8485d4b22e927b",
+      "levels": "data/cohorts/inter_MuscleSkeletal_levels.csv",
+      "levels_sha256": "c898bee8431f05b48957425a444f49f5e4da1226792be8905a5de0ee427a92ee",
+      "source_parts": [
+        {
+          "bytes": 99694606,
+          "file": "MuscleSkeletal_Site_in_PairAlu_cov100.csv.part-00000",
+          "sha256": "8fb41197e996a1f508ea3a56a2dd653028b55b7e3f8f47a78e08140aa352520b"
+        },
+        {
+          "bytes": 11921948,
+          "file": "MuscleSkeletal_Site_in_PairAlu_cov100.csv.part-00001",
+          "sha256": "c510341025f94cc4e9b5480818b375501b459a53cf45bb843753d510aec293dc"
+        }
+      ],
+      "source_rows": 89459,
+      "source_rows_with_numeric_level": 89459,
+      "status": "PASS",
+      "test_intermediate_rows": 4549,
+      "test_intermediate_substrates": 144
+    }
+  },
+  "run0_distribution_sha256": "933c7decb2af45a05dcbd426557f71e610d49f5ceb6162286d992866ce4e3962",
+  "status": "PASS",
+  "total_test_intermediate_rows": 30488
+}

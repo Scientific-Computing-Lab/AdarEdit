@@ -1,0 +1,57 @@
+{
+  "best_epoch": 781,
+  "bio_ablation": "full",
+  "context": "Ptychodera",
+  "data_sha256": {
+    "test": "1885921f545f51630adec8a0b78b20efc5b568ac2d441b4136bc6999f9fbfc6f",
+    "train": "2e9e958dae1516163e7166c2221a51534370556ab1f12fbe9a0d9a3c67da4b25",
+    "valid": "1baac3a47903917ea9e2834f9e6dd968529639e000d8f903e1cade1202885bba"
+  },
+  "epochs_requested": 1000,
+  "graph_version": "graph_v2",
+  "paths": {
+    "best_checkpoint": "runs/bioaware_Ptychodera/checkpoints/best.pth",
+    "curves_npz": "runs/bioaware_Ptychodera/test_curves.npz",
+    "graph_cache_dir": "cache/single/bioaware/Ptychodera",
+    "history_csv": "runs/bioaware_Ptychodera/history.csv",
+    "latest_checkpoint": "runs/bioaware_Ptychodera/checkpoints/last.pth",
+    "predictions_csv": "runs/bioaware_Ptychodera/test_predictions.csv",
+    "predictions_jsonl": "runs/bioaware_Ptychodera/test_predictions.jsonl",
+    "run_dir": "runs/bioaware_Ptychodera"
+  },
+  "seed": 42,
+  "selection_split": "valid",
+  "sizes": {
+    "test": 1634,
+    "train": 4831,
+    "valid": 1213
+  },
+  "test_metrics": {
+    "acc": 0.7258261933904528,
+    "auc": 0.8097112742330133,
+    "auprc": 0.820392052815496,
+    "f1": 0.7562568008705114,
+    "n": 1634,
+    "positive_n": 875,
+    "precision": 0.7217030114226376,
+    "recall": 0.7942857142857143,
+    "specificity": 0.6469038208168643,
+    "threshold": 0.1
+  },
+  "test_selection_metrics": null,
+  "test_used_during_training": false,
+  "tissue": "Ptychodera",
+  "valid_selection_metrics": {
+    "acc": 0.7403132728771641,
+    "auc": 0.7968273805608542,
+    "auprc": 0.7586632122587189,
+    "f1": 0.7323704333050127,
+    "n": 1213,
+    "positive_n": 552,
+    "precision": 0.6896,
+    "recall": 0.7807971014492754,
+    "specificity": 0.7065052950075643,
+    "threshold": 0.1
+  },
+  "variant": "bioaware"
+}

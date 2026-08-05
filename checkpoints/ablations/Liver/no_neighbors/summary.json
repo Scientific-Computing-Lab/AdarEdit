@@ -1,0 +1,57 @@
+{
+  "best_epoch": 995,
+  "bio_ablation": "no_neighbors",
+  "context": "Liver",
+  "data_sha256": {
+    "test": "d261e04803d5fadb06ea3ec6cbae8c225ab630e5bc8c33272d18ae0ff11362af",
+    "train": "a6c22c5d2cbab0ce4b11fc51e37f216a4936015af4af0653a0806f64db3a11a6",
+    "valid": "7de928eee98b6e7a15514e6d06959ff9dd61da882b01c624d1485cb1cf71994e"
+  },
+  "epochs_requested": 1000,
+  "graph_version": "graph_v2",
+  "paths": {
+    "best_checkpoint": "runs/ablations/Liver/no_neighbors/checkpoints/best.pth",
+    "curves_npz": "runs/ablations/Liver/no_neighbors/test_curves.npz",
+    "graph_cache_dir": "cache/single/ablations/Liver/no_neighbors",
+    "history_csv": "runs/ablations/Liver/no_neighbors/history.csv",
+    "latest_checkpoint": "runs/ablations/Liver/no_neighbors/checkpoints/last.pth",
+    "predictions_csv": "runs/ablations/Liver/no_neighbors/test_predictions.csv",
+    "predictions_jsonl": "runs/ablations/Liver/no_neighbors/test_predictions.jsonl",
+    "run_dir": "runs/ablations/Liver/no_neighbors"
+  },
+  "seed": 42,
+  "selection_split": "valid",
+  "sizes": {
+    "test": 4150,
+    "train": 12485,
+    "valid": 3024
+  },
+  "test_metrics": {
+    "acc": 0.771566265060241,
+    "auc": 0.8560294164903983,
+    "auprc": 0.878622903422125,
+    "f1": 0.7909131010145567,
+    "n": 4150,
+    "positive_n": 2346,
+    "precision": 0.8194698354661791,
+    "recall": 0.7642796248934356,
+    "specificity": 0.7810421286031042,
+    "threshold": 0.4
+  },
+  "test_selection_metrics": null,
+  "test_used_during_training": false,
+  "tissue": "Liver",
+  "valid_selection_metrics": {
+    "acc": 0.7893518518518519,
+    "auc": 0.8651716700732037,
+    "auprc": 0.8442353547611943,
+    "f1": 0.7805718222528419,
+    "n": 3024,
+    "positive_n": 1378,
+    "precision": 0.7429508196721312,
+    "recall": 0.8222060957910015,
+    "specificity": 0.7618469015795869,
+    "threshold": 0.4
+  },
+  "variant": "bioaware"
+}

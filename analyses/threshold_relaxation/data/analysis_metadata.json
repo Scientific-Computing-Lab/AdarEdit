@@ -1,0 +1,118 @@
+{
+  "aggregation": {
+    "score_rows": 10,
+    "score_table_sha256": "2aba9eaac3b242819beeece0259fa912949fbe831b0a9c8abe4b321f7bac8646",
+    "threshold_rows": 10,
+    "threshold_table_sha256": "b6991dbec94a370bc576431c4391c3dc4191247732f340a90ab81a1d902f08b9"
+  },
+  "analysis": "Supplementary Figure S1 editing-level continuum and threshold relaxation",
+  "canonical_inference_fidelity": [
+    {
+      "context": "Artery",
+      "labels_match": true,
+      "max_abs_error": 4.112720489501953e-06,
+      "mean_abs_error": 5.596425580776959e-07,
+      "sites": 64,
+      "status": "PASS",
+      "tolerance": 0.001,
+      "variant": "baseline"
+    },
+    {
+      "context": "Artery",
+      "labels_match": true,
+      "max_abs_error": 0.00021094083786010742,
+      "mean_abs_error": 1.691702739205971e-05,
+      "sites": 64,
+      "status": "PASS",
+      "tolerance": 0.001,
+      "variant": "bioaware"
+    },
+    {
+      "context": "Brain",
+      "labels_match": true,
+      "max_abs_error": 3.069639205932617e-06,
+      "mean_abs_error": 6.677987585188697e-07,
+      "sites": 64,
+      "status": "PASS",
+      "tolerance": 0.001,
+      "variant": "baseline"
+    },
+    {
+      "context": "Brain",
+      "labels_match": true,
+      "max_abs_error": 0.00027686357498168945,
+      "mean_abs_error": 8.467469520268202e-06,
+      "sites": 64,
+      "status": "PASS",
+      "tolerance": 0.001,
+      "variant": "bioaware"
+    },
+    {
+      "context": "Liver",
+      "labels_match": true,
+      "max_abs_error": 4.112720489501953e-06,
+      "mean_abs_error": 5.641486495767413e-07,
+      "sites": 64,
+      "status": "PASS",
+      "tolerance": 0.001,
+      "variant": "baseline"
+    },
+    {
+      "context": "Liver",
+      "labels_match": true,
+      "max_abs_error": 2.831220626886566e-06,
+      "mean_abs_error": 3.387531251154825e-07,
+      "sites": 64,
+      "status": "PASS",
+      "tolerance": 0.001,
+      "variant": "bioaware"
+    },
+    {
+      "context": "MuscleSkeletal",
+      "labels_match": true,
+      "max_abs_error": 1.5199184417169498e-06,
+      "mean_abs_error": 3.244995241319046e-07,
+      "sites": 64,
+      "status": "PASS",
+      "tolerance": 0.001,
+      "variant": "baseline"
+    },
+    {
+      "context": "MuscleSkeletal",
+      "labels_match": true,
+      "max_abs_error": 1.0788440704345703e-05,
+      "mean_abs_error": 3.349131732673061e-07,
+      "sites": 64,
+      "status": "PASS",
+      "tolerance": 0.001,
+      "variant": "bioaware"
+    },
+    {
+      "context": "Combined",
+      "labels_match": true,
+      "max_abs_error": 4.5299530029296875e-06,
+      "mean_abs_error": 7.181063210821822e-07,
+      "sites": 64,
+      "status": "PASS",
+      "tolerance": 0.001,
+      "variant": "baseline"
+    },
+    {
+      "context": "Combined",
+      "labels_match": true,
+      "max_abs_error": 0.0006014704704284668,
+      "mean_abs_error": 4.406672969549914e-05,
+      "sites": 64,
+      "status": "PASS",
+      "tolerance": 0.001,
+      "variant": "bioaware"
+    }
+  ],
+  "device": "cpu",
+  "intermediate_rows": 30488,
+  "model_site_scores": 60976,
+  "python": "3.9.25 (main, Jul 13 2026, 00:00:00) \n[GCC 11.5.0 20240719 (Red Hat 11.5.0-14)]",
+  "status": "PASS",
+  "torch": "1.11.0+cu102",
+  "torch_geometric": "2.0.4"
+}

@@ -1,0 +1,230 @@
+[
+  {
+    "species": "Octopus bimaculoides",
+    "source_file": "Octopus_prebalancing.csv.gz",
+    "source_sha256": "6a1e94248be006d3f33a6569042f9e0638d8f3aa2aa509938825f79d19c609aa",
+    "positive_definition": "EditingLevel > 0.15",
+    "negative_definition": "EditingLevel < 0.001",
+    "distance_definition": "minimum absolute genomic distance to a benchmark-positive site in the same dsRNA region and arm",
+    "positive_spacing_definition": "distance between consecutive benchmark-positive sites in the same dsRNA region and arm",
+    "total_rows": 63964,
+    "parsed_rows": 63964,
+    "regions_total": 1018,
+    "label_positive": 16600,
+    "label_negative": 30655,
+    "label_intermediate": 16709,
+    "negatives_with_positive_in_region_arm": 26436,
+    "negatives_without_positive_in_region_arm": 4219,
+    "defined_distance_min": 1,
+    "defined_distance_median": 18.0,
+    "defined_distance_mean": 31.52685731578151,
+    "positive_spacing_min": 1,
+    "positive_spacing_median": 4.0,
+    "n_positive_spacings": 15095,
+    "threshold_rows": [
+      {
+        "threshold_bp": 5,
+        "negatives_within": 5006,
+        "negatives_beyond_or_without_positive": 25649,
+        "frac_within_all_negatives": 0.16330125591257544
+      },
+      {
+        "threshold_bp": 10,
+        "negatives_within": 8664,
+        "negatives_beyond_or_without_positive": 21991,
+        "frac_within_all_negatives": 0.28262926113195236
+      },
+      {
+        "threshold_bp": 20,
+        "negatives_within": 14229,
+        "negatives_beyond_or_without_positive": 16426,
+        "frac_within_all_negatives": 0.46416571521774586
+      },
+      {
+        "threshold_bp": 30,
+        "negatives_within": 17859,
+        "negatives_beyond_or_without_positive": 12796,
+        "frac_within_all_negatives": 0.5825803294731692
+      }
+    ],
+    "distance_bins": [
+      {
+        "bin": "\u22645",
+        "count": 5006,
+        "fraction_all_negatives": 0.16330125591257544
+      },
+      {
+        "bin": "6\u201310",
+        "count": 3658,
+        "fraction_all_negatives": 0.11932800521937693
+      },
+      {
+        "bin": "11\u201320",
+        "count": 5565,
+        "fraction_all_negatives": 0.1815364540857935
+      },
+      {
+        "bin": "21\u201330",
+        "count": 3630,
+        "fraction_all_negatives": 0.11841461425542325
+      },
+      {
+        "bin": ">30 or no positive",
+        "count": 12796,
+        "fraction_all_negatives": 0.4174196705268309
+      }
+    ]
+  },
+  {
+    "species": "Ptychodera flava",
+    "source_file": "Ptychodera_prebalancing.csv.gz",
+    "source_sha256": "d6e9a8ec61a56959e7de96cfcf58d9c9aaef32fae82af5c2e0d6373c201863f6",
+    "positive_definition": "EditingLevel > 0.15",
+    "negative_definition": "EditingLevel < 0.001",
+    "distance_definition": "minimum absolute genomic distance to a benchmark-positive site in the same dsRNA region and arm",
+    "positive_spacing_definition": "distance between consecutive benchmark-positive sites in the same dsRNA region and arm",
+    "total_rows": 20270,
+    "parsed_rows": 20270,
+    "regions_total": 372,
+    "label_positive": 3839,
+    "label_negative": 13083,
+    "label_intermediate": 3348,
+    "negatives_with_positive_in_region_arm": 10933,
+    "negatives_without_positive_in_region_arm": 2150,
+    "defined_distance_min": 1,
+    "defined_distance_median": 28.0,
+    "defined_distance_mean": 44.32616848074636,
+    "positive_spacing_min": 1,
+    "positive_spacing_median": 4.0,
+    "n_positive_spacings": 3349,
+    "threshold_rows": [
+      {
+        "threshold_bp": 5,
+        "negatives_within": 1371,
+        "negatives_beyond_or_without_positive": 11712,
+        "frac_within_all_negatives": 0.10479247878926852
+      },
+      {
+        "threshold_bp": 10,
+        "negatives_within": 2480,
+        "negatives_beyond_or_without_positive": 10603,
+        "frac_within_all_negatives": 0.18955896965527785
+      },
+      {
+        "threshold_bp": 20,
+        "negatives_within": 4381,
+        "negatives_beyond_or_without_positive": 8702,
+        "frac_within_all_negatives": 0.33486203470152104
+      },
+      {
+        "threshold_bp": 30,
+        "negatives_within": 5783,
+        "negatives_beyond_or_without_positive": 7300,
+        "frac_within_all_negatives": 0.44202400061148056
+      }
+    ],
+    "distance_bins": [
+      {
+        "bin": "\u22645",
+        "count": 1371,
+        "fraction_all_negatives": 0.10479247878926852
+      },
+      {
+        "bin": "6\u201310",
+        "count": 1109,
+        "fraction_all_negatives": 0.08476649086600932
+      },
+      {
+        "bin": "11\u201320",
+        "count": 1901,
+        "fraction_all_negatives": 0.1453030650462432
+      },
+      {
+        "bin": "21\u201330",
+        "count": 1402,
+        "fraction_all_negatives": 0.1071619659099595
+      },
+      {
+        "bin": ">30 or no positive",
+        "count": 7300,
+        "fraction_all_negatives": 0.5579759993885195
+      }
+    ]
+  },
+  {
+    "species": "Strongylocentrotus purpuratus",
+    "source_file": "Strongylocentrotus_prebalancing.csv.gz",
+    "source_sha256": "4cd73a168cd6cb3c8ac3c6bce5d61c67103befbd49d3f6b380ee28ffddad81fd",
+    "positive_definition": "EditingLevel > 0.15",
+    "negative_definition": "EditingLevel < 0.001",
+    "distance_definition": "minimum absolute genomic distance to a benchmark-positive site in the same dsRNA region and arm",
+    "positive_spacing_definition": "distance between consecutive benchmark-positive sites in the same dsRNA region and arm",
+    "total_rows": 41511,
+    "parsed_rows": 41511,
+    "regions_total": 695,
+    "label_positive": 6223,
+    "label_negative": 27943,
+    "label_intermediate": 7345,
+    "negatives_with_positive_in_region_arm": 22233,
+    "negatives_without_positive_in_region_arm": 5710,
+    "defined_distance_min": 1,
+    "defined_distance_median": 30.0,
+    "defined_distance_mean": 49.80160122340665,
+    "positive_spacing_min": 1,
+    "positive_spacing_median": 4.0,
+    "n_positive_spacings": 5314,
+    "threshold_rows": [
+      {
+        "threshold_bp": 5,
+        "negatives_within": 2683,
+        "negatives_beyond_or_without_positive": 25260,
+        "frac_within_all_negatives": 0.09601689152918441
+      },
+      {
+        "threshold_bp": 10,
+        "negatives_within": 4670,
+        "negatives_beyond_or_without_positive": 23273,
+        "frac_within_all_negatives": 0.16712593493898292
+      },
+      {
+        "threshold_bp": 20,
+        "negatives_within": 8270,
+        "negatives_beyond_or_without_positive": 19673,
+        "frac_within_all_negatives": 0.2959596321082203
+      },
+      {
+        "threshold_bp": 30,
+        "negatives_within": 11218,
+        "negatives_beyond_or_without_positive": 16725,
+        "frac_within_all_negatives": 0.4014601152345847
+      }
+    ],
+    "distance_bins": [
+      {
+        "bin": "\u22645",
+        "count": 2683,
+        "fraction_all_negatives": 0.09601689152918441
+      },
+      {
+        "bin": "6\u201310",
+        "count": 1987,
+        "fraction_all_negatives": 0.07110904340979853
+      },
+      {
+        "bin": "11\u201320",
+        "count": 3600,
+        "fraction_all_negatives": 0.12883369716923737
+      },
+      {
+        "bin": "21\u201330",
+        "count": 2948,
+        "fraction_all_negatives": 0.10550048312636438
+      },
+      {
+        "bin": ">30 or no positive",
+        "count": 16725,
+        "fraction_all_negatives": 0.5985398847654153
+      }
+    ]
+  }
+]

@@ -1,0 +1,44 @@
+Attention-only XGBoost probe
+============================
+XGBoost version: 1.7.5
+Features: 101 positions (-50..50)
+XGBoost fit/SHAP split: validation, n=3793, duplexes=139
+Final evaluation split: test, n=4864, duplexes=179
+Validation/test pair-disjoint verification: PASS
+
+[1] Fit all-position XGBoost on validation
+  valid: acc=1.0000 prec=1.0000 rec=1.0000 f1=1.0000 auroc=1.0000
+  test: acc=0.7956 prec=0.8074 rec=0.7991 f1=0.8032 auroc=0.8772
+
+[2] Rank positions by mean absolute SHAP on validation
+   1. pos_1 (validation mean |SHAP|=0.903565)
+   2. pos_0 (validation mean |SHAP|=0.707526)
+   3. pos_-2 (validation mean |SHAP|=0.508108)
+   4. pos_-1 (validation mean |SHAP|=0.311716)
+   5. pos_22 (validation mean |SHAP|=0.225365)
+   6. pos_2 (validation mean |SHAP|=0.225157)
+   7. pos_12 (validation mean |SHAP|=0.220172)
+   8. pos_13 (validation mean |SHAP|=0.218579)
+   9. pos_24 (validation mean |SHAP|=0.202060)
+  10. pos_20 (validation mean |SHAP|=0.197669)
+  11. pos_21 (validation mean |SHAP|=0.181824)
+  12. pos_11 (validation mean |SHAP|=0.164040)
+  13. pos_-3 (validation mean |SHAP|=0.154460)
+  14. pos_19 (validation mean |SHAP|=0.150568)
+  15. pos_14 (validation mean |SHAP|=0.149134)
+  16. pos_33 (validation mean |SHAP|=0.144358)
+  17. pos_16 (validation mean |SHAP|=0.134944)
+  18. pos_15 (validation mean |SHAP|=0.124948)
+  19. pos_-18 (validation mean |SHAP|=0.122428)
+  20. pos_25 (validation mean |SHAP|=0.113289)
+
+[3] Fit top-20 XGBoost on validation
+  valid: acc=0.9997 prec=1.0000 rec=0.9995 f1=0.9997 auroc=1.0000
+  test: acc=0.7837 prec=0.7887 rec=0.7999 f1=0.7943 auroc=0.8654
+
+[4] Frozen GAT metrics on the same splits
+  valid: acc=0.8700 prec=0.8488 rec=0.8964 f1=0.8720 auroc=0.9370
+  test: acc=0.8557 prec=0.8334 rec=0.9043 f1=0.8674 auroc=0.9331
+
+Saved metrics: data/metrics_L2.json
+Saved models: models/xgboost_all_positions_L2.json, models/xgboost_top20_L2.json

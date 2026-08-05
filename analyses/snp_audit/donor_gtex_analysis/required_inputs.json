@@ -1,0 +1,30 @@
+{
+  "analysis": "GTEx empirical SNP overlap at labeled Alu editing sites",
+  "cutoffs": {
+    "negative_cutoff_percent": 1.0,
+    "positive_cutoff_percent": 15.0
+  },
+  "evaluation_only": true,
+  "required_inputs": [
+    {
+      "path": "data/raw/editing_levels (hosted on Google Drive; see repo README)",
+      "role": "Existing GTEx-derived tissue editing tables used to rebuild the labeled Alu-site inventory."
+    },
+    {
+      "path": "data/raw/alu_pairs/Pair_Alu_withStrand.bed",
+      "role": "Existing Alu-pair BED used to recover pair IDs and strand orientation."
+    },
+    {
+      "path": "EXTERNAL controlled-access: GTEx v8 donor genotype VCF (dbGaP/AnVIL)",
+      "required_sidecars": [
+        "EXTERNAL controlled-access: GTEx v8 donor genotype VCF (dbGaP/AnVIL).tbi or EXTERNAL controlled-access: GTEx v8 donor genotype VCF (dbGaP/AnVIL).csi when using a compressed VCF"
+      ],
+      "role": "Indexed GTEx genotype VCF/BCF used for the empirical donor-aware overlap scan."
+    }
+  ],
+  "variant_modes_reported": [
+    "direct genomic A/G at the site coordinate",
+    "strand-aware transcript-equivalent A/G (A/G on plus-strand sites, T/C on minus-strand sites)"
+  ],
+  "workspace_root": "."
+}

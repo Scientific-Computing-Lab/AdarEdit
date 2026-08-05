@@ -1,0 +1,137 @@
+{
+  "carrier_bins": [
+    {
+      "carrier_bin": "1 donor",
+      "fraction_of_carrier_positive_sites": 0.3815789473684211,
+      "site_count": 58
+    },
+    {
+      "carrier_bin": "2-5 donors",
+      "fraction_of_carrier_positive_sites": 0.24342105263157895,
+      "site_count": 37
+    },
+    {
+      "carrier_bin": "6-20 donors",
+      "fraction_of_carrier_positive_sites": 0.125,
+      "site_count": 19
+    },
+    {
+      "carrier_bin": ">20 donors",
+      "fraction_of_carrier_positive_sites": 0.25,
+      "site_count": 38
+    }
+  ],
+  "genotype_summary": {
+    "contig_prefix": "chr",
+    "donors_with_any_direct_ag_site": 838,
+    "donors_with_any_transcript_equivalent_site": 838,
+    "donors_with_any_variant_site": 838,
+    "reference_header": "Homo_sapiens_assembly38 (GRCh38/hg38)",
+    "sample_count": 838,
+    "sites_with_any_variant_carrier": 1520,
+    "sites_with_any_variant_record": 1520,
+    "sites_with_direct_ag_carrier": 167,
+    "sites_with_direct_ag_variant": 167,
+    "sites_with_transcript_equivalent_carrier": 152,
+    "sites_with_transcript_equivalent_variant": 152,
+    "transcript_equivalent_af_max": 0.9051312649164678,
+    "transcript_equivalent_af_median": 0.0017899761336515514,
+    "transcript_equivalent_af_p95": 0.5283412887828155
+  },
+  "inputs": {
+    "bed": "data/raw/alu_pairs/Pair_Alu_withStrand.bed",
+    "data_dir": "data/raw/editing_levels (hosted on Google Drive; see repo README)",
+    "genotype_vcf": "EXTERNAL controlled-access: GTEx v8 donor genotype VCF (dbGaP/AnVIL)"
+  },
+  "inventory_summary": {
+    "negative_tissue_rows": 254303,
+    "positive_tissue_rows": 57390,
+    "sites_in_multiple_tissues": 75899,
+    "tissues": [
+      "Artery",
+      "Brain",
+      "Combined",
+      "Liver",
+      "MuscleSkeletal"
+    ],
+    "total_labeled_tissue_rows": 311693,
+    "unique_negative_only_sites": 78128,
+    "unique_positive_sites_any_tissue": 22249,
+    "unique_sites": 100377
+  },
+  "label_summary": [
+    {
+      "any_coordinate_carrier_pct": 0.01370848128005753,
+      "any_coordinate_carrier_sites": 305,
+      "any_coordinate_variant_pct": 0.01370848128005753,
+      "any_coordinate_variant_sites": 305,
+      "direct_ag_carrier_pct": 0.0013483752078745112,
+      "direct_ag_carrier_sites": 30,
+      "direct_ag_variant_pct": 0.0013483752078745112,
+      "direct_ag_variant_sites": 30,
+      "label_class": "positive_any_tissue",
+      "total_sites": 22249,
+      "transcript_equivalent_carrier_pct": 0.0017528877702368646,
+      "transcript_equivalent_carrier_sites": 39,
+      "transcript_equivalent_carrier_sites_af_ge_0_001": 22,
+      "transcript_equivalent_carrier_sites_af_ge_0_01": 7,
+      "transcript_equivalent_carrier_sites_af_ge_0_05": 4,
+      "transcript_equivalent_variant_pct": 0.0017528877702368646,
+      "transcript_equivalent_variant_sites": 39
+    },
+    {
+      "any_coordinate_carrier_pct": 0.015551402826131476,
+      "any_coordinate_carrier_sites": 1215,
+      "any_coordinate_variant_pct": 0.015551402826131476,
+      "any_coordinate_variant_sites": 1215,
+      "direct_ag_carrier_pct": 0.001753532664345689,
+      "direct_ag_carrier_sites": 137,
+      "direct_ag_variant_pct": 0.001753532664345689,
+      "direct_ag_variant_sites": 137,
+      "label_class": "negative_only",
+      "total_sites": 78128,
+      "transcript_equivalent_carrier_pct": 0.0014463444603727217,
+      "transcript_equivalent_carrier_sites": 113,
+      "transcript_equivalent_carrier_sites_af_ge_0_001": 72,
+      "transcript_equivalent_carrier_sites_af_ge_0_01": 34,
+      "transcript_equivalent_carrier_sites_af_ge_0_05": 26,
+      "transcript_equivalent_variant_pct": 0.0014463444603727217,
+      "transcript_equivalent_variant_sites": 113
+    }
+  ],
+  "overall_summary": {
+    "any_coordinate_carrier_pct": 0.015142911224682946,
+    "any_coordinate_carrier_sites": 1520,
+    "any_coordinate_variant_pct": 0.015142911224682946,
+    "any_coordinate_variant_sites": 1520,
+    "direct_ag_carrier_pct": 0.0016637277463960867,
+    "direct_ag_carrier_sites": 167,
+    "direct_ag_overlap_pct": 0.0016637277463960867,
+    "direct_ag_overlap_sites": 167,
+    "ever_positive_sites": 22249,
+    "negative_site_transcript_equivalent_carrier_sites": 113,
+    "positive_site_transcript_equivalent_carrier_sites": 39,
+    "positive_site_transcript_equivalent_overlap_sites": 39,
+    "scope": "ALL",
+    "total_sites": 100377,
+    "transcript_equivalent_carrier_pct": 0.0015142911224682945,
+    "transcript_equivalent_carrier_sites": 152,
+    "transcript_equivalent_carrier_sites_af_ge_0_001": 94,
+    "transcript_equivalent_carrier_sites_af_ge_0_01": 41,
+    "transcript_equivalent_carrier_sites_af_ge_0_05": 30,
+    "transcript_equivalent_overlap_pct": 0.0015142911224682945,
+    "transcript_equivalent_overlap_sites": 152
+  },
+  "public_fallback_summary": {
+    "direct_ag_overlap_pct": 0.0448409496199328,
+    "direct_ag_overlap_sites": 4501,
+    "positive_sites_any_tissue": 22249,
+    "scope": "ALL",
+    "total_sites": 100377,
+    "transcript_equivalent_overlap_pct": 0.0540860954202656,
+    "transcript_equivalent_overlap_sites": 5429,
+    "transcript_equivalent_overlap_sites_gnomad_ge_0_001": 321,
+    "transcript_equivalent_overlap_sites_gnomad_ge_0_01": 126,
+    "transcript_equivalent_overlap_sites_gnomad_ge_0_05": 68
+  }
+}
