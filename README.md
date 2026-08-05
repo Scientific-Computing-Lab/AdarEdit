@@ -1,4 +1,4 @@
-# AdarEdit — reproducibility repository
+# AdarEdit
 
 **Structure-aware Graph Learning Predicts RNA Editability Across Tissues and Species**
 
