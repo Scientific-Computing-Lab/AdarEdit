@@ -1,0 +1,5 @@
+carrier_bin	site_count	fraction_of_carrier_positive_sites
+1 donor	58	0.3815789473684211
+2-5 donors	37	0.24342105263157895
+6-20 donors	19	0.125
+>20 donors	38	0.25

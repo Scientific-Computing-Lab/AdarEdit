@@ -1,0 +1,34 @@
+{
+  "description": "Filtered, deduplicated, pre-balancing species tables used to construct the cross-species benchmark and to recompute Supplementary Fig. S5a.",
+  "stage": "After dsRNA construction, length >= 200 and coverage >= 100 filtering, and deduplication; before class balancing and train/validation/test splitting.",
+  "source_study": "Zhang et al., Cell Reports (2023), with the processing workflow documented in data_construction/species/.",
+  "files": [
+    {
+      "species": "Octopus bimaculoides",
+      "file": "Octopus_prebalancing.csv.gz",
+      "rows_excluding_header": 63964,
+      "compressed_bytes": 1305882,
+      "uncompressed_bytes": 51425148,
+      "compressed_sha256": "6a1e94248be006d3f33a6569042f9e0638d8f3aa2aa509938825f79d19c609aa",
+      "uncompressed_sha256": "28e4fdd1503b09629f54a068fe7651d3f87496818d637e9bd2e641b665216518"
+    },
+    {
+      "species": "Ptychodera flava",
+      "file": "Ptychodera_prebalancing.csv.gz",
+      "rows_excluding_header": 20270,
+      "compressed_bytes": 397308,
+      "uncompressed_bytes": 17042895,
+      "compressed_sha256": "d6e9a8ec61a56959e7de96cfcf58d9c9aaef32fae82af5c2e0d6373c201863f6",
+      "uncompressed_sha256": "351f587cda20218b46d86e99a49cdd243ea2a3f6fb04e013137002b4d687f100"
+    },
+    {
+      "species": "Strongylocentrotus purpuratus",
+      "file": "Strongylocentrotus_prebalancing.csv.gz",
+      "rows_excluding_header": 41511,
+      "compressed_bytes": 814299,
+      "uncompressed_bytes": 37739779,
+      "compressed_sha256": "4cd73a168cd6cb3c8ac3c6bce5d61c67103befbd49d3f6b380ee28ffddad81fd",
+      "uncompressed_sha256": "a7bb1973ce0790ce1143e00caf21c667759660edc468480034651bfdf464207f"
+    }
+  ]
+}

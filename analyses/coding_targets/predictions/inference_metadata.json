@@ -1,0 +1,28 @@
+{
+  "analysis": "coding-target out-of-domain inference",
+  "coding_labels_used_as_model_inputs": false,
+  "device": "cpu",
+  "genes": [
+    "AJUBA",
+    "BLCAP",
+    "FLNA",
+    "TTYH2",
+    "NEIL1",
+    "GRIA2",
+    "GRIA3"
+  ],
+  "inference_only": true,
+  "tissues": [
+    "Brain",
+    "Combined",
+    "Liver"
+  ],
+  "torch_version": "1.11.0+cu102",
+  "training_or_fine_tuning": false,
+  "variants": [
+    "baseline",
+    "bioaware",
+    "joint_baseline",
+    "joint"
+  ]
+}

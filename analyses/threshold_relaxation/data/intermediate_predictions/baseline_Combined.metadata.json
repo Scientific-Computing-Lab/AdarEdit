@@ -1,0 +1,18 @@
+{
+  "analysis": "Supplementary Figure S1 intermediate-site inference",
+  "checkpoint": "checkpoints/baseline_Combined/best.pth",
+  "checkpoint_sha256": "aa6202b80f21d003413bb9fbfa94c09fea56fc319a0a5de8b564803e229f02cf",
+  "cohort": "data/cohorts/inter_Combined.jsonl",
+  "cohort_sha256": "5d82c40149e70addefc4e1efc8d4550a426d498d6cf2d2c741a0529d22f9227a",
+  "context": "Combined",
+  "graph_version": "graph_v2",
+  "mean_score": 0.5698513066296232,
+  "output": "data/intermediate_predictions/baseline_Combined.csv",
+  "output_sha256": "e880e3f3843020d11422c2e1f85b7b2d1373973e37e30ff600984ca71f9c22f9",
+  "python": "3.9.25",
+  "rows": 8286,
+  "status": "PASS",
+  "torch": "1.11.0+cu102",
+  "torch_geometric": "2.0.4",
+  "variant": "baseline"
+}

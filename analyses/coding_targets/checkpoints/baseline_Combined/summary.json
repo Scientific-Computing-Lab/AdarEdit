@@ -1,0 +1,57 @@
+{
+  "best_epoch": 668,
+  "bio_ablation": "full",
+  "context": "Combined",
+  "data_sha256": {
+    "test": "8228d28c4b92afe4d014d0fa9549a586ebc8acf4677b2bc5b29002df6bdb1dbf",
+    "train": "9afc6cbd04717b5f3ed66dade7c18d70722322f83ff1f5280fb9986806466f0a",
+    "valid": "f82984631df749fd5ae2cfbd1cca0f5290eaf21c23d9df418baf384add330509"
+  },
+  "epochs_requested": 1000,
+  "graph_version": "graph_v2",
+  "paths": {
+    "best_checkpoint": "runs/baseline_Combined/checkpoints/best.pth",
+    "curves_npz": "runs/baseline_Combined/test_curves.npz",
+    "graph_cache_dir": "cache/single/baseline/Combined",
+    "history_csv": "runs/baseline_Combined/history.csv",
+    "latest_checkpoint": "runs/baseline_Combined/checkpoints/last.pth",
+    "predictions_csv": "runs/baseline_Combined/test_predictions.csv",
+    "predictions_jsonl": "runs/baseline_Combined/test_predictions.jsonl",
+    "run_dir": "runs/baseline_Combined"
+  },
+  "seed": 42,
+  "selection_split": "valid",
+  "sizes": {
+    "test": 4864,
+    "train": 15305,
+    "valid": 3793
+  },
+  "test_metrics": {
+    "acc": 0.8556743421052632,
+    "auc": 0.9330998996302837,
+    "auprc": 0.9356245111020243,
+    "f1": 0.8673970532678504,
+    "n": 4864,
+    "positive_n": 2539,
+    "precision": 0.833393829401089,
+    "recall": 0.904293028751477,
+    "specificity": 0.8025806451612904,
+    "threshold": 0.475
+  },
+  "test_selection_metrics": null,
+  "test_used_during_training": false,
+  "tissue": "Combined",
+  "valid_selection_metrics": {
+    "acc": 0.8700237279198524,
+    "auc": 0.9369925142374088,
+    "auprc": 0.9260013701346368,
+    "f1": 0.8719813035575176,
+    "n": 3793,
+    "positive_n": 1873,
+    "precision": 0.8488372093023255,
+    "recall": 0.8964228510411105,
+    "specificity": 0.8442708333333333,
+    "threshold": 0.475
+  },
+  "variant": "baseline"
+}

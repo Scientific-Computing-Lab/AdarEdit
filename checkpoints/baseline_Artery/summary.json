@@ -1,0 +1,57 @@
+{
+  "best_epoch": 239,
+  "bio_ablation": "full",
+  "context": "Artery",
+  "data_sha256": {
+    "test": "27621a48125df0328acde6308c3f078bca2f1fb835142a23dd4c169941d3d0bf",
+    "train": "2f1a54884f880bea2389623de11618d8e7a839493c1b3eaa2377fde90f3fbf0b",
+    "valid": "0e93f0edc785bbfb79dc759cd1b080390698928ddd6fedcf1e2f91563b660d85"
+  },
+  "epochs_requested": 1000,
+  "graph_version": "graph_v2",
+  "paths": {
+    "best_checkpoint": "runs/baseline_Artery/checkpoints/best.pth",
+    "curves_npz": "runs/baseline_Artery/test_curves.npz",
+    "graph_cache_dir": "cache/single/baseline/Artery",
+    "history_csv": "runs/baseline_Artery/history.csv",
+    "latest_checkpoint": "runs/baseline_Artery/checkpoints/last.pth",
+    "predictions_csv": "runs/baseline_Artery/test_predictions.csv",
+    "predictions_jsonl": "runs/baseline_Artery/test_predictions.jsonl",
+    "run_dir": "runs/baseline_Artery"
+  },
+  "seed": 42,
+  "selection_split": "valid",
+  "sizes": {
+    "test": 4792,
+    "train": 15294,
+    "valid": 3876
+  },
+  "test_metrics": {
+    "acc": 0.8516277128547579,
+    "auc": 0.9238075558528616,
+    "auprc": 0.9261722831727266,
+    "f1": 0.8670779584969153,
+    "n": 4792,
+    "positive_n": 2570,
+    "precision": 0.8344728319539403,
+    "recall": 0.9023346303501946,
+    "specificity": 0.7929792979297929,
+    "threshold": 0.45000000000000007
+  },
+  "test_selection_metrics": null,
+  "test_used_during_training": false,
+  "tissue": "Artery",
+  "valid_selection_metrics": {
+    "acc": 0.8444272445820433,
+    "auc": 0.918935161075068,
+    "auprc": 0.9010845300308394,
+    "f1": 0.8499626772829062,
+    "n": 3876,
+    "positive_n": 1895,
+    "precision": 0.8041431261770244,
+    "recall": 0.9013192612137203,
+    "specificity": 0.790005047955578,
+    "threshold": 0.45000000000000007
+  },
+  "variant": "baseline"
+}

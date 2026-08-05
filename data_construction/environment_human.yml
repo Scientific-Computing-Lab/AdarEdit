@@ -1,0 +1,16 @@
+name: adaredit-human-construction
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.10
+  - pandas=2.2.3
+  - biopython
+  - viennarna
+  - r-base
+  - r-argparse
+  - r-dplyr
+  - r-fs
+  - r-purrr
+  - r-readr
+  - r-tibble

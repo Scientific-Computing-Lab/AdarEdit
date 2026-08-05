@@ -1,0 +1,136 @@
+{
+  "software_versions": {
+    "numpy": "1.26.4",
+    "pandas": "2.3.3",
+    "scikit_learn": "1.6.1",
+    "shap": "0.49.1",
+    "torch": "1.11.0+cpu",
+    "torch_geometric": "2.0.4",
+    "xgboost": "1.7.5"
+  },
+  "protocol": {
+    "attention_model": "Baseline Combined GAT, frozen",
+    "gat_gradient_training_split": "train",
+    "xgboost_fit_split": "valid",
+    "shap_feature_selection_split": "valid",
+    "final_evaluation_split": "test",
+    "test_used_for_xgboost_fitting_or_feature_selection": false,
+    "all_models_evaluated_on_identical_test_sites": true,
+    "xgboost_threshold": 0.5,
+    "feature_range": [
+      -50,
+      50
+    ],
+    "top_n": 20,
+    "xgboost_parameters": {
+      "max_depth": 10,
+      "learning_rate": 0.1,
+      "n_estimators": 200,
+      "colsample_bytree": 0.8,
+      "gamma": 0,
+      "min_child_weight": 3,
+      "objective": "binary:logistic",
+      "eval_metric": "logloss",
+      "tree_method": "hist",
+      "random_state": 42,
+      "n_jobs": 8
+    },
+    "caveat": "The GAT validation split was used for checkpoint and GAT threshold selection, but not for gradient training."
+  },
+  "split_integrity": {
+    "status": "PASS",
+    "validation_sites": 3793,
+    "test_sites": 4864,
+    "validation_duplexes": 139,
+    "test_duplexes": 179,
+    "overlapping_duplexes": 0
+  },
+  "top20_features_ranked": [
+    "pos_1",
+    "pos_0",
+    "pos_-2",
+    "pos_-1",
+    "pos_22",
+    "pos_2",
+    "pos_12",
+    "pos_13",
+    "pos_24",
+    "pos_20",
+    "pos_21",
+    "pos_11",
+    "pos_-3",
+    "pos_19",
+    "pos_14",
+    "pos_33",
+    "pos_16",
+    "pos_15",
+    "pos_-18",
+    "pos_25"
+  ],
+  "gat_baseline": {
+    "valid": {
+      "n": 3793,
+      "positive_n": 1873,
+      "accuracy": 0.8700237279198524,
+      "precision": 0.8488372093023255,
+      "recall": 0.8964228510411105,
+      "f1": 0.8719813035575176,
+      "auroc": 0.9369927923117993,
+      "auprc": 0.9260013731079207
+    },
+    "test": {
+      "n": 4864,
+      "positive_n": 2539,
+      "accuracy": 0.8556743421052632,
+      "precision": 0.833393829401089,
+      "recall": 0.904293028751477,
+      "f1": 0.8673970532678504,
+      "auroc": 0.9330997302299188,
+      "auprc": 0.9356244093742757
+    }
+  },
+  "xgboost_all_features": {
+    "valid": {
+      "n": 3793,
+      "positive_n": 1873,
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "auroc": 1.0,
+      "auprc": 1.0
+    },
+    "test": {
+      "n": 4864,
+      "positive_n": 2539,
+      "accuracy": 0.795641447368421,
+      "precision": 0.8074015121368882,
+      "recall": 0.7991335171327294,
+      "f1": 0.8032462391132225,
+      "auroc": 0.8772250526199883,
+      "auprc": 0.8790195542458825
+    }
+  },
+  "xgboost_top20_features": {
+    "valid": {
+      "n": 3793,
+      "positive_n": 1873,
+      "accuracy": 0.9997363564460849,
+      "precision": 1.0,
+      "recall": 0.999466097170315,
+      "f1": 0.9997329773030708,
+      "auroc": 1.0,
+      "auprc": 1.0
+    },
+    "test": {
+      "n": 4864,
+      "positive_n": 2539,
+      "accuracy": 0.7837171052631579,
+      "precision": 0.7887378640776699,
+      "recall": 0.7999212288302481,
+      "f1": 0.7942901838091514,
+      "auroc": 0.8653522892341833,
+      "auprc": 0.8636432751443446
+    }
+  }
+}

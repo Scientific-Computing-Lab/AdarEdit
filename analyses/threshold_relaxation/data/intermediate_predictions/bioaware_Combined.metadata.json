@@ -1,0 +1,18 @@
+{
+  "analysis": "Supplementary Figure S1 intermediate-site inference",
+  "checkpoint": "checkpoints/bioaware_Combined/best.pth",
+  "checkpoint_sha256": "cbb82d94562df3b540ebeab19ffa5fc696ed0fe2a6ab9137a7387ed11169992d",
+  "cohort": "data/cohorts/inter_Combined.jsonl",
+  "cohort_sha256": "5d82c40149e70addefc4e1efc8d4550a426d498d6cf2d2c741a0529d22f9227a",
+  "context": "Combined",
+  "graph_version": "graph_v2",
+  "mean_score": 0.49336051001608267,
+  "output": "data/intermediate_predictions/bioaware_Combined.csv",
+  "output_sha256": "cb7784d630553b5d11c76c88ce9954be08e65d11ea482f179a569804ed1546fd",
+  "python": "3.9.25",
+  "rows": 8286,
+  "status": "PASS",
+  "torch": "1.11.0+cu102",
+  "torch_geometric": "2.0.4",
+  "variant": "bioaware"
+}

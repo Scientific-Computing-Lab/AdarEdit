@@ -1,0 +1,22 @@
+name: adaredit-attention
+channels:
+  - defaults
+dependencies:
+  - python=3.10
+  - pip
+  - pip:
+      - --extra-index-url https://download.pytorch.org/whl/cpu
+      - --find-links https://data.pyg.org/whl/torch-1.11.0+cpu.html
+      - torch==1.11.0+cpu
+      - torch-scatter==2.0.9
+      - torch-sparse==0.6.13
+      - torch-geometric==2.0.4
+      - xgboost==1.7.5
+      - shap==0.49.1
+      - numpy==1.26.4
+      - pandas==2.3.3
+      - scipy==1.15.3
+      - scikit-learn==1.6.1
+      - matplotlib==3.9.4
+      - pillow==11.3.0
+      - seaborn==0.13.2

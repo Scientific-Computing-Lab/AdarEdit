@@ -1,0 +1,30 @@
+{
+  "environment_file": "environment.yml",
+  "observed": {
+    "matplotlib": "3.9.4",
+    "numpy": "1.26.4",
+    "pandas": "2.3.3",
+    "pillow": "11.3.0",
+    "python": "3.10",
+    "scikit_learn": "1.6.1",
+    "seaborn": "0.13.2",
+    "shap": "0.49.1",
+    "torch": "1.11.0",
+    "torch_geometric": "2.0.4",
+    "xgboost": "1.7.5"
+  },
+  "required": {
+    "matplotlib": "3.9.4",
+    "numpy": "1.26.4",
+    "pandas": "2.3.3",
+    "pillow": "11.3.0",
+    "python": "3.10",
+    "scikit_learn": "1.6.1",
+    "seaborn": "0.13.2",
+    "shap": "0.49.1",
+    "torch": "1.11.0",
+    "torch_geometric": "2.0.4",
+    "xgboost": "1.7.5"
+  },
+  "status": "PASS"
+}

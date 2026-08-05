@@ -1,0 +1,61 @@
+{
+  "analysis": "in_silico_mutagenesis",
+  "architecture": "homogeneous-edge baseline GAT",
+  "batch_size": 256,
+  "checkpoint": {
+    "best_epoch": 668,
+    "file_sha256": "aa6202b80f21d003413bb9fbfa94c09fea56fc319a0a5de8b564803e229f02cf"
+  },
+  "device": "cpu",
+  "direct_inference_max_abs_error": 0.0,
+  "graph_validation": {
+    "duplicate_edge_graphs": 0,
+    "pair_flag_mismatch_graphs": 0,
+    "records": 3793,
+    "target_non_a_records": 0
+  },
+  "input": {
+    "file_sha256": "f82984631df749fd5ae2cfbd1cca0f5290eaf21c23d9df418baf384add330509",
+    "path": "input/Combined_valid.jsonl",
+    "records": 3793
+  },
+  "model": "baseline_Combined",
+  "outputs": {
+    "A": {
+      "rows": 36480,
+      "summary_rows": 24
+    },
+    "B": {
+      "rows": 32728,
+      "summary_rows": 24
+    },
+    "C": {
+      "rows": 121361,
+      "summary_rows": 81
+    },
+    "D": {
+      "rows": 45752,
+      "summary_rows": 36
+    }
+  },
+  "panel_B_structural_intervention": "retain an existing RNAfold pair versus remove both directed pair edges and clear the paired flags of both partners",
+  "panel_C_feature_intervention": "set only the focal node paired-state indicator to one versus zero; preserve sequence, all graph edges, and all other node features",
+  "panel_D_structural_intervention": "retain canonical or wobble focal-partner combinations; otherwise remove both directed pair edges and clear both paired flags",
+  "panels": [
+    "A",
+    "B",
+    "C",
+    "D"
+  ],
+  "refolding_performed": false,
+  "selection": {
+    "label": 1,
+    "max_selected": null,
+    "original_probability_operator": ">",
+    "original_probability_threshold": 0.7,
+    "selected_analyzed": 1520,
+    "selected_before_optional_cap": 1520
+  },
+  "split": "validation",
+  "status": "PASS"
+}

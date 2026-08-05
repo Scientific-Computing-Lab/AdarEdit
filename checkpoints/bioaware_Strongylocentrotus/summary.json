@@ -1,0 +1,57 @@
+{
+  "best_epoch": 50,
+  "bio_ablation": "full",
+  "context": "Strongylocentrotus",
+  "data_sha256": {
+    "test": "cdd86187476f21db4f57cfb1c1b0981b3a1ba1a0c449e3c40c623f657d5a43f8",
+    "train": "a9f1af806b6477d04210a13027cef9942dca3abbc9399f52a4742f5a217eadfb",
+    "valid": "0734c7104a59548ed106368afbd932080314e2f210168eeda114147a8a67c624"
+  },
+  "epochs_requested": 1000,
+  "graph_version": "graph_v2",
+  "paths": {
+    "best_checkpoint": "runs/bioaware_Strongylocentrotus/checkpoints/best.pth",
+    "curves_npz": "runs/bioaware_Strongylocentrotus/test_curves.npz",
+    "graph_cache_dir": "cache/single/bioaware/Strongylocentrotus",
+    "history_csv": "runs/bioaware_Strongylocentrotus/history.csv",
+    "latest_checkpoint": "runs/bioaware_Strongylocentrotus/checkpoints/last.pth",
+    "predictions_csv": "runs/bioaware_Strongylocentrotus/test_predictions.csv",
+    "predictions_jsonl": "runs/bioaware_Strongylocentrotus/test_predictions.jsonl",
+    "run_dir": "runs/bioaware_Strongylocentrotus"
+  },
+  "seed": 42,
+  "selection_split": "valid",
+  "sizes": {
+    "test": 1493,
+    "train": 4917,
+    "valid": 1268
+  },
+  "test_metrics": {
+    "acc": 0.6932350971198928,
+    "auc": 0.7967529761690938,
+    "auprc": 0.7718018481453426,
+    "f1": 0.7337209302325581,
+    "n": 1493,
+    "positive_n": 724,
+    "precision": 0.6335341365461847,
+    "recall": 0.8715469613259669,
+    "specificity": 0.5253576072821846,
+    "threshold": 0.375
+  },
+  "test_selection_metrics": null,
+  "test_used_during_training": false,
+  "tissue": "Strongylocentrotus",
+  "valid_selection_metrics": {
+    "acc": 0.776813880126183,
+    "auc": 0.8378858422577455,
+    "auprc": 0.8092225275604363,
+    "f1": 0.8094276094276094,
+    "n": 1268,
+    "positive_n": 657,
+    "precision": 0.7258454106280193,
+    "recall": 0.9147640791476408,
+    "specificity": 0.6284779050736498,
+    "threshold": 0.375
+  },
+  "variant": "bioaware"
+}

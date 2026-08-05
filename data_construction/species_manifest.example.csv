@@ -1,0 +1,4 @@
+species,editing_table,genome
+Octopus,/path/to/octopus_editing_table.tsv,/path/to/octopus_genome.fa
+Ptychodera,/path/to/ptychodera_editing_table.tsv,/path/to/ptychodera_genome.fa
+Strongylocentrotus,/path/to/strongylocentrotus_editing_table.tsv,/path/to/strongylocentrotus_genome.fa

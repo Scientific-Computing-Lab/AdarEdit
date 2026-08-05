@@ -1,0 +1,12 @@
+{
+  "cuda_runtime": "12.8",
+  "device": "cuda",
+  "gpu": "NVIDIA H200",
+  "numpy": "2.2.5",
+  "pandas": "2.2.3",
+  "platform": "Linux-5.14.0-687.17.1.el9_8.x86_64-x86_64-with-glibc2.34",
+  "python": "3.10.20 (main, Jun 11 2026, 15:17:37) [GCC 14.3.0]",
+  "scikit_learn": "1.6.1",
+  "torch": "2.7.0+cu128",
+  "torch_geometric": "2.6.1"
+}

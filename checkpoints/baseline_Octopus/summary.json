@@ -1,0 +1,57 @@
+{
+  "best_epoch": 258,
+  "bio_ablation": "full",
+  "context": "Octopus",
+  "data_sha256": {
+    "test": "8c78c54b6fb8421220004b058f7d6e006e87b3ec74444020c80f0b29b1872b10",
+    "train": "8846d7aa69644639af8dc9ea67dda95cd9c971282bbefa37e78290994ef4cd9f",
+    "valid": "21264454a7f844949c326cdd62758904eb41d05e5c110a6473d5567c595f10a1"
+  },
+  "epochs_requested": 1000,
+  "graph_version": "graph_v2",
+  "paths": {
+    "best_checkpoint": "runs/baseline_Octopus/checkpoints/best.pth",
+    "curves_npz": "runs/baseline_Octopus/test_curves.npz",
+    "graph_cache_dir": "cache/single/baseline/Octopus",
+    "history_csv": "runs/baseline_Octopus/history.csv",
+    "latest_checkpoint": "runs/baseline_Octopus/checkpoints/last.pth",
+    "predictions_csv": "runs/baseline_Octopus/test_predictions.csv",
+    "predictions_jsonl": "runs/baseline_Octopus/test_predictions.jsonl",
+    "run_dir": "runs/baseline_Octopus"
+  },
+  "seed": 42,
+  "selection_split": "valid",
+  "sizes": {
+    "test": 1678,
+    "train": 4758,
+    "valid": 1242
+  },
+  "test_metrics": {
+    "acc": 0.7938021454112039,
+    "auc": 0.8647310155916537,
+    "auprc": 0.8846385319896987,
+    "f1": 0.8088397790055248,
+    "n": 1678,
+    "positive_n": 929,
+    "precision": 0.8308740068104427,
+    "recall": 0.7879440258342304,
+    "specificity": 0.8010680907877169,
+    "threshold": 0.6
+  },
+  "test_selection_metrics": null,
+  "test_used_during_training": false,
+  "tissue": "Octopus",
+  "valid_selection_metrics": {
+    "acc": 0.8091787439613527,
+    "auc": 0.8665618503118502,
+    "auprc": 0.8434453178289489,
+    "f1": 0.8033195020746888,
+    "n": 1242,
+    "positive_n": 592,
+    "precision": 0.7895595432300163,
+    "recall": 0.8175675675675675,
+    "specificity": 0.8015384615384615,
+    "threshold": 0.6
+  },
+  "variant": "baseline"
+}

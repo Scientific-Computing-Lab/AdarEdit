@@ -1,0 +1,18 @@
+{
+  "analysis": "Supplementary Figure S1 intermediate-site inference",
+  "checkpoint": "checkpoints/baseline_Artery/best.pth",
+  "checkpoint_sha256": "e06f0a07f1749e3fba4ace5287a7d6e33a688ef7bff09a40f55040fa8e6987a0",
+  "cohort": "data/cohorts/inter_Artery.jsonl",
+  "cohort_sha256": "f241d838ad5a0ef6532d26a7f303fee645b6466a59c82a7a12c9ec0695c8ee29",
+  "context": "Artery",
+  "graph_version": "graph_v2",
+  "mean_score": 0.5353992494780747,
+  "output": "data/intermediate_predictions/baseline_Artery.csv",
+  "output_sha256": "c13fce0eb3782472c5f05b4a1a20ee6430ef0eca6c70b5218a5e75e4a3dfd1b4",
+  "python": "3.9.25",
+  "rows": 6638,
+  "status": "PASS",
+  "torch": "1.11.0+cu102",
+  "torch_geometric": "2.0.4",
+  "variant": "baseline"
+}

@@ -1,0 +1,12 @@
+{
+  "resource": "UCSC hg38 Common Genomic SNPs dbSNP150 (MAF>=1%)",
+  "n_pairs": 905,
+  "duplex_len_mean": 585.9558011049724,
+  "duplex_len_median": 593,
+  "snps_per_duplex_mean": 3.4828729281767954,
+  "snps_per_duplex_median": 3,
+  "snps_per_duplex_max": 25,
+  "pct_duplex_with_ge1_common_snp": 92.48618784530387,
+  "pct_duplex_with_0_common_snp": 7.513812154696133,
+  "per_base_common_snp_density_pct": 0.5943917479115202
+}

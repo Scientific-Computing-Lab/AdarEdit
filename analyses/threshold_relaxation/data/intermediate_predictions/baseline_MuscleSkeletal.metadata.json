@@ -1,0 +1,18 @@
+{
+  "analysis": "Supplementary Figure S1 intermediate-site inference",
+  "checkpoint": "checkpoints/baseline_MuscleSkeletal/best.pth",
+  "checkpoint_sha256": "aad0112a331cfea6965e28332d4569e25decdd281f16f959c2ac59d3c7cac0b5",
+  "cohort": "data/cohorts/inter_MuscleSkeletal.jsonl",
+  "cohort_sha256": "67078ac89d0a7887a9794682b6528f146602e6617db490aeff8485d4b22e927b",
+  "context": "MuscleSkeletal",
+  "graph_version": "graph_v2",
+  "mean_score": 0.4871655162462124,
+  "output": "data/intermediate_predictions/baseline_MuscleSkeletal.csv",
+  "output_sha256": "9e655ade0eacab68f628369b477f8c56329f0c9f086aec26877af514a0bfc692",
+  "python": "3.9.25",
+  "rows": 4549,
+  "status": "PASS",
+  "torch": "1.11.0+cu102",
+  "torch_geometric": "2.0.4",
+  "variant": "baseline"
+}

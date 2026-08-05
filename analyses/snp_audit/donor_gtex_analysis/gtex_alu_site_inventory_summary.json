@@ -1,0 +1,16 @@
+{
+  "negative_tissue_rows": 254303,
+  "positive_tissue_rows": 57390,
+  "sites_in_multiple_tissues": 75899,
+  "tissues": [
+    "Artery",
+    "Brain",
+    "Combined",
+    "Liver",
+    "MuscleSkeletal"
+  ],
+  "total_labeled_tissue_rows": 311693,
+  "unique_negative_only_sites": 78128,
+  "unique_positive_sites_any_tissue": 22249,
+  "unique_sites": 100377
+}

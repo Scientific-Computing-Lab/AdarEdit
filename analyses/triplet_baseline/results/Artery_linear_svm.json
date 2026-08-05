@@ -1,0 +1,31 @@
+{
+  "best_hyperparams": {
+    "C": 0.1,
+    "gamma": "scale"
+  },
+  "feature_radius": 25,
+  "sizes": {
+    "test": 4792,
+    "train": 15294,
+    "valid": 3876
+  },
+  "test_metrics": {
+    "acc": 0.7099332220367279,
+    "auc": 0.7948206299229145,
+    "f1": 0.7768860353130016,
+    "precision": 0.6612021857923497,
+    "recall": 0.9416342412451362,
+    "specificity": 0.44194419441944194,
+    "threshold": 0.42500000000000004
+  },
+  "valid_metrics": {
+    "acc": 0.7084623323013416,
+    "auc": 0.7921568888610668,
+    "f1": 0.7585470085470085,
+    "precision": 0.6373429084380611,
+    "recall": 0.9366754617414248,
+    "specificity": 0.4901564866229177,
+    "threshold": 0.42500000000000004
+  },
+  "variant": "triplet_linear_svm"
+}

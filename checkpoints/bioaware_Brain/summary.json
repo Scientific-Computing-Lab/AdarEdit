@@ -1,0 +1,57 @@
+{
+  "best_epoch": 896,
+  "bio_ablation": "full",
+  "context": "Brain",
+  "data_sha256": {
+    "test": "c2e95092d91c929f85c52fee55b587ed6572c2db4ffc470d23f180baeefe2a5b",
+    "train": "ae4b61fdd339ccf02f9b842c177dc6ed75fe0c9ce01471da50e8506249fdf936",
+    "valid": "505f514ff02d8d8a564c65d0c25372307f1528011e45c903857c29d6abd4edb6"
+  },
+  "epochs_requested": 1000,
+  "graph_version": "graph_v2",
+  "paths": {
+    "best_checkpoint": "runs/bioaware_Brain/checkpoints/best.pth",
+    "curves_npz": "runs/bioaware_Brain/test_curves.npz",
+    "graph_cache_dir": "cache/single/bioaware/Brain",
+    "history_csv": "runs/bioaware_Brain/history.csv",
+    "latest_checkpoint": "runs/bioaware_Brain/checkpoints/last.pth",
+    "predictions_csv": "runs/bioaware_Brain/test_predictions.csv",
+    "predictions_jsonl": "runs/bioaware_Brain/test_predictions.jsonl",
+    "run_dir": "runs/bioaware_Brain"
+  },
+  "seed": 42,
+  "selection_split": "valid",
+  "sizes": {
+    "test": 4566,
+    "train": 15625,
+    "valid": 3766
+  },
+  "test_metrics": {
+    "acc": 0.8528252299605782,
+    "auc": 0.9274108833038369,
+    "auprc": 0.9305337092364092,
+    "f1": 0.8633034987794955,
+    "n": 4566,
+    "positive_n": 2418,
+    "precision": 0.8494795836669335,
+    "recall": 0.8775847808105872,
+    "specificity": 0.8249534450651769,
+    "threshold": 0.25
+  },
+  "test_selection_metrics": null,
+  "test_used_during_training": false,
+  "tissue": "Brain",
+  "valid_selection_metrics": {
+    "acc": 0.8632501327668614,
+    "auc": 0.9286837787917837,
+    "auprc": 0.9238809204013707,
+    "f1": 0.8679825685721609,
+    "n": 3766,
+    "positive_n": 1887,
+    "precision": 0.8406156901688183,
+    "recall": 0.8971913089560148,
+    "specificity": 0.8291644491750931,
+    "threshold": 0.25
+  },
+  "variant": "bioaware"
+}

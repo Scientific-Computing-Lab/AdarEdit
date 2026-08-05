@@ -1,13 +1,30 @@
-name: rna-editing-pipeline
-channels:
-  - conda-forge
-  - bioconda
+name: adaredit
+channels: [pytorch, bioconda, conda-forge, defaults]
 dependencies:
-  - python=3.11
-  - pandas
-  - pyfaidx
+  - python=3.10
+  - viennarna           # provides the `RNA` module (structure folding)
   - bedtools
-  - viennarna            # ViennaRNA + binding 
-  - rnastructure         #  dot2ct ,draw
-  - perl                 # /‏bpRNA
-  - perl-graph           #  bpRNA 
+  - pyfaidx
+  - perl
+  - perl-graph
+  - r-base
+  - r-optparse
+  - r-readr
+  - r-dplyr
+  - r-stringr
+  - r-data.table
+  - pip
+  - pip:
+    # Load the shipped checkpoints in a matching PyTorch/PyG environment.
+    - torch==2.7.0
+    - torch-geometric==2.6.1
+    - scikit-learn==1.6.1
+    - scipy
+    - numpy==2.2.5
+    - pandas==2.2.3
+    - matplotlib
+    - networkx
+    - xgboost
+    - shap
+    - seaborn
+    - pysam

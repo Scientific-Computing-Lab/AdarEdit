@@ -1,0 +1,53 @@
+{
+  "metric_absolute_tolerance": 0.0005,
+  "primary_top20_features": [
+    "pos_1", "pos_0", "pos_-2", "pos_-1", "pos_22", "pos_2",
+    "pos_12", "pos_13", "pos_24", "pos_20", "pos_21", "pos_11",
+    "pos_-3", "pos_19", "pos_14", "pos_33", "pos_16", "pos_15",
+    "pos_-18", "pos_25"
+  ],
+  "primary_test_metrics": {
+    "gat_baseline": {
+      "f1": 0.8673970532678504,
+      "auroc": 0.9330997302299188,
+      "auprc": 0.9356244093742757
+    },
+    "xgboost_all_features": {
+      "f1": 0.8032462391132225,
+      "auroc": 0.8772250526199883,
+      "auprc": 0.8790195542458825
+    },
+    "xgboost_top20_features": {
+      "f1": 0.7942901838091514,
+      "auroc": 0.8653522892341833,
+      "auprc": 0.8636432751443446
+    }
+  },
+  "availability_test_metrics": {
+    "availability_only": {
+      "f1": 0.7081689317550782,
+      "auroc": 0.5741451845828728,
+      "auprc": 0.5652393261484686
+    },
+    "complete_window_attention": {
+      "f1": 0.8070251517779705,
+      "auroc": 0.8561310663874304,
+      "auprc": 0.8785912452829137
+    },
+    "complete_window_top20": {
+      "f1": 0.8008695652173913,
+      "auroc": 0.8410814429214011,
+      "auprc": 0.859328592850009
+    }
+  },
+  "complete_window_leading_positions": [1, 0, -2],
+  "expected_counts": {
+    "validation_sites": 3793,
+    "validation_duplexes": 139,
+    "test_sites": 4864,
+    "test_duplexes": 179,
+    "test_node_rows": 470530,
+    "complete_window_validation_sites": 3150,
+    "complete_window_test_sites": 4077
+  }
+}
