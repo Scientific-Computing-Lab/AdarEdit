@@ -57,6 +57,20 @@ script run on CPU.
 
 ---
 
+### Tested platform and installation time
+
+The main training and evaluation pipeline was tested on Linux x86_64
+(kernel 5.14, glibc 2.34) with Python 3.10, PyTorch 2.7.0,
+PyTorch Geometric 2.6.1 and CUDA 12.8. The supplied checkpoints were
+generated on an NVIDIA H200 GPU. Exact software and hardware provenance is
+recorded in `environment.json` within each checkpoint directory. Analyses that
+require a different software stack provide a dedicated environment file in
+their analysis directory.
+
+Creating the repository-level Conda environment typically takes approximately
+15--30 minutes, depending on network speed and package availability. This
+estimate does not include downloading the optional large raw GTEx tables.
+
 ## 2. Repository layout
 
 ```
@@ -255,6 +269,128 @@ To score with a provided checkpoint instead of retraining, load
 in the paper.
 
 ---
+
+### Training the Baseline GAT on a new dataset
+
+To train the Baseline GAT on a new dataset, organize the input files as follows:
+
+```text
+<DATA_ROOT>/
+└── <CONTEXT>/
+    ├── train.jsonl
+    ├── valid.jsonl
+    └── test.jsonl
+```
+
+Here, `<DATA_ROOT>` is the directory containing the dataset and `<CONTEXT>` is
+the name assigned to the new experimental context.
+
+Each line of a JSONL file must describe one candidate adenosine using the
+following format:
+
+```json
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": "Predict whether the central adenosine will be edited."
+    },
+    {
+      "role": "user",
+      "content": "L:<left sequence>, A:A, R:<right sequence>, Alu Vienna Structure:<dot-bracket structure>"
+    },
+    {
+      "role": "assistant",
+      "content": "yes"
+    }
+  ]
+}
+```
+
+The assistant label must be `yes` for an edited site or `no` for a non-edited
+site. The focal nucleotide must be `A`. The complete input sequence is formed
+as `L + A + R`, and its length must equal the length of the corresponding
+RNAfold dot-bracket structure.
+
+The user is responsible for defining the biological criteria used to assign
+the `yes` and `no` labels. If editing levels are available, intermediate or
+uncertain sites may be excluded before creating the binary dataset.
+
+Complete RNA substrates should be assigned to only one of the train,
+validation or test partitions. All candidate sites derived from the same
+sequence and predicted structure must remain in the same partition to prevent
+substrate leakage.
+
+Optional files named `train.metadata.csv`, `valid.metadata.csv` and
+`test.metadata.csv` may be placed beside the JSONL files to retain site and
+substrate provenance. These metadata files are not required for model training.
+When supplied, each metadata file should contain one row for every corresponding
+JSONL record and preserve the same row order.
+
+For example, to train the Baseline GAT on a context named `MyDataset`, run from
+the repository root:
+
+```bash
+python code/train_strict_long.py \
+  --variant baseline \
+  --context MyDataset \
+  --data-root /path/to/new_data \
+  --cache-root cache/new_data \
+  --out-root runs \
+  --epochs 1000 \
+  --batch-size 256 \
+  --num-workers 0 \
+  --num-threads 8 \
+  --checkpoint-every 100 \
+  --seed 42
+```
+
+This command expects the following files:
+
+```text
+/path/to/new_data/MyDataset/train.jsonl
+/path/to/new_data/MyDataset/valid.jsonl
+/path/to/new_data/MyDataset/test.jsonl
+```
+
+During training, checkpoint and decision-threshold selection are performed
+using the validation split only. After training is complete, the selected
+checkpoint is evaluated once on the held-out test split. The test split is not
+used for model, epoch or threshold selection.
+
+The resulting files are written to:
+
+```text
+runs/baseline_MyDataset/
+```
+
+The output directory includes the selected model checkpoint, training history,
+run configuration, recorded software environment, validation-selected
+threshold, summary metrics and held-out test predictions.
+
+A CUDA-enabled GPU is required by default for full training. The `--allow-cpu`
+option may be added for a short smoke test or an intentionally slower CPU
+training run:
+
+```bash
+python code/train_strict_long.py \
+  --variant baseline \
+  --context MyDataset \
+  --data-root /path/to/new_data \
+  --cache-root cache/new_data \
+  --out-root runs \
+  --epochs 1 \
+  --batch-size 32 \
+  --num-workers 0 \
+  --num-threads 4 \
+  --checkpoint-every 1 \
+  --seed 42 \
+  --allow-cpu
+```
+
+Full training time depends on the dataset size, number of epochs and available
+GPU. The supplied checkpoints can be used to reproduce the reported analyses
+without retraining.
 
 ## 5. Key verified results (held-out test)
 
