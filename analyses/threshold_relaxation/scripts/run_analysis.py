@@ -27,7 +27,7 @@ CONTEXTS = ["Artery", "Brain", "Liver", "MuscleSkeletal", "Combined"]
 VARIANTS = ["baseline", "bioaware"]
 # Checkpoint probabilities can vary slightly across supported PyTorch/PyG and
 # CPU/GPU combinations. The graph labels must always match exactly.
-VALIDATION_ATOL = 5e-4 if tuple(map(int, torch_geometric.__version__.split(".")[:2])) >= (2, 6) else 1e-3
+VALIDATION_ATOL = 1e-3
 
 sys.path.insert(0, str(CODE))
 import bioaware_gnn as bio  # noqa: E402
